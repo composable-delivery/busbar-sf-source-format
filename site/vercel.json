@@ -17,6 +17,14 @@
   ],
   "rewrites": [
     {
+      "source": "/busbar-sf-source-format/:path*/",
+      "destination": "/:path*/index.html"
+    },
+    {
+      "source": "/busbar-sf-source-format/",
+      "destination": "/index.html"
+    },
+    {
       "source": "/busbar-sf-source-format/:path*",
       "destination": "/:path*"
     }
