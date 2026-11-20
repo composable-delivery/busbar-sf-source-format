@@ -57,10 +57,6 @@ jobs:
         with:
           shared-key: test-${{ matrix.os }}
           save-if: ${{ github.ref == 'refs/heads/main' }}
-      - name: DIAG git config
-        if: always()
-        run: |
-          git --version; git config --list --show-origin; echo ---; cat ~/.gitconfig || true
       - name: Run workspace unit & integration tests
         run: cargo test --workspace --locked
       - name: Run workspace doc tests

@@ -799,9 +799,21 @@ fn setup_git_sample_repo(src: &Path) -> [u8; 33] {
     decode_hex_sha1_needle(&alpha_oid)
 }
 
+/// Hermetic git config: the index-reuse path intentionally bails out when user-level git
+/// config defines a `filter` (e.g. git-lfs on CI runners), so point HOME at an empty dir.
+fn isolate_git_user_config(base: &Path) {
+    let fake_home = base.join("home");
+    fs::create_dir_all(&fake_home).expect("create fake home");
+    // SAFETY: this is the only test in this binary that reads HOME/XDG_CONFIG_HOME.
+    unsafe { std::env::set_var("HOME", &fake_home) };
+    // SAFETY: as above.
+    unsafe { std::env::set_var("XDG_CONFIG_HOME", fake_home.join(".config")) };
+}
+
 #[test]
 fn incremental_git_index_oid_reuse_dirty_untracked_and_gitattributes() {
     let tmp = tempfile::tempdir().expect("tempdir");
+    isolate_git_user_config(tmp.path());
     let src = tmp.path().join("repo");
     let oid_needle = setup_git_sample_repo(&src);
 
