@@ -374,7 +374,7 @@ fn all_seven_presets_load_and_merge() {
         assert!(!merged.types.is_empty());
     }
     let sv = standard_value_set_registry();
-    assert!(!sv.fullnames.is_empty());
+    assert_ne!(sv.fullnames.len(), 0);
 }
 
 #[test]
