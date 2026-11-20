@@ -2,6 +2,7 @@ import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { writeSummary } from '../../benchmarks/summarize.mjs';
 
 const scriptsDir = path.dirname(fileURLToPath(import.meta.url));
 const siteDir = path.resolve(scriptsDir, '..');
@@ -28,6 +29,24 @@ const ROOT_DOCS = [
 ];
 
 fs.mkdirSync(generatedDir, { recursive: true });
+
+// The Overview is an introduction for new users: benchmark tables belong on the Benchmarks page.
+// Fail the build rather than let one creep back in.
+const overviewPath = path.join(repoRoot, 'docs', 'index.mdx');
+if (fs.existsSync(overviewPath)) {
+  const overview = fs.readFileSync(overviewPath, 'utf-8');
+  if (/^\s*\|[\s:|-]*-{3}[\s:|-]*\|?\s*$/m.test(overview)) {
+    throw new Error(
+      'docs/index.mdx must not contain tables. Show ranges as metric cards; put tables on the Benchmarks page.'
+    );
+  }
+}
+
+// Benchmark ranges for the Overview metric cards (local results + GitHub Actions results).
+const summary = writeSummary();
+console.log(
+  `[sync-docs] Benchmark summary from ${summary.sources.length} source(s): ${summary.sources.map((s) => s.label).join(', ')}`
+);
 
 for (const doc of ROOT_DOCS) {
   const raw = fs.readFileSync(path.join(repoRoot, doc.source), 'utf-8');

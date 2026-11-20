@@ -27,10 +27,11 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 BENCH_DIR = REPO_ROOT / "benchmarks"
 NODE_BENCH_DIR = BENCH_DIR / "node-sdr"
-RESULTS_PATH = BENCH_DIR / "results.json"
+RESULTS_PATH = Path(os.environ.get("BENCH_RESULTS_PATH", BENCH_DIR / "results.json"))
+EXE = ".exe" if os.name == "nt" else ""
 
-RUST_CLI_BIN = REPO_ROOT / "target" / "release" / "sf-source-format"
-RUST_HARNESS_BIN = REPO_ROOT / "target" / "release" / "examples" / "bench_harness"
+RUST_CLI_BIN = REPO_ROOT / "target" / "release" / f"sf-source-format{EXE}"
+RUST_HARNESS_BIN = REPO_ROOT / "target" / "release" / "examples" / f"bench_harness{EXE}"
 NODE_HARNESS_SCRIPT = NODE_BENCH_DIR / "bench.mjs"
 GENERATOR_SCRIPT = BENCH_DIR / "generate-workloads.mjs"
 
@@ -132,8 +133,12 @@ def collect_env_info() -> dict[str, str]:
 
 def build_artifacts() -> None:
     print("[setup] Building release Rust binaries...", flush=True)
-    run_cmd(["cargo", "build", "--release", "-p", "busbar-sf-source-format-cli"])
-    run_cmd(["cargo", "build", "--release", "-p", "busbar-sf-source-format", "--example", "bench_harness"])
+    run_cmd(
+        [
+            "cargo", "build", "--release", "-p", "busbar-sf-source-format",
+            "--bin", "sf-source-format", "--example", "bench_harness",
+        ]
+    )
 
     if not (NODE_BENCH_DIR / "node_modules").exists():
         print("[setup] Installing Node @salesforce/source-deploy-retrieve@13.13.0...", flush=True)

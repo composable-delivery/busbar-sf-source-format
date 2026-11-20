@@ -1,0 +1,68 @@
+---
+title: sf-source-format
+description: Convert Salesforce metadata between Metadata API and SFDX source format with a single fast binary. No Node.js required.
+template: splash
+hero:
+  tagline: Convert Salesforce metadata between Metadata API and SFDX source format in one fast, self-contained binary. No Node.js, no sf CLI.
+  actions:
+    - text: Get started
+      link: ./getting-started/
+      icon: right-arrow
+    - text: CLI reference
+      link: ./cli-reference/
+      variant: minimal
+---
+
+import MetricCards from '@site/src/components/MetricCards.astro';
+import IntentCards from '@site/src/components/IntentCards.astro';
+
+## Faster and lighter than SDR
+
+<MetricCards />
+
+## What it does
+
+Salesforce projects come in two shapes. **Metadata API (MDAPI)** format keeps each object in one large XML file. **SFDX source** format splits it into many small files that review and merge cleanly in Git. `sf-source-format` converts between the two, in either direction.
+
+```plaintext
+MDAPI                                SFDX source
+objects/Account.object          →    force-app/main/default/objects/Account/Account.object-meta.xml
+                                     force-app/main/default/objects/Account/fields/Industry.field-meta.xml
+                                     force-app/main/default/objects/Account/validationRules/…
+```
+
+It replaces the conversion step of `sf project convert`, and its output is byte-for-byte identical to [`@salesforce/source-deploy-retrieve`](https://github.com/forcedotcom/source-deploy-retrieve) (SDR) 13.13.0, so you can swap it in without changing what you deploy.
+
+## Try it in 30 seconds
+
+```bash
+# Install the standalone binary (macOS / Linux)
+curl -fsSL https://composable-delivery.github.io/sf-source-format/install.sh | bash
+
+# Turn SFDX source into a deployable MDAPI package
+sf-source-format convert mdapi --sourcepath force-app --output-dir build/mdapi --exact-dir
+```
+
+The converted package is in `build/mdapi`. Run `convert source` for the other direction. Windows, Cargo and CI installs are covered in [Getting started](./getting-started.md).
+
+## Is it right for you?
+
+**A good fit if you:**
+
+- run conversions in CI and want to drop the Node.js and `sf` CLI install from your pipeline,
+- convert large projects repeatedly and want unchanged components served from an incremental cache,
+- build Rust tooling that needs a Salesforce metadata registry, XML handling or `.forceignore` support as a library.
+
+**Not for:** authenticating to an org, retrieving, or deploying. `sf-source-format` only converts files on disk; keep using the `sf` CLI for those.
+
+## Output you can trust
+
+Parity with SDR is checked, not assumed: all 34 snapshot tests across the 33 upstream SDR test suites, all 7 `sourceBehaviorOptions` presets, and byte-identical output for every one of the 12,063 source files in [`SalesforceFoundation/NPSP`](https://github.com/SalesforceFoundation/NPSP). The [Porting notes](../PORTING.md) explain how upstream quirks are handled.
+
+## Where to go next
+
+<IntentCards />
+
+:::note[Pre-release]
+Version 0.0.1 is published on [crates.io](https://crates.io/crates/busbar-sf-source-format) by [MuseLab LLC](https://muselab.com). Release binaries carry SLSA build provenance and can be verified with `gh attestation verify`.
+:::

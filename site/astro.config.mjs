@@ -73,6 +73,8 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: [
+        // Lets docs/*.mdx import site components without fragile relative paths.
+        { find: /^@site\/(.*)$/, replacement: `${siteDir}/$1` },
         {
           find: /^@astrojs\/starlight\/components$/,
           replacement: path.resolve(
@@ -113,7 +115,8 @@ export default defineConfig({
         'High-performance Rust engine for Salesforce MDAPI and SFDX source format conversion.',
       social: [{ icon: 'github', label: 'GitHub', href: REPO_URL }],
       plugins: extra.plugins,
-      customCss: ['./src/styles.css'],
+      // Branding is layered on only for MuseLab-branded builds (Vercel); Pages stays stock.
+      customCss: ['./src/styles.css', ...(extra.branded ? ['./src/branded.css'] : [])],
       sidebar: [
         {
           label: 'Getting Started',

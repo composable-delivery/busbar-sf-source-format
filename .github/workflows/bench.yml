@@ -6,7 +6,16 @@ on:
     paths:
       - "crates/**"
       - "benchmarks/**"
+      - "Cargo.toml"
+      - "Cargo.lock"
+      - "rust-toolchain.toml"
+      - ".github/actions/**"
       - ".github/workflows/bench.yml"
+      # Result snapshots and docs tooling don't change what is measured.
+      - "!benchmarks/results.json"
+      - "!benchmarks/results/**"
+      - "!benchmarks/summarize.mjs"
+      - "!benchmarks/fetch-ci-results.mjs"
   workflow_dispatch:
     inputs:
       suite:
@@ -111,9 +120,13 @@ jobs:
           cache-dependency-path: benchmarks/node-sdr/package-lock.json
       - name: Install Node SDR dependencies
         run: npm --prefix benchmarks/node-sdr ci --ignore-scripts
+      # Part B (cold CLI + memory) needs the Salesforce CLI; the harness skips it when `sf` is absent.
+      - name: Install Salesforce CLI (cold-CLI comparison)
+        if: runner.os != 'Windows'
+        run: npm install --global @salesforce/cli@2.156.8
       - name: Run cross-engine comparison
         shell: bash
-        run: python3 benchmarks/run-comparison.py --skip-sf-cli | tee comparison.log
+        run: python3 benchmarks/run-comparison.py | tee comparison.log
       - name: Append comparison summary
         if: always()
         shell: bash

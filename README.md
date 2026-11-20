@@ -134,7 +134,7 @@ See [BENCHMARKS.md](BENCHMARKS.md) for full tables, Criterion microbenchmarks, a
 
 ## Documentation
 
-- [Documentation Portal (Markdown)](docs/index.md) — Getting started, CLI reference, library guide, and architecture
+- [Documentation Portal (Markdown)](docs/index.mdx) — Getting started, CLI reference, library guide, and architecture
 - [Porting Notes](PORTING.md) — TypeScript-to-Rust mapping, design decisions, and upstream SDR parity details
 - [Benchmarks](BENCHMARKS.md) — Full benchmark methodology and results
 - [Contributing](CONTRIBUTING.md) — Development setup, lint rules, and PR checklist

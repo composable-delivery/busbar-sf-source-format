@@ -1,0 +1,104 @@
+---
+// "Where to go next", grouped by what the reader is trying to do (Diátaxis):
+// learn (tutorial), solve a task (how-to), look something up (reference), understand (explanation).
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const to = (p: string) => `${base}${p}`;
+
+const groups = [
+  {
+    kind: 'Tutorial',
+    heading: 'Learn by doing',
+    blurb: 'Install the binary and convert your first project end to end.',
+    links: [{ label: 'Getting started', href: to('/getting-started/') }],
+  },
+  {
+    kind: 'How-to',
+    heading: 'Get a task done',
+    blurb: 'Recipes for converting in CI, filtering by manifest, and building zip packages.',
+    links: [
+      { label: 'Worked CLI examples', href: to('/cli-reference/') },
+      { label: 'Use it in GitHub Actions', href: to('/getting-started/') },
+    ],
+  },
+  {
+    kind: 'Reference',
+    heading: 'Look something up',
+    blurb: 'Every subcommand, flag and Rust API.',
+    links: [
+      { label: 'CLI reference', href: to('/cli-reference/') },
+      { label: 'Library API guide', href: to('/library-api/') },
+      { label: 'Rustdoc API', href: to('/api/busbar_sf_source_format/') },
+    ],
+  },
+  {
+    kind: 'Explanation',
+    heading: 'Understand how it works',
+    blurb: 'How incremental caching works, how SDR parity is verified, and how speed is measured.',
+    links: [
+      { label: 'Architecture', href: to('/architecture/') },
+      { label: 'Porting notes', href: to('/porting/') },
+      { label: 'Benchmarks', href: to('/benchmarks/') },
+    ],
+  },
+];
+---
+
+<div class="intent-grid">
+  {
+    groups.map((g) => (
+      <section class="intent-card">
+        <p class="intent-kind">{g.kind}</p>
+        <h3>{g.heading}</h3>
+        <p class="intent-blurb">{g.blurb}</p>
+        <ul>
+          {g.links.map((l) => (
+            <li>
+              <a href={l.href}>{l.label}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</div>
+
+<style>
+  .intent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+  .intent-card {
+    margin: 0 !important;
+    padding: 1.1rem 1.25rem;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.75rem;
+    background: var(--sl-color-gray-6);
+  }
+  .intent-kind {
+    margin: 0;
+    font-size: var(--sl-text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sl-color-accent-high);
+  }
+  h3 {
+    margin: 0.25rem 0 0.4rem;
+    font-size: var(--sl-text-lg);
+  }
+  .intent-blurb {
+    margin: 0 0 0.6rem;
+    color: var(--sl-color-gray-2);
+    font-size: var(--sl-text-sm);
+    line-height: 1.5;
+  }
+  ul {
+    margin: 0;
+    padding-left: 1.1rem;
+  }
+  li {
+    margin: 0.15rem 0;
+  }
+</style>

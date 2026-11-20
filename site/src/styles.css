@@ -62,3 +62,13 @@
 }
 
 
+
+/* Use the full viewport width for content. The kit and Starlight cap it at 56-67rem, which wastes
+   space on wide screens; prose keeps a readable measure while code, cards and tables expand. */
+html:root,
+html:root[data-theme] {
+  --sl-content-width: 100%;
+}
+.sl-markdown-content > :is(p, ul, ol, blockquote, h2, h3, h4) {
+  max-width: 80ch;
+}

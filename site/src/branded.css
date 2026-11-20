@@ -1,0 +1,18 @@
+/* MuseLab-branded builds only (Vercel). Loaded in addition to the kit's Starlight theme. */
+
+/* Light mode uses the orange "muse" wordmark (the kit's default is the charcoal one).
+   `!important` is required: the kit's Header.astro uses scoped selectors that outrank ours. */
+:root[data-theme='light'] .muselab-logo-dark {
+  display: block !important;
+}
+:root[data-theme='light'] .muselab-logo-light {
+  display: none !important;
+}
+
+/* Work around the kit forcing a near-black code background in light mode while Expressive Code
+   uses its light-mode token colors (dark gray on near-black is unreadable). Let Expressive Code's
+   own light background apply. Remove once muselab-ux-kit fixes starlight.css. */
+:root[data-theme='light'] .expressive-code pre,
+:root[data-theme='light'] .sl-markdown-content pre {
+  background-color: var(--ec-codeBg) !important;
+}
