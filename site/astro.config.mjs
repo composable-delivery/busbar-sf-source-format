@@ -77,7 +77,7 @@ export default defineConfig({
           find: /^@astrojs\/starlight\/components$/,
           replacement: path.resolve(
             siteDir,
-            'node_modules/@astrojs/starlight/components.ts'
+            'node_modules/@astrojs/starlight/dist/components.ts'
           ),
         },
       ],
@@ -111,7 +111,7 @@ export default defineConfig({
       title: 'sf-source-format',
       description:
         'High-performance Rust engine for Salesforce MDAPI and SFDX source format conversion.',
-      social: { github: REPO_URL },
+      social: [{ icon: 'github', label: 'GitHub', href: REPO_URL }],
       plugins: extra.plugins,
       customCss: ['./src/styles.css'],
       sidebar: [
