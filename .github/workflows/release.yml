@@ -45,7 +45,7 @@ jobs:
             -C "target/x86_64-unknown-linux-gnu/release" sf-source-format \
             -C "${{ github.workspace }}" README.md LICENSE-MIT LICENSE-APACHE
       - name: Upload Linux artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dist-linux
           path: dist/*
@@ -76,7 +76,7 @@ jobs:
             -C universal sf-source-format \
             -C "${{ github.workspace }}" README.md LICENSE-MIT LICENSE-APACHE
       - name: Upload macOS artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dist-macos
           path: dist/*
@@ -103,7 +103,7 @@ jobs:
           7z a sf-source-format-windows-x86_64.zip sf-source-format.exe README.md LICENSE-MIT LICENSE-APACHE
           rm sf-source-format.exe README.md LICENSE-MIT LICENSE-APACHE
       - name: Upload Windows artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dist-windows
           path: dist/*
