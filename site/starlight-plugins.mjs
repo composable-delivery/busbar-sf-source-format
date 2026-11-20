@@ -12,8 +12,9 @@ export async function loadStarlightPlugins() {
     .map((s) => s.trim())
     .filter(Boolean);
 
-  const wantsMuselabBrand =
-    process.env.MUSELAB_BRAND === 'true' || Boolean(process.env.NODE_AUTH_TOKEN);
+  // Branding is opt-in and explicit (set only by the Vercel deployment). A bare
+  // NODE_AUTH_TOKEN must NOT enable it: CI runners set a placeholder token.
+  const wantsMuselabBrand = process.env.MUSELAB_BRAND === 'true';
 
   const entries =
     explicit.length > 0
@@ -60,9 +61,10 @@ export async function loadStarlightPlugins() {
         if (!isPath) packages.push(packageName(specifier));
         if (specifier.includes('muselab-ux-kit')) branded = true;
       } catch (error) {
-        if (explicit.length > 0) {
+        if (explicit.length > 0 || wantsMuselabBrand) {
+          // Asked for branding but it is unavailable: fail loudly rather than publish unbranded.
           throw new Error(
-            `DOCS_STARLIGHT_PLUGINS: cannot load "${entry}": ${
+            `Starlight plugin: cannot load "${entry}": ${
               error instanceof Error ? error.message : error
             }`,
             { cause: error }

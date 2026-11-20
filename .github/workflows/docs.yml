@@ -37,7 +37,6 @@ jobs:
     timeout-minutes: 30
     permissions:
       contents: read
-      packages: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
@@ -70,24 +69,8 @@ jobs:
       - name: Install Starlight site dependencies
         run: npm --prefix site ci --ignore-scripts
 
-      # Dual-mode open-source layering: install @composable-delivery/muselab-ux-kit when
-      # Actions access is available (official repo), otherwise fall back cleanly to
-      # stock Starlight (contributor forks).
-      - name: Layer MuseLab UX Kit when available
-        id: brand
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          if [ -n "$NODE_AUTH_TOKEN" ] && npm --prefix site install --no-save --ignore-scripts @composable-delivery/muselab-ux-kit; then
-            echo "branded=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "::notice::@composable-delivery/muselab-ux-kit not accessible; building unbranded Starlight docs."
-            echo "branded=false" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Build Astro Starlight site
         env:
-          MUSELAB_BRAND: ${{ steps.brand.outputs.branded }}
           ASTRO_SITE: https://${{ github.repository_owner }}.github.io
           ASTRO_BASE: /${{ github.event.repository.name }}
         run: npm --prefix site run build

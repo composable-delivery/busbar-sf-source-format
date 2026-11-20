@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "npm ci && npm install --no-save --ignore-scripts @composable-delivery/muselab-ux-kit",
+  "build": {
+    "env": {
+      "MUSELAB_BRAND": "true",
+      "ASTRO_SITE": "https://docs.muselab.com",
+      "ASTRO_BASE": "/busbar-sf-source-format"
+    }
+  }
+}
