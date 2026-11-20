@@ -7,5 +7,18 @@
       "ASTRO_SITE": "https://docs.muselab.com",
       "ASTRO_BASE": "/busbar-sf-source-format"
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/busbar-sf-source-format/",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/busbar-sf-source-format/:path*",
+      "destination": "/:path*"
+    }
+  ]
 }
