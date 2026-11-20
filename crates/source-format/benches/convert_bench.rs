@@ -8,7 +8,8 @@ use busbar_sf_source_format::convert::{
 };
 use busbar_sf_source_format::registry::RegistryAccess;
 use busbar_sf_source_format::resolve::{ComponentSetBuilder, ComponentSetOptions};
-use criterion::{BatchSize, Criterion, black_box};
+use criterion::{BatchSize, Criterion};
+use std::hint::black_box;
 
 const FIXTURES: &[&str] = &[
     "customObjects-and-children",

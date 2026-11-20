@@ -10,11 +10,11 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/starlight": "^0.32.0",
-    "astro": "^5.4.0"
+    "@astrojs/markdown-remark": "^7.3.10",
+    "@astrojs/starlight": "^0.43.1",
+    "astro": "^7.4.13"
   },
   "devDependencies": {
-    "@types/node": "^22.0.0"
+    "@types/node": "^26.6.6"
   }
 }
-

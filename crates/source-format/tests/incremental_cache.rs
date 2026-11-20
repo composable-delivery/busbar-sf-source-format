@@ -799,8 +799,39 @@ fn setup_git_sample_repo(src: &Path) -> [u8; 33] {
     decode_hex_sha1_needle(&alpha_oid)
 }
 
+const GIT_ISOLATED_ENV: &str = "SF_TEST_GIT_ISOLATED";
+
+/// Re-runs the git-index test in a child process whose `HOME` is empty. The index-reuse path
+/// intentionally bails out when user-level git config defines a `filter` (e.g. git-lfs on CI
+/// runners), so the test must not see the host's git config. A child process avoids mutating
+/// this process's environment.
 #[test]
 fn incremental_git_index_oid_reuse_dirty_untracked_and_gitattributes() {
+    if std::env::var_os(GIT_ISOLATED_ENV).is_some() {
+        git_index_oid_reuse_body();
+        return;
+    }
+    let home = tempfile::tempdir().expect("fake home");
+    let status = Command::new(std::env::current_exe().expect("current_exe"))
+        .args([
+            "--exact",
+            "incremental_git_index_oid_reuse_dirty_untracked_and_gitattributes",
+            "--test-threads=1",
+        ])
+        .env(GIT_ISOLATED_ENV, "1")
+        .env("HOME", home.path())
+        .env("XDG_CONFIG_HOME", home.path().join(".config"))
+        .env("GIT_CONFIG_NOSYSTEM", "1")
+        .status()
+        .expect("spawn isolated test");
+    assert!(status.success(), "isolated git-index test failed");
+}
+
+#[expect(
+    clippy::missing_assert_message,
+    reason = "test body; assertions are self-describing"
+)]
+fn git_index_oid_reuse_body() {
     let tmp = tempfile::tempdir().expect("tempdir");
     let src = tmp.path().join("repo");
     let oid_needle = setup_git_sample_repo(&src);
