@@ -208,8 +208,8 @@ impl ComponentSet {
 
         for (ty, full_name) in expand_manifest_members(&parsed, &registry)? {
             let member = MetadataMember {
-                type_name: ty.name.clone(),
-                full_name: full_name.clone(),
+                type_name: ty.name,
+                full_name,
             };
             if let Some(ref mut inc) = include_set {
                 inc.add_member(&member)?;

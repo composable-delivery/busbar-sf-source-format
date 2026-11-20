@@ -107,9 +107,7 @@ fn compile_rules(
     let mut compiled = Vec::new();
     for cfg in configs {
         let all_env_match = cfg.replace_when_env.iter().all(|cond| {
-            env::var(&cond.env)
-                .ok()
-                .is_some_and(|val| val == cond.value.as_env_str())
+            env::var(&cond.env).is_ok_and(|val| val == cond.value.as_env_str())
         });
         if !all_env_match {
             continue;
