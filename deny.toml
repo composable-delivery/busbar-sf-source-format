@@ -1,0 +1,35 @@
+# cargo-deny configuration. Run locally with `cargo deny check`.
+
+[graph]
+all-features = true
+
+[advisories]
+unmaintained = "all"
+yanked = "deny"
+ignore = [
+    # `serde_yaml_ng` 0.10.0 depends on `unsafe-libyaml` 0.2.11 (marked unmaintained).
+    # Used solely for ExternalServiceRegistration OpenAPI JSON <-> YAML schema conversion
+    # under `preset-decomposedESR` to preserve js-yaml formatting parity with upstream SDR.
+    { id = "RUSTSEC-2024-0449", reason = "transitive via serde_yaml_ng for ExternalServiceRegistration schema formatting parity" },
+]
+
+[licenses]
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "Unicode-3.0",
+    "Zlib",
+    "CC0-1.0",
+]
+confidence-threshold = 0.93
+
+[bans]
+multiple-versions = "warn"
+wildcards = "deny"
+highlight = "all"
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+allow-git = []

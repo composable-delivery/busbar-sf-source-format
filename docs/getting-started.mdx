@@ -1,0 +1,167 @@
+---
+title: Getting Started
+description: Installation instructions and first steps with the busbar-sf-source-format CLI and library.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+# Getting Started
+
+> [!NOTE]
+> **Pre-Release Notice (v0.0.1)**: Published on [crates.io](https://crates.io/crates/busbar-sf-source-format) as `0.0.1` by [Jason Lantz](https://github.com/jlantz) and [MuseLab LLC](https://muselab.com). Each release includes cryptographically attested standalone binaries with SLSA build provenance.
+
+## Installation
+
+<Tabs>
+  <TabItem label="Standalone Binary">
+    Install the self-contained native binary with no Node.js or Rust toolchain required.
+
+    **macOS / Linux:**
+    ```bash
+    curl -fsSL https://composable-delivery.github.io/sf-source-format/install.sh | bash
+    ```
+
+    **Windows (PowerShell):**
+    ```powershell
+    irm https://composable-delivery.github.io/sf-source-format/install.ps1 | iex
+    ```
+
+    **Verify Build Provenance (GitHub Attestation):**
+    ```bash
+    gh attestation verify ~/.local/bin/sf-source-format --owner composable-delivery
+    ```
+  </TabItem>
+
+  <TabItem label="Cargo (crates.io)">
+    Install the CLI binary from crates.io using Cargo (Rust 1.86+):
+
+    ```bash
+    cargo install busbar-sf-source-format
+    ```
+
+    Or install with [`cargo-binstall`](https://github.com/cargo-bins/cargo-binstall) for fast pre-compiled binary resolution:
+
+    ```bash
+    cargo binstall busbar-sf-source-format
+    ```
+  </TabItem>
+
+  <TabItem label="GitHub Actions CI">
+    Add `sf-source-format` to your CI pipeline in seconds without installing Node.js or `@salesforce/cli`:
+
+    ```yaml
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install sf-source-format
+        run: |
+          curl -fsSL https://composable-delivery.github.io/sf-source-format/install.sh | bash
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+
+      - name: Convert Source to MDAPI
+        run: |
+          sf-source-format convert mdapi \
+            --sourcepath force-app \
+            --output-dir deploy-package
+    ```
+  </TabItem>
+
+  <TabItem label="Build from Source">
+    Clone and build directly from repository source:
+
+    ```bash
+    git clone https://github.com/composable-delivery/sf-source-format.git
+    cd sf-source-format
+    cargo install --path crates/cli
+    ```
+  </TabItem>
+
+  <TabItem label="Rust Library">
+    Add the core engine as a dependency to your `Cargo.toml`:
+
+    ```toml
+    [dependencies]
+    busbar-sf-source-format = "0.0.1"
+    ```
+
+    See the [Library API Guide](./library-api.md) for code samples and architectural details.
+  </TabItem>
+</Tabs>
+
+Verify the CLI is ready:
+
+```bash
+sf-source-format --help
+```
+
+---
+
+## Basic CLI Usage
+
+### Convert SFDX Source to Metadata API (MDAPI)
+
+Convert a project source directory into an MDAPI deployment directory:
+
+```bash
+sf-source-format convert mdapi \
+  --sourcepath force-app \
+  --output-dir mdapi-out \
+  --exact-dir
+```
+
+Or generate a deployable `.zip` package directly:
+
+```bash
+sf-source-format convert mdapi \
+  --sourcepath force-app \
+  --output-dir mdapi-out \
+  --zip \
+  --package-name my-package
+```
+
+### Convert MDAPI Output to SFDX Source
+
+Decompose retrieved MDAPI metadata back into modular SFDX source format:
+
+```bash
+sf-source-format convert source \
+  --sourcepath mdapi-out \
+  --output-dir force-app \
+  --project-dir . \
+  --exact-dir
+```
+
+To merge retrieved metadata cleanly over an existing source tree:
+
+```bash
+sf-source-format convert source \
+  --sourcepath mdapi-out \
+  --merge-with force-app \
+  --project-dir .
+```
+
+### Filtering Components
+
+Filter conversion using a `package.xml` manifest or specific component identifiers:
+
+```bash
+# By manifest
+sf-source-format convert mdapi \
+  --manifest manifest/package.xml \
+  --sourcepath force-app \
+  --output-dir mdapi-out
+
+# By component identifier
+sf-source-format convert mdapi \
+  --metadata CustomObject:Account \
+  --sourcepath force-app \
+  --output-dir mdapi-out
+```
+
+---
+
+## Next Steps
+
+- [CLI Reference](./cli-reference.md) — Comprehensive list of all subcommands, arguments, and flags
+- [Library API Guide](./library-api.md) — Using `RegistryAccess`, `ComponentSetBuilder`, and `MetadataConverter` in Rust
+- [Architecture](./architecture.md) — Internal pipeline design and security sandboxing

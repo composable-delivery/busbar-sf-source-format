@@ -1,0 +1,132 @@
+name: Benchmarks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "crates/**"
+      - "benchmarks/**"
+      - ".github/workflows/bench.yml"
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: Which benchmark suite to run
+        type: choice
+        options: [criterion, comparison, all]
+        default: criterion
+      runners:
+        description: Runner configuration matrix (default is standard single ubuntu-latest)
+        type: choice
+        options: [standard-only, cross-os]
+        default: standard-only
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: 0
+
+jobs:
+  matrix-config:
+    name: Determine Benchmark Runners
+    runs-on: ubuntu-latest
+    outputs:
+      runners: ${{ steps.set-runners.outputs.runners }}
+    steps:
+      - id: set-runners
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.runners }}" = "cross-os" ]; then
+            echo 'runners=["ubuntu-latest", "macos-latest", "windows-latest"]' >> "$GITHUB_OUTPUT"
+          else
+            echo 'runners=["ubuntu-latest"]' >> "$GITHUB_OUTPUT"
+          fi
+
+  criterion:
+    name: Criterion Microbenchmarks (${{ matrix.os }})
+    needs: [matrix-config]
+    if: github.event_name != 'workflow_dispatch' || inputs.suite == 'criterion' || inputs.suite == 'all'
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ${{ fromJson(needs.matrix-config.outputs.runners) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/rust-toolchain
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: bench-criterion-${{ matrix.os }}
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+      - name: Run Criterion suite
+        run: |
+          cargo bench -p busbar-sf-source-format --bench convert_bench --locked -- \
+            --noplot --warm-up-time 1 --measurement-time 2 | tee criterion.log
+      - name: Summarize Criterion results
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "### Criterion Microbenchmarks on \`${{ matrix.os }}\` (\`convert_bench\`)"
+            echo ""
+            echo '```text'
+            grep -E "time:|^[a-zA-Z0-9_/-]+$" criterion.log || cat criterion.log
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload Criterion artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: criterion-results-${{ matrix.os }}
+          path: target/criterion/
+          retention-days: 14
+
+  comparison:
+    name: Rust vs Node SDR Comparison (${{ matrix.os }})
+    needs: [matrix-config]
+    if: github.event_name == 'workflow_dispatch' && (inputs.suite == 'comparison' || inputs.suite == 'all')
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ${{ fromJson(needs.matrix-config.outputs.runners) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/rust-toolchain
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: bench-comparison-${{ matrix.os }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: benchmarks/node-sdr/package-lock.json
+      - name: Install Node SDR dependencies
+        run: npm --prefix benchmarks/node-sdr ci --ignore-scripts
+      - name: Run cross-engine comparison
+        shell: bash
+        run: python3 benchmarks/run-comparison.py --skip-sf-cli | tee comparison.log
+      - name: Append comparison summary
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "### Rust vs Node SDR Comparison on \`${{ matrix.os }}\`"
+            echo ""
+            cat comparison.log
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload comparison JSON
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-comparison-results-${{ matrix.os }}
+          path: benchmarks/results.json
+          retention-days: 30

@@ -1,0 +1,101 @@
+[workspace]
+resolver = "2"
+members = ["crates/source-format"]
+
+[workspace.package]
+version = "0.0.1"
+edition = "2024"
+rust-version = "1.86"
+authors = ["Jason Lantz <jason@kantext.dev>", "MuseLab LLC"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/composable-delivery/busbar-sf-source-format"
+homepage = "https://github.com/composable-delivery/busbar-sf-source-format"
+
+[workspace.dependencies]
+anyhow = "1.0"
+blake3 = "1.5"
+clap = { version = "4.6", features = ["derive"] }
+criterion = "0.5"
+feruca = "0.13"
+globset = "0.4"
+ignore = "0.4"
+indexmap = { version = "2.14", features = ["serde"] }
+libc = "0.2"
+mime_guess = "2.0"
+pretty_assertions = "1.4"
+quick-xml = "0.42"
+rayon = "1.10"
+regex = "1.13"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = { version = "1.0", features = ["preserve_order"] }
+serde_yaml_ng = "0.10"
+tempfile = "3.27"
+thiserror = "2.0"
+walkdir = "2.5"
+zip = { version = "9.8", default-features = false, features = ["deflate"] }
+
+busbar-sf-source-format = { path = "crates/source-format", version = "0.0.1" }
+
+[workspace.lints.rust]
+unsafe_op_in_unsafe_fn = "warn"
+missing_debug_implementations = "warn"
+missing_docs = "warn"
+unreachable_pub = "warn"
+rust_2018_idioms = { level = "warn", priority = -1 }
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+
+# Panics: return errors, and give every intentional panic a reason.
+unwrap_used = "warn"
+expect_used = "allow"
+panic_in_result_fn = "warn"
+missing_panics_doc = "warn"
+missing_errors_doc = "warn"
+missing_assert_message = "warn"
+
+# Suppressions must explain themselves and expire when no longer needed.
+allow_attributes = "warn"
+allow_attributes_without_reason = "warn"
+
+# Unsafe must be justified.
+undocumented_unsafe_blocks = "warn"
+multiple_unsafe_ops_per_block = "warn"
+
+# API shape.
+fn_params_excessive_bools = "warn"
+struct_excessive_bools = "warn"
+clone_on_ref_ptr = "warn"
+redundant_clone = "warn"
+rc_buffer = "warn"
+
+# Evolution.
+exhaustive_enums = "warn"
+
+# Idioms.
+string_add = "warn"
+wildcard_imports = "warn"
+
+# Output and debugging leftovers.
+dbg_macro = "warn"
+todo = "warn"
+print_stdout = "warn"
+print_stderr = "warn"
+
+# Casts that silently lose information.
+as_conversions = "warn"
+cast_possible_truncation = "warn"
+cast_sign_loss = "warn"
+
+# Pedantic lints that are mostly noise in practice, or that the skill disagrees with.
+module_name_repetitions = "allow"
+must_use_candidate = "allow"
+module_inception = "allow"
+enum_glob_use = "allow"
+
+[profile.dev]
+debug = "line-tables-only"
+
+[profile.dev.package."*"]
+debug = false

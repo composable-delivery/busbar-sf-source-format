@@ -1,0 +1,34 @@
+name: Rust toolchain (from rust-toolchain.toml)
+description: >-
+  Installs the toolchain and components declared in rust-toolchain.toml, plus
+  any additional components or targets requested by a job.
+
+inputs:
+  components:
+    description: Extra components, space-separated (e.g. llvm-tools-preview)
+    required: false
+    default: ""
+  targets:
+    description: Extra targets, space-separated (e.g. x86_64-unknown-linux-gnu)
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Install toolchain from rust-toolchain.toml
+      shell: bash
+      working-directory: ${{ github.workspace }}
+      env:
+        EXTRA_COMPONENTS: ${{ inputs.components }}
+        EXTRA_TARGETS: ${{ inputs.targets }}
+      run: |
+        rustup toolchain install
+        if [ -n "$EXTRA_COMPONENTS" ]; then rustup component add $EXTRA_COMPONENTS; fi
+        if [ -n "$EXTRA_TARGETS" ]; then rustup target add $EXTRA_TARGETS; fi
+        rustup default "$(rustup show active-toolchain | cut -d' ' -f1)"
+        if [ -z "${CARGO_INCREMENTAL+set}" ]; then echo "CARGO_INCREMENTAL=0" >> "$GITHUB_ENV"; fi
+        if [ -z "${CARGO_TERM_COLOR+set}" ]; then echo "CARGO_TERM_COLOR=always" >> "$GITHUB_ENV"; fi
+        rustc --version
+        cargo --version
+

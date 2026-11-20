@@ -1,0 +1,64 @@
+/* Neutral, functional overrides for wide benchmark and flag reference tables. */
+.sl-markdown-content table {
+  display: block;
+  overflow-x: auto;
+}
+
+.sl-markdown-content th:first-child,
+.sl-markdown-content td:first-child {
+  white-space: nowrap;
+}
+
+/* Tabbed installation accordions */
+.install-tabs {
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.install-tabs details {
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.5rem;
+  background-color: var(--sl-color-gray-6);
+  padding: 0;
+  overflow: hidden;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.install-tabs details[open] {
+  border-color: #f99f1b;
+  box-shadow: 0 0 0 1px rgba(249, 159, 27, 0.25);
+}
+
+.install-tabs summary {
+  padding: 0.85rem 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  outline: none;
+}
+
+.install-tabs summary::-webkit-details-marker {
+  display: none;
+}
+
+.install-tabs summary:hover {
+  background-color: var(--sl-color-gray-5);
+}
+
+.install-tabs summary:focus-visible {
+  outline: 2px solid #f99f1b;
+  outline-offset: -2px;
+}
+
+.install-tabs .tab-content {
+  padding: 1rem 1.25rem 1.25rem;
+  border-top: 1px solid var(--sl-color-gray-5);
+}
+
+
