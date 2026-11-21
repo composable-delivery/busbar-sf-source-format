@@ -23,6 +23,7 @@ const generatedRoot = path.join(siteDir, '.generated');
 const { site, base, outDir } = resolveSiteEnv({
   defaultSite: DOCS_ORIGIN,
   defaultBase: DOCS_BASE,
+  vercelBase: DOCS_BASE, // Vercel serves this site under /<repo-name>/ too (see vercel.json rewrites)
 });
 
 // generic-ux-kit is always used. The MuseLab brand layer is opt-in (MUSELAB_BRAND=true, set by the
