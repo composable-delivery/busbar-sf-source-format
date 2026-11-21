@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// Summarizes benchmark results (local `benchmarks/results.json` + CI results in
-// `benchmarks/results/ci/*.json`) into ranges of difference vs Node SDR for the docs Overview.
+// Summarizes the tracked benchmark results (`benchmarks/results/local/*.json`, saved from your own
+// machines with save-local-results.mjs, + `benchmarks/results/ci/*.json`, fetched from Actions) into ranges of difference vs Node SDR for the docs Overview.
 //
 // The Overview content is Markdown in docs/index.md. This script generates the metrics block
 // between the `bench:metrics:begin/end` markers in that file, so the numbers are plain Markdown
@@ -14,7 +14,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const localFile = path.join(repoRoot, 'benchmarks', 'results.json');
+const localDir = path.join(repoRoot, 'benchmarks', 'results', 'local');
 const ciDir = path.join(repoRoot, 'benchmarks', 'results', 'ci');
 const overviewFile = path.join(repoRoot, 'docs', 'index.md');
 const BLOCK = /<!-- bench:metrics:begin[^>]*-->[\s\S]*?<!-- bench:metrics:end -->/;
@@ -32,9 +32,11 @@ function osName(env = {}) {
 
 function loadSources() {
   const sources = [];
-  if (fs.existsSync(localFile)) {
-    const data = readJson(localFile);
-    sources.push({ id: 'local', kind: 'local', label: `${data.environment?.cpu ?? 'Local machine'} · ${osName(data.environment)}`, data });
+  if (fs.existsSync(localDir)) {
+    for (const f of fs.readdirSync(localDir).filter((n) => n.endsWith('.json')).sort()) {
+      const data = readJson(path.join(localDir, f));
+      sources.push({ id: `local-${path.basename(f, '.json')}`, kind: 'local', label: `${data.environment?.cpu ?? 'Local machine'} · ${osName(data.environment)}`, date: data.source?.date, data });
+    }
   }
   if (fs.existsSync(ciDir)) {
     for (const f of fs.readdirSync(ciDir).filter((n) => n.endsWith('.json')).sort()) {
@@ -48,7 +50,7 @@ function loadSources() {
 
 export function summarize() {
   const sources = loadSources();
-  if (sources.length === 0) throw new Error('No benchmark results found in benchmarks/.');
+  if (sources.length === 0) throw new Error('No benchmark results found in benchmarks/results/{local,ci}/.');
 
   const inProc = [];
   const cold = [];

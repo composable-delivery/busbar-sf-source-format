@@ -7,7 +7,7 @@ Benchmarks comparing this Rust workspace (`busbar-sf-source-format` / `busbar-sf
 
 ## Environment
 
-Measured locally from [benchmarks/results.json](benchmarks/results.json):
+Measured locally (saved with `benchmarks/save-local-results.mjs`) from [benchmarks/results/local/apple-m2-max-macos.json](benchmarks/results/local/apple-m2-max-macos.json):
 
 - **Machine**: Apple M2 Max, 12 cores, 64 GiB RAM (`68,719,476,736` bytes)
 - **OS**: macOS 14.4.1 (`Build 23E224`)
