@@ -18,17 +18,16 @@ const repoRoot = path.resolve(siteDir, '..');
 const docsRoot = path.join(repoRoot, 'docs');
 const generatedRoot = path.join(siteDir, '.generated');
 
-const CANONICAL_URL = 'https://composable-delivery.github.io/sf-source-format/';
+const CANONICAL_URL = 'https://docs.muselab.com/busbar-sf-source-format/';
 const REPO_URL = 'https://github.com/composable-delivery/sf-source-format';
 
 const { site, base, outDir } = resolveSiteEnv({
-  defaultSite: 'https://composable-delivery.github.io',
-  defaultBase: '/sf-source-format',
+  defaultSite: 'https://docs.muselab.com',
+  defaultBase: '/busbar-sf-source-format',
 });
 
-// Stock Starlight + generic-ux-kit by default (works for forks with no credentials). The MuseLab
-// brand layer is opt-in (MUSELAB_BRAND=true, set by the Vercel deployment) and fails loudly if
-// it cannot be loaded.
+// generic-ux-kit is always used. The MuseLab brand layer is opt-in (MUSELAB_BRAND=true, set by the
+// Vercel deployment) and fails loudly if it cannot be loaded. Docs are published only from Vercel.
 const extra = await loadStarlightPlugins({
   optIn: {
     envVar: 'MUSELAB_BRAND',

@@ -54,7 +54,7 @@ It replaces the conversion step of `sf project convert`, and its output is byte-
 
 ```bash
 # Install the standalone binary (macOS / Linux)
-curl -fsSL https://composable-delivery.github.io/sf-source-format/install.sh | bash
+curl -fsSL https://docs.muselab.com/busbar-sf-source-format/install.sh | bash
 
 # Turn SFDX source into a deployable MDAPI package
 sf-source-format convert mdapi --sourcepath force-app --output-dir build/mdapi --exact-dir
