@@ -4,6 +4,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { DOCS_ORIGIN, DOCS_BASE, REPO_NAME } from '../docs.config.mjs';
 
+/** Escapes every regex metacharacter (including the backslash) so the text matches literally. */
+const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
 export function checkDocsUrl(repoRoot) {
   const files = [
     path.join(repoRoot, 'README.md'),
@@ -12,7 +15,7 @@ export function checkDocsUrl(repoRoot) {
     ...fs.readdirSync(path.join(repoRoot, 'docs')).filter((f) => /\.mdx?$/.test(f)).map((f) => path.join(repoRoot, 'docs', f)),
   ];
   const problems = [];
-  const host = DOCS_ORIGIN.replace(/^https?:\/\//, '').replace(/\./g, '\\.');
+  const host = escapeRegExp(DOCS_ORIGIN.replace(/^https?:\/\//, ''));
   const re = new RegExp(`https?://${host}/([^/\\s)"'\`]*)`, 'g');
   for (const file of files) {
     for (const [, first] of fs.readFileSync(file, 'utf8').matchAll(re)) {
