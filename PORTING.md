@@ -89,6 +89,10 @@ The test harness copies each snapshot project into `<TempDir>/<project_name>/` (
 4. **`waveTemplateBundle`**: Upstream `originalMdapi/waveTemplates/.../Regional_Sales_Info.csv` uses `\r\n`, whereas `mocha-snap` normalized line endings to `\n` in `__snapshots__`. `sdr_snapshots.rs` normalizes `\r\n` → `\n` solely for `.csv` files.
 5. **`mpdWithLabels`**: Upstream `@salesforce/core` `pkg.fullPath` ends with `/` while `mpdWithLabels/snapshots.test.ts` passed `path.resolve(...)` without one, causing `pkgPaths.includes(defaultDirectory)` to miss and duplicate `my_app_Label_1` into `force-app`. In Rust, `NonDecompositionFinalizer` normalizes paths canonically so multi-package ownership stays idempotent.
 
+## Deliberate Deviations from Upstream
+
+1. **No network lookup for the manifest API version.** SDR's `ComponentSet.getApiVersion()` falls back, after `sourceApiVersion`, the configured `org-api-version`, and so on, to an HTTP call that asks Salesforce for the highest API version, and only then to `58.0`. This port resolves everything else identically (including `SF_ORG_API_VERSION`/`SFDX_API_VERSION`, the project and global `.sf/config.json`, and the legacy `.sfdx/sfdx-config.json`; see `resolve/org_api_version.rs`) but skips the network step: a run with nothing configured uses `58.0`. Conversion stays offline and deterministic, and the incremental cache key (which includes the resolved version) stays stable.
+
 ## Maintaining for New Salesforce API Versions
 
 To update this repository for a new Salesforce API release / `@salesforce/source-deploy-retrieve` version:

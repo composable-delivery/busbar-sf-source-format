@@ -4,6 +4,7 @@ pub(crate) mod adapters;
 mod component;
 mod component_set;
 mod error;
+mod org_api_version;
 mod resolver;
 
 pub use adapters::ResolveMode;

@@ -90,6 +90,21 @@ sf-source-format convert source \
   --project-dir .
 ```
 
+## API version
+
+The API version only sets the `<version>` in the generated `package.xml` (and the destructive-changes manifests); component files are converted without version handling. `sf-source-format` picks it the same way `sf project convert` does. The first value found wins:
+
+1. A version in the `package.xml` passed with `--manifest`.
+2. `--api-version`.
+3. `sourceApiVersion` in `sfdx-project.json`.
+4. `org-api-version` from the environment or the `sf` configuration:
+   - the `SF_ORG_API_VERSION` environment variable (or its legacy synonym `SFDX_API_VERSION`),
+   - the project's `.sf/config.json`, then the global `~/.sf/config.json` (set with `sf config set org-api-version=63.0`),
+   - the legacy `.sfdx/sfdx-config.json` (`apiVersion`) in either place, which overrides `config.json` there unless `SF_SFDX_INTEROPERABILITY=false`.
+5. `58.0`.
+
+Unlike the `sf` CLI, `sf-source-format` never contacts Salesforce to look up the newest API version. If none of the above is set, it uses `58.0`, so the same inputs always produce the same output, offline. Set `--api-version` or `sourceApiVersion` to pin the version you deploy with.
+
 ## Output
 
 On success, `sf-source-format` prints:
