@@ -263,3 +263,126 @@ fn cli_incremental_cache_dir_cold_warm_and_single_edit() {
         "unexpected edited stdout: {edited_stdout}"
     );
 }
+
+/// Runs `convert mdapi` in isolation (temp `HOME`, no inherited sf API-version settings) and
+/// returns the `<version>` written to `package.xml`.
+fn mdapi_package_version(
+    work: &Path,
+    sfdx_dir: &Path,
+    home: &Path,
+    extra_args: &[&str],
+    envs: &[(&str, &str)],
+) -> String {
+    let out = work.join("mdapiVersionOut");
+    let _ = fs::remove_dir_all(&out);
+    let mut cmd = Command::new(bin_path());
+    cmd.args(["convert", "mdapi", "--sourcepath"])
+        .arg(sfdx_dir)
+        .arg("--output-dir")
+        .arg(&out)
+        .arg("--project-dir")
+        .arg(work)
+        .arg("--exact-dir")
+        .args(extra_args)
+        .env("HOME", home)
+        .env("USERPROFILE", home)
+        .env_remove("SF_ORG_API_VERSION")
+        .env_remove("SFDX_API_VERSION")
+        .env_remove("SF_SFDX_INTEROPERABILITY");
+    for (key, value) in envs {
+        cmd.env(key, value);
+    }
+    let status = cmd.status().expect("run cli convert mdapi");
+    assert!(status.success(), "cli convert mdapi failed: {status}");
+    let xml = fs::read_to_string(out.join("package.xml")).expect("read package.xml");
+    xml.split("<version>")
+        .nth(1)
+        .and_then(|rest| rest.split("</version>").next())
+        .expect("package.xml <version>")
+        .to_owned()
+}
+
+fn write_project(work: &Path, source_api_version: Option<&str>) {
+    let version = source_api_version
+        .map(|v| format!(",\n  \"sourceApiVersion\": \"{v}\""))
+        .unwrap_or_default();
+    fs::write(
+        work.join("sfdx-project.json"),
+        format!(
+            "{{\n  \"packageDirectories\": [{{ \"path\": \"force-app\", \"default\": true }}]{version}\n}}\n"
+        ),
+    )
+    .expect("write sfdx-project.json");
+}
+
+fn write_config(root: &Path, body: &str) {
+    let dir = root.join(".sf");
+    fs::create_dir_all(&dir).expect("mkdir .sf");
+    fs::write(dir.join("config.json"), body).expect("write config.json");
+}
+
+/// The manifest `<version>` follows SDR's `getApiVersion()` order (minus its network lookup):
+/// `--api-version` > project `sourceApiVersion` > `org-api-version` (env, local config, global
+/// config) > the fixed `58.0` fallback.
+#[test]
+fn cli_manifest_api_version_follows_sdr_precedence() {
+    let tmp = tempfile::tempdir().expect("tempdir");
+    let work = tmp.path().join("customLabels-simple");
+    copy_dir_filtered(&fixture_root("customLabels-simple"), &work);
+    let home = tmp.path().join("home");
+    fs::create_dir_all(&home).expect("mkdir home");
+
+    let sfdx_dir = work.join("force-app");
+    let to_src = Command::new(bin_path())
+        .args(["convert", "source", "--sourcepath"])
+        .arg(work.join("originalMdapi"))
+        .arg("--output-dir")
+        .arg(&sfdx_dir)
+        .arg("--project-dir")
+        .arg(&work)
+        .arg("--exact-dir")
+        .status()
+        .expect("prepare sfdx dir");
+    assert!(to_src.success(), "prepare sfdx dir failed");
+    let version = |extra: &[&str], envs: &[(&str, &str)]| {
+        mdapi_package_version(&work, &sfdx_dir, &home, extra, envs)
+    };
+
+    // A project `sourceApiVersion` beats org-level config; the flag beats the project.
+    write_project(&work, Some("59.0"));
+    assert_eq!(version(&[], &[]), "59.0");
+    assert_eq!(version(&[], &[("SF_ORG_API_VERSION", "61.0")]), "59.0");
+    assert_eq!(version(&["--api-version", "62.0"], &[]), "62.0");
+
+    // Without a project value, org-api-version applies: env > local config > global config.
+    write_project(&work, None);
+    assert_eq!(
+        version(&[], &[]),
+        "58.0",
+        "nothing configured: fixed fallback, no network"
+    );
+    write_config(&home, r#"{"org-api-version":"56.0"}"#);
+    assert_eq!(version(&[], &[]), "56.0", "global config");
+    write_config(&work, r#"{"org-api-version":"57.0"}"#);
+    assert_eq!(version(&[], &[]), "57.0", "local config beats global");
+    assert_eq!(
+        version(&[], &[("SFDX_API_VERSION", "60.0")]),
+        "60.0",
+        "legacy env synonym"
+    );
+    assert_eq!(
+        version(
+            &[],
+            &[("SFDX_API_VERSION", "60.0"), ("SF_ORG_API_VERSION", "61.0")]
+        ),
+        "61.0",
+        "SF_ORG_API_VERSION beats its synonym and the config files"
+    );
+    assert_eq!(
+        version(
+            &["--api-version", "62.0"],
+            &[("SF_ORG_API_VERSION", "61.0")]
+        ),
+        "62.0"
+    );
+}

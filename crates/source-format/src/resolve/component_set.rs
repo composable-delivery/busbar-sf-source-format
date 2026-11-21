@@ -17,6 +17,7 @@ use crate::manifest::{
 };
 use crate::resolve::component::{ComponentProps, MetadataMember, SourceComponent, TreeHandle};
 use crate::resolve::error::ResolveError;
+use crate::resolve::org_api_version::{EnvLookup, org_api_version, process_env};
 use crate::resolve::resolver::{ForceIgnorePolicy, MetadataResolver};
 
 const KEY_DELIMITER: char = '#';
@@ -451,8 +452,22 @@ impl ComponentSet {
         kinds
     }
 
-    /// Resolves the API version for manifest generation matching SDR's fallback chain.
+    /// Resolves the API version for manifest generation, following SDR's
+    /// `ComponentSet.getApiVersion()` order:
+    ///
+    /// 1. `sourceApiVersion` set on this component set (a manifest's version, or an override)
+    /// 2. `apiVersion` set on this component set (`--api-version`)
+    /// 3. `sourceApiVersion` in `sfdx-project.json`
+    /// 4. `org-api-version` from the environment (`SF_ORG_API_VERSION`) or sf config files
+    /// 5. a fixed fallback (`58.0`)
+    ///
+    /// SDR's network lookup for the newest API version is intentionally not performed, so a run
+    /// with nothing configured is offline and deterministic.
     pub fn resolved_api_version(&self) -> String {
+        self.resolved_api_version_with(&process_env)
+    }
+
+    fn resolved_api_version_with(&self, env: EnvLookup<'_>) -> String {
         if let Some(v) = &self.source_api_version {
             return v.clone();
         }
@@ -463,6 +478,9 @@ impl ComponentSet {
             && let Ok(Some((_, cfg))) = SfdxProjectConfig::find_and_load(dir)
             && let Some(v) = cfg.source_api_version
         {
+            return v;
+        }
+        if let Some(v) = org_api_version(self.project_directory.as_deref(), env) {
             return v;
         }
         FALLBACK_API_VERSION.to_owned()
