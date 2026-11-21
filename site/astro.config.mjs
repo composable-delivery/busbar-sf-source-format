@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import { DOCS_BASE, DOCS_ORIGIN, DOCS_URL, REPO_URL } from './docs.config.mjs';
 import {
   loadStarlightPlugins,
   packageExportAliases,
@@ -18,12 +19,10 @@ const repoRoot = path.resolve(siteDir, '..');
 const docsRoot = path.join(repoRoot, 'docs');
 const generatedRoot = path.join(siteDir, '.generated');
 
-const CANONICAL_URL = 'https://docs.muselab.com/busbar-sf-source-format/';
-const REPO_URL = 'https://github.com/composable-delivery/sf-source-format';
 
 const { site, base, outDir } = resolveSiteEnv({
-  defaultSite: 'https://docs.muselab.com',
-  defaultBase: '/busbar-sf-source-format',
+  defaultSite: DOCS_ORIGIN,
+  defaultBase: DOCS_BASE,
 });
 
 // generic-ux-kit is always used. The MuseLab brand layer is opt-in (MUSELAB_BRAND=true, set by the
@@ -114,7 +113,7 @@ export default defineConfig({
           docsRoot,
           generatedRoot,
           base,
-          canonicalUrl: CANONICAL_URL,
+          canonicalUrl: DOCS_URL,
           repoBlobUrl: `${REPO_URL}/blob/main/`,
           generatedOrigins: {
             'benchmarks.md': 'BENCHMARKS.md',

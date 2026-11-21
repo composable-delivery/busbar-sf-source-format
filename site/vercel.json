@@ -3,9 +3,7 @@
   "installCommand": "export NODE_AUTH_TOKEN=\"$GITHUB_TOKEN_PACKAGES\" && npm ci && npm install --no-save --ignore-scripts @composable-delivery/muselab-ux-kit",
   "build": {
     "env": {
-      "MUSELAB_BRAND": "true",
-      "ASTRO_SITE": "https://docs.muselab.com",
-      "ASTRO_BASE": "/busbar-sf-source-format"
+      "MUSELAB_BRAND": "true"
     }
   },
   "redirects": [
