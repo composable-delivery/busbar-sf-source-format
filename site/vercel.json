@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "export NODE_AUTH_TOKEN=\"$GITHUB_TOKEN_PACKAGES\" && npm ci && npm install --no-save --ignore-scripts @composable-delivery/muselab-ux-kit",
+  "installCommand": "export NODE_AUTH_TOKEN=\"$GITHUB_TOKEN_PACKAGES\" && npm ci",
   "build": {
     "env": {
       "MUSELAB_BRAND": "true"
