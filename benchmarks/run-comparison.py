@@ -125,10 +125,52 @@ def collect_env_info() -> dict[str, str]:
                 info[key] = " | ".join(lines)
         except OSError:
             info[key] = "unavailable"
+    _fill_linux_env(info)
+    label = os.environ.get("BENCH_RUNNER_LABEL")
+    if label:
+        info["runner_label"] = label
     pkg_json = NODE_BENCH_DIR / "node_modules" / "@salesforce" / "source-deploy-retrieve" / "package.json"
     if pkg_json.exists():
         info["sdr_version"] = json.loads(pkg_json.read_text())["version"]
     return info
+
+
+def _fill_linux_env(info: dict[str, str]) -> None:
+    """macOS-only commands (sw_vers/sysctl) fail on Linux; fill CPU, cores, RAM and OS from /proc."""
+    if platform.system() != "Linux":
+        return
+
+    def missing(key: str) -> bool:
+        return info.get(key, "unavailable") in ("", "unavailable")
+
+    if missing("cpu"):
+        try:
+            for line in Path("/proc/cpuinfo").read_text().splitlines():
+                if line.lower().startswith("model name"):
+                    info["cpu"] = line.split(":", 1)[1].strip()
+                    break
+        except OSError:
+            pass
+    if missing("cores"):
+        info["cores"] = str(os.cpu_count() or "")
+    if missing("ram_bytes"):
+        try:
+            for line in Path("/proc/meminfo").read_text().splitlines():
+                if line.startswith("MemTotal:"):
+                    info["ram_bytes"] = str(int(line.split()[1]) * 1024)
+                    break
+        except (OSError, ValueError):
+            pass
+    if missing("os"):
+        name = platform.platform()
+        try:
+            for line in Path("/etc/os-release").read_text().splitlines():
+                if line.startswith("PRETTY_NAME="):
+                    name = line.split("=", 1)[1].strip().strip('"')
+                    break
+        except OSError:
+            pass
+        info["os"] = f"{name} ({platform.machine()})"
 
 
 def build_artifacts() -> None:
