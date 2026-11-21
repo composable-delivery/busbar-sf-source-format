@@ -4,23 +4,38 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
-import remarkDocLinks from './plugins/remark-doc-links.mjs';
-import remarkStripLeadingH1 from './plugins/remark-strip-h1.mjs';
-import { loadStarlightPlugins } from './starlight-plugins.mjs';
+import { uxKitStarlightPlugin } from '@composable-delivery/generic-ux-kit/starlight';
+import { DOCS_BASE, DOCS_ORIGIN, DOCS_URL, REPO_URL } from './docs.config.mjs';
+import {
+  loadStarlightPlugins,
+  packageExportAliases,
+  remarkDocLinks,
+  remarkGithubAlerts,
+  remarkStripLeadingH1,
+  remarkUxBlocks,
+  resolveSiteEnv,
+} from '@composable-delivery/generic-ux-kit/node';
 
 const siteDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(siteDir, '..');
 const docsRoot = path.join(repoRoot, 'docs');
 const generatedRoot = path.join(siteDir, '.generated');
 
-const CANONICAL_URL = 'https://composable-delivery.github.io/sf-source-format/';
-const REPO_URL = 'https://github.com/composable-delivery/sf-source-format';
 
-const site = process.env.ASTRO_SITE || 'https://composable-delivery.github.io';
-const base = process.env.ASTRO_BASE ?? (process.env.VERCEL ? '/' : '/sf-source-format');
-const outDir = process.env.ASTRO_OUT_DIR || './dist';
+const { site, base, outDir } = resolveSiteEnv({
+  defaultSite: DOCS_ORIGIN,
+  defaultBase: DOCS_BASE,
+  vercelBase: DOCS_BASE, // Vercel serves this site under /<repo-name>/ too (see vercel.json rewrites)
+});
 
-const extra = await loadStarlightPlugins();
+// generic-ux-kit is always used. The MuseLab brand layer is opt-in (MUSELAB_BRAND=true, set by the
+// Vercel deployment) and fails loudly if it cannot be loaded. Docs are published only from Vercel.
+const extra = await loadStarlightPlugins({
+  optIn: {
+    envVar: 'MUSELAB_BRAND',
+    entry: '@composable-delivery/muselab-ux-kit/starlight#muselabStarlightPlugin',
+  },
+});
 
 /** Serves trailing-slash `/api/.../` `index.html` files during `astro dev`. */
 function rustdocDevIndexIntegration(basePath) {
@@ -73,6 +88,10 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: [
+        // docs/*.mdx lives outside the Astro root, so resolve kit imports from the kit's real location.
+        ...packageExportAliases(siteDir, '@composable-delivery/generic-ux-kit'),
+        // Lets docs/*.mdx import site components without fragile relative paths.
+        { find: /^@site\/(.*)$/, replacement: `${siteDir}/$1` },
         {
           find: /^@astrojs\/starlight\/components$/,
           replacement: path.resolve(
@@ -83,11 +102,15 @@ export default defineConfig({
       ],
       modules: [path.resolve(siteDir, 'node_modules'), 'node_modules'],
     },
-    ssr: { noExternal: extra.packages },
+    ssr: { noExternal: ['@composable-delivery/generic-ux-kit', ...extra.packages] },
   },
   markdown: {
     remarkPlugins: [
       remarkStripLeadingH1,
+      // `> [!NOTE]` (GitHub alerts) -> styled asides.
+      remarkGithubAlerts,
+      // Turns the marked sections of docs/index.md (plain Markdown) into cards.
+      remarkUxBlocks,
       [
         remarkDocLinks,
         {
@@ -95,12 +118,15 @@ export default defineConfig({
           docsRoot,
           generatedRoot,
           base,
-          canonicalUrl: CANONICAL_URL,
+          canonicalUrl: DOCS_URL,
           repoBlobUrl: `${REPO_URL}/blob/main/`,
           generatedOrigins: {
             'benchmarks.md': 'BENCHMARKS.md',
             'porting.md': 'PORTING.md',
           },
+          rootDocs: { 'BENCHMARKS.md': 'benchmarks', 'PORTING.md': 'porting' },
+          // /api/... (generated Rustdoc) is not a Markdown page, so link it site-absolute.
+          prefixAbsolutePaths: true,
         },
       ],
     ],
@@ -112,7 +138,7 @@ export default defineConfig({
       description:
         'High-performance Rust engine for Salesforce MDAPI and SFDX source format conversion.',
       social: [{ icon: 'github', label: 'GitHub', href: REPO_URL }],
-      plugins: extra.plugins,
+      plugins: [uxKitStarlightPlugin(), ...extra.plugins],
       customCss: ['./src/styles.css'],
       sidebar: [
         {

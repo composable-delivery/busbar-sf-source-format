@@ -2,6 +2,9 @@ import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { assertNoTables } from '@composable-delivery/generic-ux-kit/node';
+import { checkDocsUrl } from './check-docs-url.mjs';
+import { syncOverview } from '../../benchmarks/summarize.mjs';
 
 const scriptsDir = path.dirname(fileURLToPath(import.meta.url));
 const siteDir = path.resolve(scriptsDir, '..');
@@ -28,6 +31,19 @@ const ROOT_DOCS = [
 ];
 
 fs.mkdirSync(generatedDir, { recursive: true });
+
+// The Overview is an introduction for new users: benchmark tables belong on the Benchmarks page.
+// Fail the build rather than let one creep back in.
+checkDocsUrl(repoRoot);
+assertNoTables(path.join(repoRoot, 'docs', 'index.md'), 'Show ranges as metric cards; put tables on the Benchmarks page.');
+
+// The Overview's metric cards are Markdown generated from the benchmark results. Refuse to build
+// with stale numbers (they must agree with the Benchmarks page).
+if (syncOverview().changed) {
+  throw new Error(
+    'docs/index.md benchmark cards are out of date with benchmarks/results*. Run: node benchmarks/summarize.mjs --write-docs'
+  );
+}
 
 for (const doc of ROOT_DOCS) {
   const raw = fs.readFileSync(path.join(repoRoot, doc.source), 'utf-8');

@@ -1,0 +1,11 @@
+{
+  "customObjects-and-children": "SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views).",
+  "digitalExperienceBundle": "SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files.",
+  "staticResource": "SDR snapshot fixture: a static resource, including its unpacked archive contents.",
+  "preset-decomposedPS2": "SDR snapshot fixture for the decomposePermissionSetBeta2 sourceBehaviorOptions preset (permission sets split into per-permission files).",
+  "preset-decomposedESR": "SDR snapshot fixture for the decomposeExternalServiceRegistrationBeta sourceBehaviorOptions preset.",
+  "customLabels-multiple": "SDR snapshot fixture: custom labels spread across several files that are recomposed into one CustomLabels document.",
+  "medium-org": "Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files.",
+  "large-org": "Synthetic org: 100 custom objects (50 fields, 10 validation rules and 4 list views each), 400 Apex classes, 30 profiles, 20 permission sets, 2,000 custom labels and 25 LWC bundles. 7,451 SFDX files / 1,052 MDAPI files.",
+  "npsp": "Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped."
+}

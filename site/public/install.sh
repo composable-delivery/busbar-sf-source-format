@@ -13,7 +13,7 @@ case "$OS" in
   Darwin*) TARBALL="sf-source-format-macos-universal.tar.gz" ;;
   *)
     echo "Error: Unsupported operating system: $OS" >&2
-    echo "On Windows, use: irm https://composable-delivery.github.io/sf-source-format/install.ps1 | iex" >&2
+    echo "On Windows, use: irm https://docs.muselab.com/busbar-sf-source-format/install.ps1 | iex" >&2
     exit 1
     ;;
 esac

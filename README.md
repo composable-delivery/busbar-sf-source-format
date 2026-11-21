@@ -2,7 +2,6 @@
 
 [![CI](https://github.com/composable-delivery/sf-source-format/actions/workflows/ci.yml/badge.svg)](https://github.com/composable-delivery/sf-source-format/actions/workflows/ci.yml)
 [![Security](https://github.com/composable-delivery/sf-source-format/actions/workflows/security.yml/badge.svg)](https://github.com/composable-delivery/sf-source-format/actions/workflows/security.yml)
-[![Docs](https://github.com/composable-delivery/sf-source-format/actions/workflows/docs.yml/badge.svg)](https://github.com/composable-delivery/sf-source-format/actions/workflows/docs.yml)
 [![License: MIT OR Apache-2.0](https://img.shields.io/badge/License-MIT_OR_Apache--2.0-blue.svg)](LICENSE-MIT)
 [![MSRV: 1.86](https://img.shields.io/badge/MSRV-1.86-informational.svg)](Cargo.toml)
 
@@ -134,7 +133,7 @@ See [BENCHMARKS.md](BENCHMARKS.md) for full tables, Criterion microbenchmarks, a
 
 ## Documentation
 
-- [Documentation Portal (Markdown)](docs/index.md) — Getting started, CLI reference, library guide, and architecture
+- [Documentation](https://docs.muselab.com/busbar-sf-source-format/) (source: [`docs/`](docs/index.md)) — Getting started, CLI reference, library guide, and architecture
 - [Porting Notes](PORTING.md) — TypeScript-to-Rust mapping, design decisions, and upstream SDR parity details
 - [Benchmarks](BENCHMARKS.md) — Full benchmark methodology and results
 - [Contributing](CONTRIBUTING.md) — Development setup, lint rules, and PR checklist

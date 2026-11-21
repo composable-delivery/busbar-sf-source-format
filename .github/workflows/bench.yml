@@ -6,7 +6,16 @@ on:
     paths:
       - "crates/**"
       - "benchmarks/**"
+      - "Cargo.toml"
+      - "Cargo.lock"
+      - "rust-toolchain.toml"
+      - ".github/actions/**"
       - ".github/workflows/bench.yml"
+      # Result snapshots and docs tooling don't change what is measured.
+      - "!benchmarks/results.json"
+      - "!benchmarks/results/**"
+      - "!benchmarks/summarize.mjs"
+      - "!benchmarks/fetch-ci-results.mjs"
   workflow_dispatch:
     inputs:
       suite:
@@ -15,10 +24,13 @@ on:
         options: [criterion, comparison, all]
         default: criterion
       runners:
-        description: Runner configuration matrix (default is standard single ubuntu-latest)
+        description: >-
+          Linux runner sizes for the comparison suite. "default" is ubuntu-latest only; "sizes" uses the
+          JSON list of runner labels in the repository variable BENCH_RUNNERS (larger runners must be
+          created in the org settings first), for example ["ubuntu-latest","ubuntu-8-cores","ubuntu-16-cores"].
         type: choice
-        options: [standard-only, cross-os]
-        default: standard-only
+        options: [default, sizes]
+        default: default
 
 permissions:
   contents: read
@@ -33,36 +45,34 @@ env:
 
 jobs:
   matrix-config:
-    name: Determine Benchmark Runners
+    name: Determine Linux runner sizes
     runs-on: ubuntu-latest
     outputs:
       runners: ${{ steps.set-runners.outputs.runners }}
     steps:
       - id: set-runners
         shell: bash
+        env:
+          BENCH_RUNNERS: ${{ vars.BENCH_RUNNERS }}
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.runners }}" = "cross-os" ]; then
-            echo 'runners=["ubuntu-latest", "macos-latest", "windows-latest"]' >> "$GITHUB_OUTPUT"
+          # Linux only: OS differences are not what we measure, runner size is.
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.runners }}" = "sizes" ] && [ -n "$BENCH_RUNNERS" ]; then
+            echo "runners=$BENCH_RUNNERS" >> "$GITHUB_OUTPUT"
           else
             echo 'runners=["ubuntu-latest"]' >> "$GITHUB_OUTPUT"
           fi
 
   criterion:
-    name: Criterion Microbenchmarks (${{ matrix.os }})
-    needs: [matrix-config]
+    name: Criterion Microbenchmarks (ubuntu-latest)
     if: github.event_name != 'workflow_dispatch' || inputs.suite == 'criterion' || inputs.suite == 'all'
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     timeout-minutes: 25
-    strategy:
-      fail-fast: false
-      matrix:
-        os: ${{ fromJson(needs.matrix-config.outputs.runners) }}
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/rust-toolchain
       - uses: Swatinem/rust-cache@v2
         with:
-          shared-key: bench-criterion-${{ matrix.os }}
+          shared-key: bench-criterion
           save-if: ${{ github.ref == 'refs/heads/main' }}
       - name: Run Criterion suite
         run: |
@@ -73,7 +83,7 @@ jobs:
         shell: bash
         run: |
           {
-            echo "### Criterion Microbenchmarks on \`${{ matrix.os }}\` (\`convert_bench\`)"
+            echo "### Criterion Microbenchmarks on \`ubuntu-latest\` (\`convert_bench\`)"
             echo ""
             echo '```text'
             grep -E "time:|^[a-zA-Z0-9_/-]+$" criterion.log || cat criterion.log
@@ -83,43 +93,49 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: criterion-results-${{ matrix.os }}
+          name: criterion-results-ubuntu-latest
           path: target/criterion/
           retention-days: 14
 
   comparison:
-    name: Rust vs Node SDR Comparison (${{ matrix.os }})
+    name: Rust vs Node SDR Comparison (${{ matrix.runner }})
     needs: [matrix-config]
     if: github.event_name == 'workflow_dispatch' && (inputs.suite == 'comparison' || inputs.suite == 'all')
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.runner }}
     timeout-minutes: 35
     strategy:
       fail-fast: false
       matrix:
-        os: ${{ fromJson(needs.matrix-config.outputs.runners) }}
+        runner: ${{ fromJson(needs.matrix-config.outputs.runners) }}
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/rust-toolchain
       - uses: Swatinem/rust-cache@v2
         with:
-          shared-key: bench-comparison-${{ matrix.os }}
+          shared-key: bench-comparison-${{ matrix.runner }}
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: "22"
+          # One Node version everywhere: .nvmrc (also what the SDR baseline was measured on).
+          node-version-file: .nvmrc
           cache: npm
           cache-dependency-path: benchmarks/node-sdr/package-lock.json
       - name: Install Node SDR dependencies
         run: npm --prefix benchmarks/node-sdr ci --ignore-scripts
+      # Part B (cold CLI + memory) needs the Salesforce CLI.
+      - name: Install Salesforce CLI (cold-CLI comparison)
+        run: npm install --global @salesforce/cli@2.156.8
       - name: Run cross-engine comparison
         shell: bash
-        run: python3 benchmarks/run-comparison.py --skip-sf-cli | tee comparison.log
+        env:
+          BENCH_RUNNER_LABEL: ${{ matrix.runner }}
+        run: python3 benchmarks/run-comparison.py | tee comparison.log
       - name: Append comparison summary
         if: always()
         shell: bash
         run: |
           {
-            echo "### Rust vs Node SDR Comparison on \`${{ matrix.os }}\`"
+            echo "### Rust vs Node SDR Comparison on \`${{ matrix.runner }}\`"
             echo ""
             cat comparison.log
           } >> "$GITHUB_STEP_SUMMARY"
@@ -127,6 +143,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: benchmark-comparison-results-${{ matrix.os }}
+          name: benchmark-comparison-results-${{ matrix.runner }}
           path: benchmarks/results.json
           retention-days: 30

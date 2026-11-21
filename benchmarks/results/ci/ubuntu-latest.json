@@ -1,0 +1,1279 @@
+{
+  "environment": {
+    "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+    "node": "v22.23.4",
+    "sf_cli": "@salesforce/cli/2.156.8 linux-x64 node-v22.23.4",
+    "os": "Ubuntu 26.04.1 LTS (x86_64)",
+    "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+    "cores": "4",
+    "ram_bytes": "16758382592",
+    "runner_label": "ubuntu-latest",
+    "sdr_version": "13.13.0"
+  },
+  "part_a": {
+    "workloads": [
+      {
+        "name": "customObjects-and-children (MDAPI -> SFDX)",
+        "direction": "mdapi_to_source",
+        "mode": "directory",
+        "rust": {
+          "min_ms": 2.029909,
+          "median_ms": 2.106289,
+          "mean_ms": 2.0984228000000003,
+          "p95_ms": 2.218473,
+          "max_ms": 2.218473,
+          "samples_ms": [
+            2.103588,
+            2.037172,
+            2.12426,
+            2.218473,
+            2.040211,
+            2.029909,
+            2.123883,
+            2.10899,
+            2.035036,
+            2.162706
+          ],
+          "output_count": 38
+        },
+        "node": {
+          "min_ms": 19.096164,
+          "median_ms": 21.123886,
+          "mean_ms": 22.672435,
+          "p95_ms": 31.186883,
+          "max_ms": 31.186883,
+          "samples_ms": [
+            31.186883,
+            22.979086,
+            29.896584,
+            21.492735,
+            19.096164,
+            19.840856,
+            21.01582,
+            20.131207,
+            21.231952,
+            19.853063
+          ],
+          "output_count": 38
+        },
+        "speedup_median": 10.02895898900863,
+        "speedup_mean": 10.804512322302253,
+        "output_count_match": true
+      },
+      {
+        "name": "customObjects-and-children (SFDX -> MDAPI dir)",
+        "direction": "source_to_mdapi",
+        "mode": "directory",
+        "rust": {
+          "min_ms": 1.931176,
+          "median_ms": 1.9639450000000003,
+          "mean_ms": 2.0052537999999998,
+          "p95_ms": 2.232798,
+          "max_ms": 2.232798,
+          "samples_ms": [
+            1.931176,
+            1.943643,
+            1.944847,
+            1.959834,
+            1.9680560000000002,
+            1.985599,
+            1.984918,
+            2.232798,
+            2.157493,
+            1.9441739999999998
+          ],
+          "output_count": 3
+        },
+        "node": {
+          "min_ms": 8.749295,
+          "median_ms": 9.776212999999998,
+          "mean_ms": 9.7765226,
+          "p95_ms": 11.273594,
+          "max_ms": 11.273594,
+          "samples_ms": [
+            10.781492,
+            9.772604,
+            8.749295,
+            9.892295,
+            10.099116,
+            9.779822,
+            9.456572,
+            8.947262,
+            11.273594,
+            9.013174
+          ],
+          "output_count": 3
+        },
+        "speedup_median": 4.977844593407655,
+        "speedup_mean": 4.875453969966296,
+        "output_count_match": true
+      },
+      {
+        "name": "customObjects-and-children (SFDX -> MDAPI zip)",
+        "direction": "source_to_mdapi",
+        "mode": "zip",
+        "rust": {
+          "min_ms": 1.9619619999999998,
+          "median_ms": 1.9796235,
+          "mean_ms": 1.9887183,
+          "p95_ms": 2.0344439999999997,
+          "max_ms": 2.0344439999999997,
+          "samples_ms": [
+            1.981333,
+            1.997564,
+            2.009318,
+            2.0344439999999997,
+            1.9753,
+            1.9716339999999999,
+            1.9691610000000002,
+            2.008553,
+            1.9619619999999998,
+            1.977914
+          ],
+          "output_count": 3
+        },
+        "node": {
+          "min_ms": 8.349556,
+          "median_ms": 10.171322499999999,
+          "mean_ms": 10.2258452,
+          "p95_ms": 12.909731,
+          "max_ms": 12.909731,
+          "samples_ms": [
+            10.286562,
+            11.643844,
+            10.683202,
+            12.909731,
+            11.169596,
+            10.056083,
+            8.738287,
+            9.370787,
+            8.349556,
+            9.050804
+          ],
+          "output_count": 3
+        },
+        "speedup_median": 5.138008565770208,
+        "speedup_mean": 5.141927441407866,
+        "output_count_match": true
+      },
+      {
+        "name": "digitalExperienceBundle (MDAPI -> SFDX)",
+        "direction": "mdapi_to_source",
+        "mode": "directory",
+        "rust": {
+          "min_ms": 6.4304239999999995,
+          "median_ms": 6.5987385,
+          "mean_ms": 6.6255296,
+          "p95_ms": 6.873357,
+          "max_ms": 6.873357,
+          "samples_ms": [
+            6.581127,
+            6.605306,
+            6.592171,
+            6.751850999999999,
+            6.4304239999999995,
+            6.873357,
+            6.573207999999999,
+            6.531811,
+            6.707658,
+            6.608383
+          ],
+          "output_count": 115
+        },
+        "node": {
+          "min_ms": 59.886004,
+          "median_ms": 66.56925150000001,
+          "mean_ms": 67.9391871,
+          "p95_ms": 77.537484,
+          "max_ms": 77.537484,
+          "samples_ms": [
+            65.345342,
+            67.197096,
+            68.162025,
+            65.941407,
+            73.723748,
+            63.520465,
+            63.073627,
+            75.004673,
+            77.537484,
+            59.886004
+          ],
+          "output_count": 115
+        },
+        "speedup_median": 10.088178445016425,
+        "speedup_mean": 10.25415192470048,
+        "output_count_match": true
+      },
+      {
+        "name": "digitalExperienceBundle (SFDX -> MDAPI dir)",
+        "direction": "source_to_mdapi",
+        "mode": "directory",
+        "rust": {
+          "min_ms": 6.76636,
+          "median_ms": 6.9147955,
+          "mean_ms": 6.944001299999999,
+          "p95_ms": 7.27466,
+          "max_ms": 7.27466,
+          "samples_ms": [
+            6.863603,
+            7.005573999999999,
+            6.775068,
+            6.980257,
+            7.06458,
+            7.27466,
+            6.880319999999999,
+            6.904621,
+            6.76636,
+            6.92497
+          ],
+          "output_count": 116
+        },
+        "node": {
+          "min_ms": 51.637036,
+          "median_ms": 58.0139765,
+          "mean_ms": 59.47798350000001,
+          "p95_ms": 72.453183,
+          "max_ms": 72.453183,
+          "samples_ms": [
+            55.040046,
+            59.574744,
+            57.343471,
+            58.684482,
+            72.093811,
+            72.453183,
+            51.637036,
+            53.07688,
+            54.571581,
+            60.304601
+          ],
+          "output_count": 116
+        },
+        "speedup_median": 8.389832569885833,
+        "speedup_mean": 8.565376204638673,
+        "output_count_match": true
+      },
+      {
+        "name": "digitalExperienceBundle (SFDX -> MDAPI zip)",
+        "direction": "source_to_mdapi",
+        "mode": "zip",
+        "rust": {
+          "min_ms": 5.142489,
+          "median_ms": 5.253681,
+          "mean_ms": 5.3288036,
+          "p95_ms": 5.863577,
+          "max_ms": 5.863577,
+          "samples_ms": [
+            5.227939,
+            5.863577,
+            5.28796,
+            5.521732,
+            5.231665,
+            5.149615,
+            5.142489,
+            5.2470040000000004,
+            5.260358,
+            5.355697
+          ],
+          "output_count": 116
+        },
+        "node": {
+          "min_ms": 35.718912,
+          "median_ms": 45.1844825,
+          "mean_ms": 44.976833299999996,
+          "p95_ms": 56.35295,
+          "max_ms": 56.35295,
+          "samples_ms": [
+            48.555051,
+            48.822058,
+            49.634837,
+            56.35295,
+            52.411742,
+            41.813914,
+            39.249434,
+            37.055407,
+            40.154028,
+            35.718912
+          ],
+          "output_count": 116
+        },
+        "speedup_median": 8.600537889529265,
+        "speedup_mean": 8.44032482262998,
+        "output_count_match": true
+      },
+      {
+        "name": "staticResource (MDAPI -> SFDX)",
+        "direction": "mdapi_to_source",
+        "mode": "directory",
+        "rust": {
+          "min_ms": 1.090969,
+          "median_ms": 1.1138655,
+          "mean_ms": 1.1259829,
+          "p95_ms": 1.216116,
+          "max_ms": 1.216116,
+          "samples_ms": [
+            1.1205209999999999,
+            1.145461,
+            1.101346,
+            1.102251,
+            1.216116,
+            1.122391,
+            1.10721,
+            1.1492589999999998,
+            1.104305,
+            1.090969
+          ],
+          "output_count": 14
+        },
+        "node": {
+          "min_ms": 8.590931,
+          "median_ms": 9.53107,
+          "mean_ms": 9.7337077,
+          "p95_ms": 11.691313,
+          "max_ms": 11.691313,
+          "samples_ms": [
+            9.566227,
+            9.495913,
+            11.691313,
+            9.062393,
+            10.633001,
+            10.649589,
+            8.874755,
+            8.826134,
+            8.590931,
+            9.946821
+          ],
+          "output_count": 14
+        },
+        "speedup_median": 8.55675124150986,
+        "speedup_mean": 8.644631903379706,
+        "output_count_match": true
+      },
+      {
+        "name": "staticResource (SFDX -> MDAPI dir)",
+        "direction": "source_to_mdapi",
+        "mode": "directory",
+        "rust": {
+          "min_ms": 5.641979,
+          "median_ms": 5.659924,
+          "mean_ms": 5.6672614,
+          "p95_ms": 5.7081550000000005,
+          "max_ms": 5.7081550000000005,
+          "samples_ms": [
+            5.6857180000000005,
+            5.661548,
+            5.691566,
+            5.658273,
+            5.7081550000000005,
+            5.645904,
+            5.666961,
+            5.6583,
+            5.65421,
+            5.641979
+          ],
+          "output_count": 9
+        },
+        "node": {
+          "min_ms": 27.560383,
+          "median_ms": 27.742189500000002,
+          "mean_ms": 28.201834400000003,
+          "p95_ms": 30.063689,
+          "max_ms": 30.063689,
+          "samples_ms": [
+            27.787648,
+            27.580243,
+            29.366995,
+            30.063689,
+            27.606608,
+            27.654089,
+            27.696731,
+            28.907462,
+            27.794496,
+            27.560383
+          ],
+          "output_count": 9
+        },
+        "speedup_median": 4.9015127234924005,
+        "speedup_mean": 4.976272031496554,
+        "output_count_match": true
+      },
+      {
+        "name": "preset-decomposedPS2 (MDAPI -> SFDX)",
+        "direction": "mdapi_to_source",
+        "mode": "directory",
+        "rust": {
+          "min_ms": 2.3606909999999997,
+          "median_ms": 2.4442645,
+          "mean_ms": 2.4376225,
+          "p95_ms": 2.4941899999999997,
+          "max_ms": 2.4941899999999997,
+          "samples_ms": [
+            2.484308,
+            2.472506,
+            2.4515219999999998,
+            2.4337370000000003,
+            2.3983440000000003,
+            2.4941899999999997,
+            2.3606909999999997,
+            2.4589149999999997,
+            2.4370070000000004,
+            2.385005
+          ],
+          "output_count": 26
+        },
+        "node": {
+          "min_ms": 13.102117,
+          "median_ms": 14.283069,
+          "mean_ms": 14.34284,
+          "p95_ms": 16.605624,
+          "max_ms": 16.605624,
+          "samples_ms": [
+            14.688603,
+            15.130354,
+            13.768742,
+            14.625237,
+            13.664686,
+            14.302912,
+            13.276899,
+            16.605624,
+            13.102117,
+            14.263226
+          ],
+          "output_count": 26
+        },
+        "speedup_median": 5.843503843385198,
+        "speedup_mean": 5.883946345260598,
+        "output_count_match": true
+      },
+      {
+        "name": "preset-decomposedPS2 (SFDX -> MDAPI dir)",
+        "direction": "source_to_mdapi",
+        "mode": "directory",
+        "rust": {
+          "min_ms": 2.554487,
+          "median_ms": 2.573471,
+          "mean_ms": 2.5847138999999997,
+          "p95_ms": 2.644882,
+          "max_ms": 2.644882,
+          "samples_ms": [
+            2.5701029999999996,
+            2.627818,
+            2.5672289999999998,
+            2.554487,
+            2.595231,
+            2.574615,
+            2.575444,
+            2.644882,
+            2.572327,
+            2.5650030000000004
+          ],
+          "output_count": 7
+        },
+        "node": {
+          "min_ms": 7.627381,
+          "median_ms": 8.1241665,
+          "mean_ms": 8.4173494,
+          "p95_ms": 11.211378,
+          "max_ms": 11.211378,
+          "samples_ms": [
+            11.211378,
+            8.633743,
+            7.64109,
+            7.669348,
+            8.626271,
+            7.627381,
+            8.153953,
+            8.660855,
+            8.09438,
+            7.855095
+          ],
+          "output_count": 7
+        },
+        "speedup_median": 3.156890635254875,
+        "speedup_mean": 3.2565884371187086,
+        "output_count_match": true
+      },
+      {
+        "name": "preset-decomposedESR (MDAPI -> SFDX)",
+        "direction": "mdapi_to_source",
+        "mode": "directory",
+        "rust": {
+          "min_ms": 1.016085,
+          "median_ms": 1.030772,
+          "mean_ms": 1.0308023,
+          "p95_ms": 1.059936,
+          "max_ms": 1.059936,
+          "samples_ms": [
+            1.034278,
+            1.039178,
+            1.0351839999999999,
+            1.016085,
+            1.059936,
+            1.024889,
+            1.01872,
+            1.0316539999999998,
+            1.0298900000000002,
+            1.018209
+          ],
+          "output_count": 4
+        },
+        "node": {
+          "min_ms": 5.089011,
+          "median_ms": 5.8662865,
+          "mean_ms": 5.9210067,
+          "p95_ms": 7.160994,
+          "max_ms": 7.160994,
+          "samples_ms": [
+            5.390914,
+            6.635322,
+            5.538223,
+            6.087376,
+            5.816179,
+            7.160994,
+            5.089011,
+            6.241094,
+            5.33456,
+            5.916394
+          ],
+          "output_count": 4
+        },
+        "speedup_median": 5.69115818047056,
+        "speedup_mean": 5.744075949384281,
+        "output_count_match": true
+      },
+      {
+        "name": "preset-decomposedESR (SFDX -> MDAPI dir)",
+        "direction": "source_to_mdapi",
+        "mode": "directory",
+        "rust": {
+          "min_ms": 1.0313709999999998,
+          "median_ms": 1.0461870000000002,
+          "mean_ms": 1.0452882000000001,
+          "p95_ms": 1.054471,
+          "max_ms": 1.054471,
+          "samples_ms": [
+            1.054471,
+            1.050354,
+            1.0542310000000001,
+            1.0313709999999998,
+            1.051311,
+            1.0448460000000002,
+            1.035689,
+            1.043633,
+            1.047528,
+            1.0394480000000001
+          ],
+          "output_count": 3
+        },
+        "node": {
+          "min_ms": 4.969245,
+          "median_ms": 5.487779,
+          "mean_ms": 5.5577094,
+          "p95_ms": 6.140721,
+          "max_ms": 6.140721,
+          "samples_ms": [
+            5.422647,
+            5.500114,
+            6.140721,
+            6.108025,
+            4.969245,
+            5.504051,
+            5.342443,
+            6.000396,
+            5.475444,
+            5.114008
+          ],
+          "output_count": 3
+        },
+        "speedup_median": 5.245504866720767,
+        "speedup_mean": 5.31691585153262,
+        "output_count_match": true
+      },
+      {
+        "name": "customLabels-multiple (SFDX -> MDAPI dir)",
+        "direction": "source_to_mdapi",
+        "mode": "directory",
+        "rust": {
+          "min_ms": 75.381725,
+          "median_ms": 78.5412215,
+          "mean_ms": 78.5129424,
+          "p95_ms": 81.646388,
+          "max_ms": 81.646388,
+          "samples_ms": [
+            75.381725,
+            81.646388,
+            76.165419,
+            78.080175,
+            80.375171,
+            79.539946,
+            79.002268,
+            77.49822400000001,
+            76.157804,
+            81.282304
+          ],
+          "output_count": 2
+        },
+        "node": {
+          "min_ms": 782.57128,
+          "median_ms": 809.0627895,
+          "mean_ms": 807.5941241,
+          "p95_ms": 830.698982,
+          "max_ms": 830.698982,
+          "samples_ms": [
+            782.57128,
+            812.044004,
+            830.698982,
+            821.529069,
+            829.441458,
+            798.770246,
+            793.434631,
+            806.215134,
+            789.325992,
+            811.910445
+          ],
+          "output_count": 2
+        },
+        "speedup_median": 10.301123079681158,
+        "speedup_mean": 10.286127349368071,
+        "output_count_match": true
+      },
+      {
+        "name": "medium-org (MDAPI -> SFDX)",
+        "direction": "mdapi_to_source",
+        "mode": "directory",
+        "rust": {
+          "min_ms": 38.192485,
+          "median_ms": 38.538334,
+          "mean_ms": 42.9265242,
+          "p95_ms": 54.681181,
+          "max_ms": 54.681181,
+          "samples_ms": [
+            38.237629000000005,
+            38.192485,
+            38.538334,
+            54.681181,
+            44.982991999999996
+          ],
+          "output_count": 1591
+        },
+        "node": {
+          "min_ms": 481.110437,
+          "median_ms": 503.658961,
+          "mean_ms": 521.2535216,
+          "p95_ms": 576.558619,
+          "max_ms": 576.558619,
+          "samples_ms": [
+            503.658961,
+            497.758472,
+            547.181119,
+            481.110437,
+            576.558619
+          ],
+          "output_count": 1591
+        },
+        "speedup_median": 13.069038246437948,
+        "speedup_mean": 12.142924015264203,
+        "output_count_match": true
+      },
+      {
+        "name": "medium-org (SFDX -> MDAPI dir)",
+        "direction": "source_to_mdapi",
+        "mode": "directory",
+        "rust": {
+          "min_ms": 43.228816,
+          "median_ms": 44.70109,
+          "mean_ms": 44.82080860000001,
+          "p95_ms": 47.365503000000004,
+          "max_ms": 47.365503000000004,
+          "samples_ms": [
+            44.70109,
+            45.019582,
+            43.789052000000005,
+            43.228816,
+            47.365503000000004
+          ],
+          "output_count": 292
+        },
+        "node": {
+          "min_ms": 242.256552,
+          "median_ms": 243.525847,
+          "mean_ms": 243.60193239999998,
+          "p95_ms": 245.133388,
+          "max_ms": 245.133388,
+          "samples_ms": [
+            243.86371,
+            245.133388,
+            243.230165,
+            242.256552,
+            243.525847
+          ],
+          "output_count": 292
+        },
+        "speedup_median": 5.4478726805095805,
+        "speedup_mean": 5.435018689064881,
+        "output_count_match": true
+      },
+      {
+        "name": "medium-org (SFDX -> MDAPI zip)",
+        "direction": "source_to_mdapi",
+        "mode": "zip",
+        "rust": {
+          "min_ms": 40.047883,
+          "median_ms": 41.029452,
+          "mean_ms": 41.6609816,
+          "p95_ms": 44.532923000000004,
+          "max_ms": 44.532923000000004,
+          "samples_ms": [
+            40.891523,
+            41.803127,
+            44.532923000000004,
+            40.047883,
+            41.029452
+          ],
+          "output_count": 292
+        },
+        "node": {
+          "min_ms": 213.410919,
+          "median_ms": 220.273315,
+          "mean_ms": 221.76308680000002,
+          "p95_ms": 229.464866,
+          "max_ms": 229.464866,
+          "samples_ms": [
+            220.273315,
+            229.169676,
+            229.464866,
+            216.496658,
+            213.410919
+          ],
+          "output_count": 292
+        },
+        "speedup_median": 5.368663344565265,
+        "speedup_mean": 5.323040367344586,
+        "output_count_match": true
+      },
+      {
+        "name": "large-org (MDAPI -> SFDX)",
+        "direction": "mdapi_to_source",
+        "mode": "directory",
+        "rust": {
+          "min_ms": 165.944641,
+          "median_ms": 169.83854100000002,
+          "mean_ms": 168.64945866666667,
+          "p95_ms": 170.16519399999999,
+          "max_ms": 170.16519399999999,
+          "samples_ms": [
+            169.83854100000002,
+            165.944641,
+            170.16519399999999
+          ],
+          "output_count": 7451
+        },
+        "node": {
+          "min_ms": 2311.308837,
+          "median_ms": 2317.217828,
+          "mean_ms": 2319.120989,
+          "p95_ms": 2328.836302,
+          "max_ms": 2328.836302,
+          "samples_ms": [
+            2317.217828,
+            2328.836302,
+            2311.308837
+          ],
+          "output_count": 7451
+        },
+        "speedup_median": 13.643651284074558,
+        "speedup_mean": 13.75113212538506,
+        "output_count_match": true
+      },
+      {
+        "name": "large-org (SFDX -> MDAPI dir)",
+        "direction": "source_to_mdapi",
+        "mode": "directory",
+        "rust": {
+          "min_ms": 196.862601,
+          "median_ms": 202.083238,
+          "mean_ms": 201.98604166666667,
+          "p95_ms": 207.012286,
+          "max_ms": 207.012286,
+          "samples_ms": [
+            207.012286,
+            196.862601,
+            202.083238
+          ],
+          "output_count": 1052
+        },
+        "node": {
+          "min_ms": 1321.912334,
+          "median_ms": 1358.821928,
+          "mean_ms": 1355.5996736666668,
+          "p95_ms": 1386.064759,
+          "max_ms": 1386.064759,
+          "samples_ms": [
+            1321.912334,
+            1358.821928,
+            1386.064759
+          ],
+          "output_count": 1052
+        },
+        "speedup_median": 6.724070444674883,
+        "speedup_mean": 6.711353232535665,
+        "output_count_match": true
+      },
+      {
+        "name": "large-org (SFDX -> MDAPI zip)",
+        "direction": "source_to_mdapi",
+        "mode": "zip",
+        "rust": {
+          "min_ms": 199.287135,
+          "median_ms": 207.269609,
+          "mean_ms": 205.3299966666667,
+          "p95_ms": 209.433246,
+          "max_ms": 209.433246,
+          "samples_ms": [
+            209.433246,
+            207.269609,
+            199.287135
+          ],
+          "output_count": 1052
+        },
+        "node": {
+          "min_ms": 1284.464858,
+          "median_ms": 1288.243219,
+          "mean_ms": 1296.2809033333333,
+          "p95_ms": 1316.134633,
+          "max_ms": 1316.134633,
+          "samples_ms": [
+            1284.464858,
+            1316.134633,
+            1288.243219
+          ],
+          "output_count": 1052
+        },
+        "speedup_median": 6.215302017576537,
+        "speedup_mean": 6.31315893623531,
+        "output_count_match": true
+      },
+      {
+        "name": "npsp (MDAPI -> SFDX)",
+        "direction": "mdapi_to_source",
+        "mode": "directory",
+        "rust": {
+          "min_ms": 402.965084,
+          "median_ms": 412.898343,
+          "mean_ms": 409.95557966666667,
+          "p95_ms": 414.003312,
+          "max_ms": 414.003312,
+          "samples_ms": [
+            402.965084,
+            414.003312,
+            412.898343
+          ],
+          "output_count": 12063
+        },
+        "node": {
+          "min_ms": 5219.203892,
+          "median_ms": 5223.30457,
+          "mean_ms": 5253.878104,
+          "p95_ms": 5319.12585,
+          "max_ms": 5319.12585,
+          "samples_ms": [
+            5223.30457,
+            5219.203892,
+            5319.12585
+          ],
+          "output_count": 12063
+        },
+        "speedup_median": 12.650340352661575,
+        "speedup_mean": 12.81572532387999,
+        "output_count_match": true
+      },
+      {
+        "name": "npsp (SFDX -> MDAPI dir)",
+        "direction": "source_to_mdapi",
+        "mode": "directory",
+        "rust": {
+          "min_ms": 364.43963,
+          "median_ms": 367.60329,
+          "mean_ms": 370.66834066666667,
+          "p95_ms": 379.962102,
+          "max_ms": 379.962102,
+          "samples_ms": [
+            379.962102,
+            367.60329,
+            364.43963
+          ],
+          "output_count": 3927
+        },
+        "node": {
+          "min_ms": 3745.411231,
+          "median_ms": 3754.440256,
+          "mean_ms": 3756.0548046666663,
+          "p95_ms": 3768.312927,
+          "max_ms": 3768.312927,
+          "samples_ms": [
+            3754.440256,
+            3745.411231,
+            3768.312927
+          ],
+          "output_count": 3927
+        },
+        "speedup_median": 10.213293401155358,
+        "speedup_mean": 10.133195616089582,
+        "output_count_match": true
+      },
+      {
+        "name": "npsp (SFDX -> MDAPI zip)",
+        "direction": "source_to_mdapi",
+        "mode": "zip",
+        "rust": {
+          "min_ms": 422.585058,
+          "median_ms": 425.592913,
+          "mean_ms": 436.0967,
+          "p95_ms": 460.112129,
+          "max_ms": 460.112129,
+          "samples_ms": [
+            460.112129,
+            422.585058,
+            425.592913
+          ],
+          "output_count": 3927
+        },
+        "node": {
+          "min_ms": 3892.06034,
+          "median_ms": 3939.025316,
+          "mean_ms": 3951.351036666667,
+          "p95_ms": 4022.967454,
+          "max_ms": 4022.967454,
+          "samples_ms": [
+            4022.967454,
+            3939.025316,
+            3892.06034
+          ],
+          "output_count": 3927
+        },
+        "speedup_median": 9.255382774665705,
+        "speedup_mean": 9.060722167048425,
+        "output_count_match": true
+      }
+    ],
+    "process_memory": {
+      "rust_max_rss_bytes": 358580224,
+      "rust_peak_footprint_bytes": null,
+      "node_max_rss_bytes": 952418304,
+      "node_peak_footprint_bytes": null
+    }
+  },
+  "part_b": [
+    {
+      "name": "customObjects-and-children (MDAPI -> SFDX)",
+      "direction": "mdapi_to_source",
+      "rust_cli": {
+        "min_ms": 5.832574999999451,
+        "median_ms": 5.947703999993337,
+        "mean_ms": 6.007151800008614,
+        "p95_ms": 6.309848000000784,
+        "max_ms": 6.309848000000784,
+        "samples_ms": [
+          6.309848000000784,
+          5.947703999993337,
+          5.887821000044369,
+          6.057811000005131,
+          5.832574999999451
+        ],
+        "max_rss_bytes": 8773632,
+        "output_count": 38
+      },
+      "sf_cli": {
+        "min_ms": 1290.5938179999907,
+        "median_ms": 1295.3965519999997,
+        "mean_ms": 1297.6202096000065,
+        "p95_ms": 1306.3707690000115,
+        "max_ms": 1306.3707690000115,
+        "samples_ms": [
+          1306.3707690000115,
+          1293.2346360000224,
+          1302.5052730000084,
+          1290.5938179999907,
+          1295.3965519999997
+        ],
+        "max_rss_bytes": 201752576,
+        "output_count": 38
+      },
+      "speedup_median": 217.79775052716997,
+      "speedup_mean": 216.0125551676829,
+      "output_count_match": true
+    },
+    {
+      "name": "customObjects-and-children (SFDX -> MDAPI)",
+      "direction": "source_to_mdapi",
+      "rust_cli": {
+        "min_ms": 6.372983000005661,
+        "median_ms": 6.827662999967288,
+        "mean_ms": 6.746115800001462,
+        "p95_ms": 7.031817000040519,
+        "max_ms": 7.031817000040519,
+        "samples_ms": [
+          6.997280999996747,
+          6.500834999997096,
+          6.372983000005661,
+          7.031817000040519,
+          6.827662999967288
+        ],
+        "max_rss_bytes": 10223616,
+        "output_count": 3
+      },
+      "sf_cli": {
+        "min_ms": 1286.609822999992,
+        "median_ms": 1294.9814490000335,
+        "mean_ms": 1294.0650190000156,
+        "p95_ms": 1298.2844210000053,
+        "max_ms": 1298.2844210000053,
+        "samples_ms": [
+          1294.4096990000276,
+          1296.0397030000195,
+          1286.609822999992,
+          1294.9814490000335,
+          1298.2844210000053
+        ],
+        "max_rss_bytes": 201637888,
+        "output_count": 3
+      },
+      "speedup_median": 189.6668668336791,
+      "speedup_mean": 191.82371862038525,
+      "output_count_match": true
+    },
+    {
+      "name": "digitalExperienceBundle (MDAPI -> SFDX)",
+      "direction": "mdapi_to_source",
+      "rust_cli": {
+        "min_ms": 12.486871000021438,
+        "median_ms": 12.673776999974962,
+        "mean_ms": 12.836687399999391,
+        "p95_ms": 13.57278599999745,
+        "max_ms": 13.57278599999745,
+        "samples_ms": [
+          12.486871000021438,
+          12.901639999995496,
+          13.57278599999745,
+          12.673776999974962,
+          12.548363000007612
+        ],
+        "max_rss_bytes": 12906496,
+        "output_count": 115
+      },
+      "sf_cli": {
+        "min_ms": 1288.0027219999874,
+        "median_ms": 1294.072263999965,
+        "mean_ms": 1293.8774532000025,
+        "p95_ms": 1297.5054569999998,
+        "max_ms": 1297.5054569999998,
+        "samples_ms": [
+          1293.0785710000237,
+          1288.0027219999874,
+          1294.072263999965,
+          1297.5054569999998,
+          1296.7282520000367
+        ],
+        "max_rss_bytes": 205946880,
+        "output_count": 115
+      },
+      "speedup_median": 102.10628323368175,
+      "speedup_mean": 100.79527629535201,
+      "output_count_match": true
+    },
+    {
+      "name": "digitalExperienceBundle (SFDX -> MDAPI)",
+      "direction": "source_to_mdapi",
+      "rust_cli": {
+        "min_ms": 13.176064999981918,
+        "median_ms": 13.41445200000635,
+        "mean_ms": 13.522206000004644,
+        "p95_ms": 14.089408000018011,
+        "max_ms": 14.089408000018011,
+        "samples_ms": [
+          13.41445200000635,
+          13.176064999981918,
+          13.291616000003614,
+          14.089408000018011,
+          13.639489000013327
+        ],
+        "max_rss_bytes": 13193216,
+        "output_count": 116
+      },
+      "sf_cli": {
+        "min_ms": 1292.713488000004,
+        "median_ms": 1298.6606320000078,
+        "mean_ms": 1298.017126000002,
+        "p95_ms": 1303.2354000000055,
+        "max_ms": 1303.2354000000055,
+        "samples_ms": [
+          1302.734101999988,
+          1303.2354000000055,
+          1298.6606320000078,
+          1292.713488000004,
+          1292.7420080000047
+        ],
+        "max_rss_bytes": 199270400,
+        "output_count": 116
+      },
+      "speedup_median": 96.81056162408969,
+      "speedup_mean": 95.99152135380545,
+      "output_count_match": true
+    },
+    {
+      "name": "medium-org (MDAPI -> SFDX)",
+      "direction": "mdapi_to_source",
+      "rust_cli": {
+        "min_ms": 56.307396000022436,
+        "median_ms": 56.80637700004354,
+        "mean_ms": 56.75217260001091,
+        "p95_ms": 57.24233099999765,
+        "max_ms": 57.24233099999765,
+        "samples_ms": [
+          57.24233099999765,
+          56.307396000022436,
+          57.02654399999574,
+          56.37821499999518,
+          56.80637700004354
+        ],
+        "max_rss_bytes": 41369600,
+        "output_count": 1591
+      },
+      "sf_cli": {
+        "min_ms": 2320.8838170000377,
+        "median_ms": 2323.052670999971,
+        "mean_ms": 2322.8974177999817,
+        "p95_ms": 2323.893808999969,
+        "max_ms": 2323.893808999969,
+        "samples_ms": [
+          2323.04407099997,
+          2323.893808999969,
+          2323.052670999971,
+          2320.8838170000377,
+          2323.612720999961
+        ],
+        "max_rss_bytes": 227500032,
+        "output_count": 1591
+      },
+      "speedup_median": 40.89422338971187,
+      "speedup_mean": 40.93054611621221,
+      "output_count_match": true
+    },
+    {
+      "name": "medium-org (SFDX -> MDAPI)",
+      "direction": "source_to_mdapi",
+      "rust_cli": {
+        "min_ms": 58.79259400001047,
+        "median_ms": 59.637937000047714,
+        "mean_ms": 59.54244460000382,
+        "p95_ms": 60.55328499996904,
+        "max_ms": 60.55328499996904,
+        "samples_ms": [
+          59.695787999999084,
+          59.637937000047714,
+          58.79259400001047,
+          60.55328499996904,
+          59.03261899999279
+        ],
+        "max_rss_bytes": 56606720,
+        "output_count": 292
+      },
+      "sf_cli": {
+        "min_ms": 2317.6168719999737,
+        "median_ms": 2319.3448810000064,
+        "mean_ms": 2319.242483200003,
+        "p95_ms": 2320.8027549999883,
+        "max_ms": 2320.8027549999883,
+        "samples_ms": [
+          2317.6168719999737,
+          2319.3448810000064,
+          2318.6879790000035,
+          2319.7599290000426,
+          2320.8027549999883
+        ],
+        "max_rss_bytes": 220241920,
+        "output_count": 292
+      },
+      "speedup_median": 38.890427765771825,
+      "speedup_mean": 38.951079331396045,
+      "output_count_match": true
+    },
+    {
+      "name": "npsp (MDAPI -> SFDX)",
+      "direction": "mdapi_to_source",
+      "rust_cli": {
+        "min_ms": 470.71676299998444,
+        "median_ms": 474.1825160000417,
+        "mean_ms": 479.09623033333065,
+        "p95_ms": 492.3894119999659,
+        "max_ms": 492.3894119999659,
+        "samples_ms": [
+          492.3894119999659,
+          474.1825160000417,
+          470.71676299998444
+        ],
+        "max_rss_bytes": 171151360,
+        "output_count": 12063
+      },
+      "sf_cli": {
+        "min_ms": 7343.931981000025,
+        "median_ms": 7352.841839000007,
+        "mean_ms": 7350.8256369999945,
+        "p95_ms": 7355.703090999952,
+        "max_ms": 7355.703090999952,
+        "samples_ms": [
+          7352.841839000007,
+          7355.703090999952,
+          7343.931981000025
+        ],
+        "max_rss_bytes": 400855040,
+        "output_count": 12063
+      },
+      "speedup_median": 15.506353758094617,
+      "speedup_mean": 15.343108902956022,
+      "output_count_match": true
+    },
+    {
+      "name": "npsp (SFDX -> MDAPI)",
+      "direction": "source_to_mdapi",
+      "rust_cli": {
+        "min_ms": 450.50510499999064,
+        "median_ms": 454.698570000005,
+        "mean_ms": 453.38956266668146,
+        "p95_ms": 454.96501300004866,
+        "max_ms": 454.96501300004866,
+        "samples_ms": [
+          454.96501300004866,
+          450.50510499999064,
+          454.698570000005
+        ],
+        "max_rss_bytes": 243687424,
+        "output_count": 3927
+      },
+      "sf_cli": {
+        "min_ms": 6329.013074999977,
+        "median_ms": 6331.328600000006,
+        "mean_ms": 6333.751949333324,
+        "p95_ms": 6340.914172999987,
+        "max_ms": 6340.914172999987,
+        "samples_ms": [
+          6329.013074999977,
+          6331.328600000006,
+          6340.914172999987
+        ],
+        "max_rss_bytes": 377233408,
+        "output_count": 3927
+      },
+      "speedup_median": 13.924232486589823,
+      "speedup_mean": 13.969778907305173,
+      "output_count_match": true
+    }
+  ],
+  "source": {
+    "kind": "ci",
+    "runner": "ubuntu-latest",
+    "runId": 44855592445,
+    "sha": "8ef7cc6aa96701858e179556de59782ae7c3e33f",
+    "date": "2026-11-21T02:23:06Z",
+    "url": "https://github.com/composable-delivery/busbar-sf-source-format/actions/runs/44855592445"
+  }
+}
