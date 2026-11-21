@@ -1,0 +1,51 @@
+---
+// Adapts this repo's measured benchmark ranges (benchmarks/summarize.mjs -> .generated/benchmark-summary.json)
+// to the generic MetricCards component. Never hand-edit numbers here.
+import MetricCards from '@composable-delivery/generic-ux-kit/components/MetricCards.astro';
+import { withBase } from '@composable-delivery/generic-ux-kit';
+import summary from '../../.generated/benchmark-summary.json';
+
+const fmt = (v: number) => (v >= 10 ? Math.round(v).toString() : v.toFixed(1));
+const span = (r: { min: number; max: number }) =>
+  fmt(r.min) === fmt(r.max) ? `${fmt(r.min)}×` : `${fmt(r.min)}–${fmt(r.max)}×`;
+const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? '' : 's'}`;
+
+const { inProcess, coldCli, suiteMemory, coldStartMs } = summary;
+const memory = coldCli.memory ?? suiteMemory;
+
+const metrics = [
+  {
+    title: 'Conversion speed',
+    value: span(inProcess.speedup),
+    unit: 'faster',
+    detail: `In-process, across ${plural(inProcess.scenarios, 'scenario')} on ${plural(inProcess.platforms, 'platform')}.`,
+  },
+  coldCli.speedup && {
+    title: 'Cold start in CI',
+    value: span(coldCli.speedup),
+    unit: 'faster',
+    detail: `Whole command vs the \`sf\` CLI, across ${plural(coldCli.scenarios, 'scenario')} on ${plural(coldCli.platforms, 'platform')}.`,
+  },
+  memory && {
+    title: 'Memory use',
+    value: span(memory),
+    unit: 'less memory',
+    detail: coldCli.memory
+      ? `Peak memory per run vs the \`sf\` CLI, across ${plural(coldCli.scenarios, 'scenario')}.`
+      : 'Peak memory across the full benchmark suite.',
+  },
+  coldStartMs != null && {
+    title: 'No runtime to boot',
+    value: `${Math.max(1, Math.round(coldStartMs))} ms`,
+    unit: 'to start',
+    detail: 'A single native binary. No Node.js, no npm install, no warm-up.',
+  },
+].filter(Boolean) as { title: string; value: string; unit: string; detail: string }[];
+
+const sources = summary.sources.map((s) => s.label).join('; ');
+---
+
+<MetricCards metrics={metrics} label="Performance compared with Salesforce SDR">
+  Compared with <code>@salesforce/source-deploy-retrieve</code> {summary.sdrVersion} and the <code>sf</code> CLI. Measured on {sources}.{' '}
+  <a href={withBase('/benchmarks/')}>See the full results and methodology.</a>
+</MetricCards>

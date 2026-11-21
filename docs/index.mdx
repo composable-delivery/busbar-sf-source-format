@@ -13,12 +13,51 @@ hero:
       variant: minimal
 ---
 
-import MetricCards from '@site/src/components/MetricCards.astro';
-import IntentCards from '@site/src/components/IntentCards.astro';
+import { Aside } from '@astrojs/starlight/components';
+import BenchmarkCards from '@site/src/components/BenchmarkCards.astro';
+import IntentCards from '@composable-delivery/generic-ux-kit/components/IntentCards.astro';
+
+export const nextSteps = [
+  {
+    kind: 'Tutorial',
+    heading: 'Learn by doing',
+    blurb: 'Install the binary and convert your first project end to end.',
+    links: [{ label: 'Getting started', href: '/getting-started/' }],
+  },
+  {
+    kind: 'How-to',
+    heading: 'Get a task done',
+    blurb: 'Recipes for converting in CI, filtering by manifest, and building zip packages.',
+    links: [
+      { label: 'Worked CLI examples', href: '/cli-reference/' },
+      { label: 'Use it in GitHub Actions', href: '/getting-started/' },
+    ],
+  },
+  {
+    kind: 'Reference',
+    heading: 'Look something up',
+    blurb: 'Every subcommand, flag and Rust API.',
+    links: [
+      { label: 'CLI reference', href: '/cli-reference/' },
+      { label: 'Library API guide', href: '/library-api/' },
+      { label: 'Rustdoc API', href: '/api/busbar_sf_source_format/' },
+    ],
+  },
+  {
+    kind: 'Explanation',
+    heading: 'Understand how it works',
+    blurb: 'How incremental caching works, how SDR parity is verified, and how speed is measured.',
+    links: [
+      { label: 'Architecture', href: '/architecture/' },
+      { label: 'Porting notes', href: '/porting/' },
+      { label: 'Benchmarks', href: '/benchmarks/' },
+    ],
+  },
+];
 
 ## Faster and lighter than SDR
 
-<MetricCards />
+<BenchmarkCards />
 
 ## What it does
 
@@ -61,8 +100,8 @@ Parity with SDR is checked, not assumed: all 34 snapshot tests across the 33 ups
 
 ## Where to go next
 
-<IntentCards />
+<IntentCards groups={nextSteps} />
 
-:::note[Pre-release]
+<Aside type="note" title="Pre-release">
 Version 0.0.1 is published on [crates.io](https://crates.io/crates/busbar-sf-source-format) by [MuseLab LLC](https://muselab.com). Release binaries carry SLSA build provenance and can be verified with `gh attestation verify`.
-:::
+</Aside>

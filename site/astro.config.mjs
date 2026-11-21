@@ -4,9 +4,13 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
-import remarkDocLinks from './plugins/remark-doc-links.mjs';
-import remarkStripLeadingH1 from './plugins/remark-strip-h1.mjs';
-import { loadStarlightPlugins } from './starlight-plugins.mjs';
+import {
+  loadStarlightPlugins,
+  packageExportAliases,
+  remarkDocLinks,
+  remarkStripLeadingH1,
+  resolveSiteEnv,
+} from '@composable-delivery/generic-ux-kit/node';
 
 const siteDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(siteDir, '..');
@@ -16,11 +20,20 @@ const generatedRoot = path.join(siteDir, '.generated');
 const CANONICAL_URL = 'https://composable-delivery.github.io/sf-source-format/';
 const REPO_URL = 'https://github.com/composable-delivery/sf-source-format';
 
-const site = process.env.ASTRO_SITE || 'https://composable-delivery.github.io';
-const base = process.env.ASTRO_BASE ?? (process.env.VERCEL ? '/' : '/sf-source-format');
-const outDir = process.env.ASTRO_OUT_DIR || './dist';
+const { site, base, outDir } = resolveSiteEnv({
+  defaultSite: 'https://composable-delivery.github.io',
+  defaultBase: '/sf-source-format',
+});
 
-const extra = await loadStarlightPlugins();
+// Stock Starlight + generic-ux-kit by default (works for forks with no credentials). The MuseLab
+// brand layer is opt-in (MUSELAB_BRAND=true, set by the Vercel deployment) and fails loudly if
+// it cannot be loaded.
+const extra = await loadStarlightPlugins({
+  optIn: {
+    envVar: 'MUSELAB_BRAND',
+    entry: '@composable-delivery/muselab-ux-kit/starlight#muselabStarlightPlugin',
+  },
+});
 
 /** Serves trailing-slash `/api/.../` `index.html` files during `astro dev`. */
 function rustdocDevIndexIntegration(basePath) {
@@ -73,6 +86,8 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: [
+        // docs/*.mdx lives outside the Astro root, so resolve kit imports from the kit's real location.
+        ...packageExportAliases(siteDir, '@composable-delivery/generic-ux-kit'),
         // Lets docs/*.mdx import site components without fragile relative paths.
         { find: /^@site\/(.*)$/, replacement: `${siteDir}/$1` },
         {
@@ -85,7 +100,7 @@ export default defineConfig({
       ],
       modules: [path.resolve(siteDir, 'node_modules'), 'node_modules'],
     },
-    ssr: { noExternal: extra.packages },
+    ssr: { noExternal: ['@composable-delivery/generic-ux-kit', ...extra.packages] },
   },
   markdown: {
     remarkPlugins: [
@@ -103,6 +118,7 @@ export default defineConfig({
             'benchmarks.md': 'BENCHMARKS.md',
             'porting.md': 'PORTING.md',
           },
+          rootDocs: { 'BENCHMARKS.md': 'benchmarks', 'PORTING.md': 'porting' },
         },
       ],
     ],
@@ -115,8 +131,11 @@ export default defineConfig({
         'High-performance Rust engine for Salesforce MDAPI and SFDX source format conversion.',
       social: [{ icon: 'github', label: 'GitHub', href: REPO_URL }],
       plugins: extra.plugins,
-      // Branding is layered on only for MuseLab-branded builds (Vercel); Pages stays stock.
-      customCss: ['./src/styles.css', ...(extra.branded ? ['./src/branded.css'] : [])],
+      customCss: [
+        '@composable-delivery/generic-ux-kit/styles/tokens.css',
+        '@composable-delivery/generic-ux-kit/styles/starlight.css',
+        './src/styles.css',
+      ],
       sidebar: [
         {
           label: 'Getting Started',
