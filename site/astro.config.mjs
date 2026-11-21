@@ -10,6 +10,7 @@ import {
   loadStarlightPlugins,
   packageExportAliases,
   remarkDocLinks,
+  remarkGithubAlerts,
   remarkStripLeadingH1,
   remarkUxBlocks,
   resolveSiteEnv,
@@ -106,6 +107,8 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [
       remarkStripLeadingH1,
+      // `> [!NOTE]` (GitHub alerts) -> styled asides.
+      remarkGithubAlerts,
       // Turns the marked sections of docs/index.md (plain Markdown) into cards.
       remarkUxBlocks,
       [

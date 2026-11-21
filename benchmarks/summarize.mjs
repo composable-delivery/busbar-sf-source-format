@@ -7,7 +7,7 @@
 // (readable on GitHub) yet never typed by hand.
 //
 //   node benchmarks/summarize.mjs                 print the summary JSON
-//   node benchmarks/summarize.mjs --write-docs    regenerate the block in docs/index.md
+//   node benchmarks/summarize.mjs --write-docs    regenerate the generated blocks (docs/index.md, BENCHMARKS.md)
 //   node benchmarks/summarize.mjs --check-docs    exit 1 if the block is stale (used by the docs build)
 import fs from 'node:fs';
 import path from 'node:path';
@@ -100,7 +100,7 @@ const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
 
 /** The generated Markdown: a `ux:metrics` block plus one sentence on what was measured. */
 export function renderMetricsMarkdown(summary) {
-  const { inProcess, coldCli, suiteMemory, coldStartMs } = summary;
+  const { inProcess, coldCli, suiteMemory } = summary;
   const memory = coldCli.memory ?? suiteMemory;
   const card = (title, value, unit, detail) => `### ${title}\n**${value}** ${unit}\n${detail}`;
   const cards = [
@@ -114,9 +114,6 @@ export function renderMetricsMarkdown(summary) {
         coldCli.memory
           ? `Peak memory per run vs the \`sf\` CLI, across ${plural(coldCli.scenarios, 'scenario')}.`
           : 'Peak memory across the full benchmark suite.'),
-    coldStartMs != null &&
-      card('No runtime to boot', `${Math.max(1, Math.round(coldStartMs))} ms`, 'to start',
-        'A single native binary. No Node.js, no npm install, no warm-up.'),
   ].filter(Boolean);
   const sources = summary.sources.map((x) => x.label).join('; ');
   return [
@@ -130,23 +127,128 @@ export function renderMetricsMarkdown(summary) {
   ].join('\n');
 }
 
-/** Regenerates (write) or verifies (check) the block in docs/index.md. */
-export function syncOverview({ write = false } = {}) {
-  const current = fs.readFileSync(overviewFile, 'utf8');
-  if (!BLOCK.test(current)) {
-    throw new Error('docs/index.md is missing the <!-- bench:metrics:begin --> ... <!-- bench:metrics:end --> markers.');
+const workloadsFile = path.join(repoRoot, 'benchmarks', 'workloads.json');
+const benchmarksFile = path.join(repoRoot, 'BENCHMARKS.md');
+const TABLES = /<!-- bench:tables:begin[^>]*-->[\s\S]*?<!-- bench:tables:end -->/;
+
+const esc = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const info = (tip) => `<span class="ux-info" tabindex="0" role="img" aria-label="${esc(tip)}" data-tip="${esc(tip)}">ⓘ</span>`;
+const num = (n, d = 0) => n.toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d });
+const ms = (v) => (v >= 100 ? `${num(v)} ms` : v >= 10 ? `${num(v, 1)} ms` : `${num(v, 2)} ms`);
+const mib = (b) => `${num(b / 1048576, 1)} MiB`;
+const times = (v) => `${v >= 100 ? num(v) : v >= 10 ? num(v, 1) : num(v, 2)}×`;
+// Skew: how far the slow end (p95) strays from the typical (median) run, as a percentage of the median.
+const skew = (t) => `+${num(Math.max(0, ((t.p95_ms - t.median_ms) / t.median_ms) * 100))}%`;
+
+const SKEW_TIP = 'Skew = (p95 − median) ÷ median. How far the slowest typical runs stray from the median run. Lower is steadier.';
+const SPEEDUP_TIP = 'Median time of the baseline ÷ median time of sf-source-format. Higher is faster.';
+const MEMORY_TIP = 'Peak resident memory of the baseline ÷ peak resident memory of sf-source-format.';
+
+function workloadCell(name, descriptions) {
+  const m = /^(.*?)\s*\((.*)\)\s*$/.exec(name);
+  const base = m ? m[1] : name;
+  const dir = (m ? m[2] : '').replace(/->/g, '→');
+  const tip = descriptions[base];
+  return `<td><code>${esc(base)}</code>${tip ? info(tip) : ''}${dir ? `<small>${esc(dir)}</small>` : ''}</td>`;
+}
+
+function inProcessTable(workloads, descriptions) {
+  const rows = workloads.map((w) =>
+    `<tr>${workloadCell(w.name, descriptions)}<td><strong>${times(w.speedup_median)}</strong></td>` +
+    `<td class="ux-group-start">${ms(w.rust.median_ms)}</td><td>${skew(w.rust)}</td>` +
+    `<td class="ux-group-start">${ms(w.node.median_ms)}</td><td>${skew(w.node)}</td></tr>`);
+  return [
+    '<table class="ux-grouped">', '<thead>',
+    `<tr><th rowspan="2">Workload</th><th rowspan="2">Speedup${info(SPEEDUP_TIP)}</th><th colspan="2">sf-source-format</th><th colspan="2">Node SDR</th></tr>`,
+    `<tr><th>Median</th><th>Skew${info(SKEW_TIP)}</th><th>Median</th><th>Skew${info(SKEW_TIP)}</th></tr>`,
+    '</thead>', '<tbody>', ...rows, '</tbody>', '</table>',
+  ].join('\n');
+}
+
+function coldCliTable(workloads, descriptions) {
+  const rows = workloads.map((w) => {
+    const speed = w.sf_cli.median_ms / w.rust_cli.median_ms;
+    const mem = w.sf_cli.max_rss_bytes / w.rust_cli.max_rss_bytes;
+    return `<tr>${workloadCell(w.name, descriptions)}<td><strong>${times(speed)}</strong></td><td>${times(mem)}</td>` +
+      `<td class="ux-group-start">${ms(w.rust_cli.median_ms)}</td><td>${skew(w.rust_cli)}</td><td>${mib(w.rust_cli.max_rss_bytes)}</td>` +
+      `<td class="ux-group-start">${ms(w.sf_cli.median_ms)}</td><td>${skew(w.sf_cli)}</td><td>${mib(w.sf_cli.max_rss_bytes)}</td></tr>`;
+  });
+  return [
+    '<table class="ux-grouped">', '<thead>',
+    `<tr><th rowspan="2">Workload</th><th rowspan="2">Speedup${info(SPEEDUP_TIP)}</th><th rowspan="2">Less memory${info(MEMORY_TIP)}</th><th colspan="3">sf-source-format</th><th colspan="3"><code>sf</code> CLI</th></tr>`,
+    `<tr><th>Median</th><th>Skew${info(SKEW_TIP)}</th><th>Peak RSS</th><th>Median</th><th>Skew${info(SKEW_TIP)}</th><th>Peak RSS</th></tr>`,
+    '</thead>', '<tbody>', ...rows, '</tbody>', '</table>',
+  ].join('\n');
+}
+
+function environmentLine(src) {
+  const e = src.data.environment ?? {};
+  const known = (v) => v && v !== 'unavailable';
+  const bits = [
+    known(e.cpu) && e.cpu, known(e.cores) && `${e.cores} cores`, known(e.ram_bytes) && `${num(Number(e.ram_bytes) / 1073741824)} GiB RAM`,
+    known(e.os) && (e.os.includes('|') ? osName(e) : e.os),
+    e.rustc && e.rustc.split(' ').slice(0, 2).join(' '), e.node && `Node ${e.node}`,
+    src.date && `measured ${src.date.slice(0, 10)}`,
+  ].filter(Boolean);
+  return bits.join(' · ');
+}
+
+function sourceSection(src, descriptions, level) {
+  const h = '#'.repeat(level);
+  const parts = [`${h} ${src.label}`, '', environmentLine(src), ''];
+  const a = src.data.part_a?.workloads ?? [];
+  if (a.length) parts.push(`${h}# In-process conversion`, '', inProcessTable(a, descriptions), '');
+  const b = Array.isArray(src.data.part_b) ? src.data.part_b.filter((w) => w.rust_cli && w.sf_cli) : [];
+  if (b.length) parts.push(`${h}# Cold CLI, end to end`, '', coldCliTable(b, descriptions), '');
+  return parts.join('\n');
+}
+
+/** Order: CI (Linux) sources first, default runner first, then local machines. */
+function orderedSources(sources) {
+  const rank = (s) => (s.kind === 'ci' ? (s.label.endsWith('ubuntu-latest') ? 0 : 1) : 2);
+  return [...sources].sort((x, y) => rank(x) - rank(y) || x.label.localeCompare(y.label));
+}
+
+export function renderBenchmarkTables() {
+  const descriptions = JSON.parse(fs.readFileSync(workloadsFile, 'utf8'));
+  const [primary, ...others] = orderedSources(loadSources());
+  const out = ['<!-- bench:tables:begin (generated by benchmarks/summarize.mjs; do not edit by hand) -->', ''];
+  out.push(sourceSection(primary, descriptions, 3));
+  for (const src of others) {
+    out.push(`<details>\n<summary><strong>${esc(src.label)}</strong></summary>\n`, sourceSection(src, descriptions, 4), '</details>\n');
   }
-  const next = current.replace(BLOCK, () => renderMetricsMarkdown(summarize()));
-  const changed = next !== current;
-  if (changed && write) fs.writeFileSync(overviewFile, next);
-  return { changed, file: overviewFile };
+  out.push('<!-- bench:tables:end -->');
+  return out.join('\n');
+}
+
+/** Regenerates (write) or verifies (check) the generated blocks in docs/index.md and BENCHMARKS.md. */
+export function syncOverview({ write = false } = {}) {
+  const targets = [
+    { file: overviewFile, block: BLOCK, name: 'bench:metrics', render: () => renderMetricsMarkdown(summarize()) },
+    { file: benchmarksFile, block: TABLES, name: 'bench:tables', render: () => renderBenchmarkTables() },
+  ];
+  let changed = false;
+  const stale = [];
+  for (const t of targets) {
+    const current = fs.readFileSync(t.file, 'utf8');
+    if (!t.block.test(current)) {
+      throw new Error(`${path.relative(repoRoot, t.file)} is missing the <!-- ${t.name}:begin --> ... <!-- ${t.name}:end --> markers.`);
+    }
+    const next = current.replace(t.block, () => t.render());
+    if (next !== current) {
+      changed = true;
+      stale.push(path.relative(repoRoot, t.file));
+      if (write) fs.writeFileSync(t.file, next);
+    }
+  }
+  return { changed, stale };
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const args = process.argv.slice(2);
   if (args.includes('--write-docs')) {
     const { changed } = syncOverview({ write: true });
-    console.log(changed ? 'docs/index.md metrics block updated.' : 'docs/index.md metrics block already current.');
+    console.log(changed ? 'Generated blocks updated.' : 'Generated blocks already current.');
   } else if (args.includes('--check-docs')) {
     process.exit(syncOverview().changed ? 1 : 0);
   } else {

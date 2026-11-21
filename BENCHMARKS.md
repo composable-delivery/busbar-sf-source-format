@@ -1,86 +1,146 @@
-# Performance Benchmarks: `busbar-sf-source-format` (Rust) vs `@salesforce/source-deploy-retrieve` & `sf` CLI (Node.js)
+# Performance Benchmarks
 
-Benchmarks comparing this Rust workspace (`busbar-sf-source-format` / `busbar-sf-source-format-cli`) against:
-1. **In-Process Conversion Engine**: `@salesforce/source-deploy-retrieve@13.13.0` (`benchmarks/node-sdr/bench.mjs`) vs Rust release harness (`crates/source-format/examples/bench_harness.rs`).
-2. **Cold CLI End-to-End**: `@salesforce/cli` (`sf project convert mdapi` / `sf project convert source`) vs `busbar-sf-source-format-cli`.
-3. **Microbenchmarks**: Rust Criterion suite (`crates/source-format/benches/convert_bench.rs`).
+How `sf-source-format` compares with `@salesforce/source-deploy-retrieve` (SDR) 13.13.0 and the Salesforce `sf` CLI. This page lists the **current** results only; how the engine got here is in [Architecture](./docs/architecture.md#optimization-history).
 
-## Environment
+## How we measure
 
-Measured locally (saved with `benchmarks/save-local-results.mjs`) from [benchmarks/results/local/apple-m2-max-macos.json](benchmarks/results/local/apple-m2-max-macos.json):
+- **Same work, same boundaries.** Output preparation and file counting run outside the timed interval in both harnesses (`crates/source-format/examples/bench_harness.rs` and `benchmarks/node-sdr/bench.mjs`). Both time the same pipeline: registry initialization, `ComponentSetBuilder.build({ sourcepath })`, and `MetadataConverter.convert(...)`.
+- **Same output.** Every in-process (22/22) and cold CLI (8/8) workload asserts that output file counts match between the two engines. On `SalesforceFoundation/NPSP`, a separate byte comparison against SDR 13.13.0 found `12,063 / 12,063` SFDX files identical (`MDAPI -> SFDX`), `3,926 / 3,926` MDAPI files plus `809` inner static-resource files identical (`SFDX -> MDAPI` directory), and all `3,927 / 3,927` entries identical in the zip.
+- **Iterations.** Fixture projects: 3 warmup + 10 timed runs. `medium-org`: 2 + 5 in-process and 1 + 5 cold CLI. `large-org` and `npsp`: 1 warmup + 3 timed. Cold CLI runs set `SF_DISABLE_AUTOUPDATE`, `SF_SKIP_NEW_VERSION_CHECK`, `SF_DISABLE_TELEMETRY`, `SF_USE_PROGRESS_BAR=false` and `SF_NO_COLOR`.
+- **Memory** is peak resident set size from `/usr/bin/time`.
+- **Machines.** Reference results come from Linux runners on GitHub Actions; results from local machines are listed after them. The `npsp` dataset is `SalesforceFoundation/NPSP` at commit `f5072b44781e7f31cb396c6919cfa7d0ead0ec6a` (BSD-3-Clause).
 
-- **Machine**: Apple M2 Max, 12 cores, 64 GiB RAM (`68,719,476,736` bytes)
-- **OS**: macOS 14.4.1 (`Build 23E224`)
-- **Rust**: `rustc 1.96.0 (ac68faa20 2026-05-25)` (`--release` / `bench` profile)
-- **Node.js**: `v22.23.4`
-- **Node Library**: `@salesforce/source-deploy-retrieve@13.13.0`
-- **Salesforce CLI**: `@salesforce/cli/2.156.8 darwin-arm64 node-v22.23.4`
+Hover or focus the ⓘ icons for what each workload contains and how each column is defined.
 
-## Methodology
+## Results
 
-- **Fair Timing Boundaries**: Output directory preparation/cleanup and output file/ZIP counting run **outside** the timed interval in both `bench_harness.rs` (`std::time::Instant`) and `bench.mjs` (`process.hrtime.bigint()`). Both engines time the exact pipeline: `RegistryAccess` initialization (`from_project_dir` when present), `ComponentSetBuilder.build({ sourcepath })`, and `MetadataConverter.convert(...)`.
-- **Parity Verification**: Every in-process (`22/22`) and cold-CLI (`8/8`) workload asserts output file counts (non-directory ZIP entry count for ZIP targets; recursive file count for directory targets) match between Rust and Node. On the real-world `SalesforceFoundation/NPSP` dataset, a separate head-to-head byte comparison against `@salesforce/source-deploy-retrieve@13.13.0` confirmed `12,063 / 12,063` SFDX files raw byte-identical (`MDAPI -> SFDX`), `3,926 / 3,926` non-ZIP MDAPI files raw byte-identical plus `staticresources/CumulusStaticResources.resource`'s `809` inner files byte-identical (`SFDX -> MDAPI dir`), and all `3,927 / 3,927` entries matched inside `SFDX -> MDAPI zip`.
-- **Warmup & Iterations**:
-  - Real SDR snapshot fixtures (6 projects): `3` warmup runs + `10` timed iterations (`Part A`).
-  - Synthetic `medium-org` (25 `CustomObject`s with 40 fields / 8 validation rules / 4 list views each, 100 `ApexClass`es, 15 `Profile`s, 10 `PermissionSet`s, 500 `CustomLabels`, 10 `LightningComponentBundle`s — `1,591` SFDX / `292` MDAPI files): `2` warmup + `5` timed iterations (`Part A`), `1` warmup + `5` timed CLI invocations (`Part B`).
-  - Synthetic `large-org` (100 `CustomObject`s with 50 fields / 10 validation rules / 4 list views each, 400 `ApexClass`es, 30 `Profile`s, 20 `PermissionSet`s, 2,000 `CustomLabels`, 25 `LightningComponentBundle`s — `7,451` SFDX / `1,052` MDAPI files): `1` warmup + `3` timed iterations.
-  - Real-world **`npsp`** ([`SalesforceFoundation/NPSP`](https://github.com/SalesforceFoundation/NPSP) pinned commit `f5072b44781e7f31cb396c6919cfa7d0ead0ec6a`, BSD-3-Clause; `12,194` raw SFDX files / `12,063` after `.forceignore` / `3,927` MDAPI files / ~9.2 MB compressed `.zip` across 28 metadata directories, cached in gitignored `benchmarks/.cache/npsp`): `1` warmup + `3` timed iterations in both `Part A` and `Part B`.
-  - Cold CLI (`Part B`): subprocess invocations with `SF_DISABLE_AUTOUPDATE=true`, `SF_SKIP_NEW_VERSION_CHECK=true`, `SF_DISABLE_TELEMETRY=true`, `SF_USE_PROGRESS_BAR=false`, `SF_NO_COLOR=true`.
-- **Memory**: Peak RSS (`maximum resident set size`) and `peak memory footprint` measured via `/usr/bin/time -l`.
+<!-- bench:tables:begin (generated by benchmarks/summarize.mjs; do not edit by hand) -->
 
----
+### GitHub Actions · ubuntu-latest
 
-## Part A: Warm In-Process Engine Comparison
+INTEL(R) XEON(R) PLATINUM 8573C · 4 cores · 16 GiB RAM · Ubuntu 26.04.1 LTS (x86_64) · rustc 1.100.0 · Node v22.23.4 · measured 2026-11-21
 
-| Workload | Rust Median (ms) | Rust Mean (ms) | Rust P95 (ms) | Node Median (ms) | Node Mean (ms) | Node P95 (ms) | Median Speedup | Output Files (R / N) |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | :---: |
-| `customObjects-and-children` (MDAPI -> SFDX) | 3.15 | 3.18 | 3.37 | 17.77 | 18.81 | 25.47 | **5.65x** | 38 / 38 |
-| `customObjects-and-children` (SFDX -> MDAPI dir) | 2.20 | 2.17 | 2.29 | 9.77 | 10.02 | 17.03 | **4.45x** | 3 / 3 |
-| `customObjects-and-children` (SFDX -> MDAPI zip) | 1.58 | 1.59 | 1.88 | 11.15 | 11.37 | 16.61 | **7.05x** | 3 / 3 |
-| `digitalExperienceBundle` (MDAPI -> SFDX) | 15.39 | 15.46 | 17.06 | 78.30 | 78.58 | 104.80 | **5.09x** | 115 / 115 |
-| `digitalExperienceBundle` (SFDX -> MDAPI dir) | 13.92 | 13.82 | 14.27 | 66.93 | 68.62 | 88.58 | **4.81x** | 116 / 116 |
-| `digitalExperienceBundle` (SFDX -> MDAPI zip) | 4.40 | 4.46 | 4.82 | 49.29 | 48.55 | 58.13 | **11.20x** | 116 / 116 |
-| `staticResource` (MDAPI -> SFDX) | 2.01 | 2.13 | 2.57 | 11.97 | 12.27 | 17.62 | **5.97x** | 14 / 14 |
-| `staticResource` (SFDX -> MDAPI dir) | 4.57 | 4.56 | 4.73 | 27.41 | 27.90 | 38.50 | **5.99x** | 9 / 9 |
-| `preset-decomposedPS2` (MDAPI -> SFDX) | 2.91 | 3.02 | 3.40 | 31.57 | 32.23 | 49.84 | **10.84x** | 26 / 26 |
-| `preset-decomposedPS2` (SFDX -> MDAPI dir) | 2.41 | 2.41 | 2.59 | 11.03 | 12.61 | 22.83 | **4.58x** | 7 / 7 |
-| `preset-decomposedESR` (MDAPI -> SFDX) | 1.05 | 1.04 | 1.20 | 8.22 | 9.99 | 21.13 | **7.86x** | 4 / 4 |
-| `preset-decomposedESR` (SFDX -> MDAPI dir) | 0.90 | 0.91 | 0.98 | 4.45 | 4.74 | 7.21 | **4.96x** | 3 / 3 |
-| `customLabels-multiple` (SFDX -> MDAPI dir) | 55.56 | 57.80 | 69.41 | 538.64 | 536.93 | 578.74 | **9.70x** | 2 / 2 |
-| `medium-org` (MDAPI -> SFDX) | 80.58 | 81.84 | 89.94 | 399.18 | 411.38 | 467.32 | **4.95x** | 1591 / 1591 |
-| `medium-org` (SFDX -> MDAPI dir) | 63.00 | 66.16 | 83.76 | 200.58 | 200.89 | 210.70 | **3.18x** | 292 / 292 |
-| `medium-org` (SFDX -> MDAPI zip) | 28.70 | 29.75 | 34.26 | 173.32 | 171.65 | 175.61 | **6.04x** | 292 / 292 |
-| `large-org` (MDAPI -> SFDX) | 391.39 | 403.02 | 440.52 | 1770.24 | 1798.93 | 1910.45 | **4.52x** | 7451 / 7451 |
-| `large-org` (SFDX -> MDAPI dir) | 186.34 | 185.89 | 188.10 | 966.42 | 967.47 | 970.02 | **5.19x** | 1052 / 1052 |
-| `large-org` (SFDX -> MDAPI zip) | 131.77 | 130.68 | 135.48 | 949.96 | 951.03 | 961.55 | **7.21x** | 1052 / 1052 |
-| `npsp` (MDAPI -> SFDX) | 801.98 | 818.12 | 866.10 | 3650.17 | 3929.99 | 4510.14 | **4.55x** | 12063 / 12063 |
-| `npsp` (SFDX -> MDAPI dir) | 530.12 | 530.52 | 580.14 | 3138.12 | 3227.35 | 3915.36 | **5.92x** | 3927 / 3927 |
-| `npsp` (SFDX -> MDAPI zip) | 374.18 | 375.74 | 388.85 | 3020.53 | 3014.05 | 3024.24 | **8.07x** | 3927 / 3927 |
+#### In-process conversion
 
-**Full-suite process memory (`/usr/bin/time -l`)**:
-- **Rust (`bench_harness`)**: `388.4 MiB` max RSS (`128.6 MiB` peak memory footprint)
-- **Node (`bench.mjs`)**: `913.1 MiB` max RSS (`460.4 MiB` peak memory footprint) — **2.35x higher max RSS / 3.58x higher peak memory footprint** than Rust.
+<table class="ux-grouped">
+<thead>
+<tr><th rowspan="2">Workload</th><th rowspan="2">Speedup<span class="ux-info" tabindex="0" role="img" aria-label="Median time of the baseline ÷ median time of sf-source-format. Higher is faster." data-tip="Median time of the baseline ÷ median time of sf-source-format. Higher is faster.">ⓘ</span></th><th colspan="2">sf-source-format</th><th colspan="2">Node SDR</th></tr>
+<tr><th>Median</th><th>Skew<span class="ux-info" tabindex="0" role="img" aria-label="Skew = (p95 − median) ÷ median. How far the slowest typical runs stray from the median run. Lower is steadier." data-tip="Skew = (p95 − median) ÷ median. How far the slowest typical runs stray from the median run. Lower is steadier.">ⓘ</span></th><th>Median</th><th>Skew<span class="ux-info" tabindex="0" role="img" aria-label="Skew = (p95 − median) ÷ median. How far the slowest typical runs stray from the median run. Lower is steadier." data-tip="Skew = (p95 − median) ÷ median. How far the slowest typical runs stray from the median run. Lower is steadier.">ⓘ</span></th></tr>
+</thead>
+<tbody>
+<tr><td><code>customObjects-and-children</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views)." data-tip="SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views).">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>10.0×</strong></td><td class="ux-group-start">2.11 ms</td><td>+5%</td><td class="ux-group-start">21.1 ms</td><td>+48%</td></tr>
+<tr><td><code>customObjects-and-children</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views)." data-tip="SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views).">ⓘ</span><small>SFDX → MDAPI dir</small></td><td><strong>4.98×</strong></td><td class="ux-group-start">1.96 ms</td><td>+14%</td><td class="ux-group-start">9.78 ms</td><td>+15%</td></tr>
+<tr><td><code>customObjects-and-children</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views)." data-tip="SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views).">ⓘ</span><small>SFDX → MDAPI zip</small></td><td><strong>5.14×</strong></td><td class="ux-group-start">1.98 ms</td><td>+3%</td><td class="ux-group-start">10.2 ms</td><td>+27%</td></tr>
+<tr><td><code>digitalExperienceBundle</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files." data-tip="SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files.">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>10.1×</strong></td><td class="ux-group-start">6.60 ms</td><td>+4%</td><td class="ux-group-start">66.6 ms</td><td>+16%</td></tr>
+<tr><td><code>digitalExperienceBundle</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files." data-tip="SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files.">ⓘ</span><small>SFDX → MDAPI dir</small></td><td><strong>8.39×</strong></td><td class="ux-group-start">6.91 ms</td><td>+5%</td><td class="ux-group-start">58.0 ms</td><td>+25%</td></tr>
+<tr><td><code>digitalExperienceBundle</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files." data-tip="SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files.">ⓘ</span><small>SFDX → MDAPI zip</small></td><td><strong>8.60×</strong></td><td class="ux-group-start">5.25 ms</td><td>+12%</td><td class="ux-group-start">45.2 ms</td><td>+25%</td></tr>
+<tr><td><code>staticResource</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: a static resource, including its unpacked archive contents." data-tip="SDR snapshot fixture: a static resource, including its unpacked archive contents.">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>8.56×</strong></td><td class="ux-group-start">1.11 ms</td><td>+9%</td><td class="ux-group-start">9.53 ms</td><td>+23%</td></tr>
+<tr><td><code>staticResource</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: a static resource, including its unpacked archive contents." data-tip="SDR snapshot fixture: a static resource, including its unpacked archive contents.">ⓘ</span><small>SFDX → MDAPI dir</small></td><td><strong>4.90×</strong></td><td class="ux-group-start">5.66 ms</td><td>+1%</td><td class="ux-group-start">27.7 ms</td><td>+8%</td></tr>
+<tr><td><code>preset-decomposedPS2</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture for the decomposePermissionSetBeta2 sourceBehaviorOptions preset (permission sets split into per-permission files)." data-tip="SDR snapshot fixture for the decomposePermissionSetBeta2 sourceBehaviorOptions preset (permission sets split into per-permission files).">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>5.84×</strong></td><td class="ux-group-start">2.44 ms</td><td>+2%</td><td class="ux-group-start">14.3 ms</td><td>+16%</td></tr>
+<tr><td><code>preset-decomposedPS2</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture for the decomposePermissionSetBeta2 sourceBehaviorOptions preset (permission sets split into per-permission files)." data-tip="SDR snapshot fixture for the decomposePermissionSetBeta2 sourceBehaviorOptions preset (permission sets split into per-permission files).">ⓘ</span><small>SFDX → MDAPI dir</small></td><td><strong>3.16×</strong></td><td class="ux-group-start">2.57 ms</td><td>+3%</td><td class="ux-group-start">8.12 ms</td><td>+38%</td></tr>
+<tr><td><code>preset-decomposedESR</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture for the decomposeExternalServiceRegistrationBeta sourceBehaviorOptions preset." data-tip="SDR snapshot fixture for the decomposeExternalServiceRegistrationBeta sourceBehaviorOptions preset.">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>5.69×</strong></td><td class="ux-group-start">1.03 ms</td><td>+3%</td><td class="ux-group-start">5.87 ms</td><td>+22%</td></tr>
+<tr><td><code>preset-decomposedESR</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture for the decomposeExternalServiceRegistrationBeta sourceBehaviorOptions preset." data-tip="SDR snapshot fixture for the decomposeExternalServiceRegistrationBeta sourceBehaviorOptions preset.">ⓘ</span><small>SFDX → MDAPI dir</small></td><td><strong>5.25×</strong></td><td class="ux-group-start">1.05 ms</td><td>+1%</td><td class="ux-group-start">5.49 ms</td><td>+12%</td></tr>
+<tr><td><code>customLabels-multiple</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: custom labels spread across several files that are recomposed into one CustomLabels document." data-tip="SDR snapshot fixture: custom labels spread across several files that are recomposed into one CustomLabels document.">ⓘ</span><small>SFDX → MDAPI dir</small></td><td><strong>10.3×</strong></td><td class="ux-group-start">78.5 ms</td><td>+4%</td><td class="ux-group-start">809 ms</td><td>+3%</td></tr>
+<tr><td><code>medium-org</code><span class="ux-info" tabindex="0" role="img" aria-label="Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files." data-tip="Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files.">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>13.1×</strong></td><td class="ux-group-start">38.5 ms</td><td>+42%</td><td class="ux-group-start">504 ms</td><td>+14%</td></tr>
+<tr><td><code>medium-org</code><span class="ux-info" tabindex="0" role="img" aria-label="Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files." data-tip="Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files.">ⓘ</span><small>SFDX → MDAPI dir</small></td><td><strong>5.45×</strong></td><td class="ux-group-start">44.7 ms</td><td>+6%</td><td class="ux-group-start">244 ms</td><td>+1%</td></tr>
+<tr><td><code>medium-org</code><span class="ux-info" tabindex="0" role="img" aria-label="Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files." data-tip="Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files.">ⓘ</span><small>SFDX → MDAPI zip</small></td><td><strong>5.37×</strong></td><td class="ux-group-start">41.0 ms</td><td>+9%</td><td class="ux-group-start">220 ms</td><td>+4%</td></tr>
+<tr><td><code>large-org</code><span class="ux-info" tabindex="0" role="img" aria-label="Synthetic org: 100 custom objects (50 fields, 10 validation rules and 4 list views each), 400 Apex classes, 30 profiles, 20 permission sets, 2,000 custom labels and 25 LWC bundles. 7,451 SFDX files / 1,052 MDAPI files." data-tip="Synthetic org: 100 custom objects (50 fields, 10 validation rules and 4 list views each), 400 Apex classes, 30 profiles, 20 permission sets, 2,000 custom labels and 25 LWC bundles. 7,451 SFDX files / 1,052 MDAPI files.">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>13.6×</strong></td><td class="ux-group-start">170 ms</td><td>+0%</td><td class="ux-group-start">2,317 ms</td><td>+1%</td></tr>
+<tr><td><code>large-org</code><span class="ux-info" tabindex="0" role="img" aria-label="Synthetic org: 100 custom objects (50 fields, 10 validation rules and 4 list views each), 400 Apex classes, 30 profiles, 20 permission sets, 2,000 custom labels and 25 LWC bundles. 7,451 SFDX files / 1,052 MDAPI files." data-tip="Synthetic org: 100 custom objects (50 fields, 10 validation rules and 4 list views each), 400 Apex classes, 30 profiles, 20 permission sets, 2,000 custom labels and 25 LWC bundles. 7,451 SFDX files / 1,052 MDAPI files.">ⓘ</span><small>SFDX → MDAPI dir</small></td><td><strong>6.72×</strong></td><td class="ux-group-start">202 ms</td><td>+2%</td><td class="ux-group-start">1,359 ms</td><td>+2%</td></tr>
+<tr><td><code>large-org</code><span class="ux-info" tabindex="0" role="img" aria-label="Synthetic org: 100 custom objects (50 fields, 10 validation rules and 4 list views each), 400 Apex classes, 30 profiles, 20 permission sets, 2,000 custom labels and 25 LWC bundles. 7,451 SFDX files / 1,052 MDAPI files." data-tip="Synthetic org: 100 custom objects (50 fields, 10 validation rules and 4 list views each), 400 Apex classes, 30 profiles, 20 permission sets, 2,000 custom labels and 25 LWC bundles. 7,451 SFDX files / 1,052 MDAPI files.">ⓘ</span><small>SFDX → MDAPI zip</small></td><td><strong>6.22×</strong></td><td class="ux-group-start">207 ms</td><td>+1%</td><td class="ux-group-start">1,288 ms</td><td>+2%</td></tr>
+<tr><td><code>npsp</code><span class="ux-info" tabindex="0" role="img" aria-label="Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped." data-tip="Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped.">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>12.7×</strong></td><td class="ux-group-start">413 ms</td><td>+0%</td><td class="ux-group-start">5,223 ms</td><td>+2%</td></tr>
+<tr><td><code>npsp</code><span class="ux-info" tabindex="0" role="img" aria-label="Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped." data-tip="Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped.">ⓘ</span><small>SFDX → MDAPI dir</small></td><td><strong>10.2×</strong></td><td class="ux-group-start">368 ms</td><td>+3%</td><td class="ux-group-start">3,754 ms</td><td>+0%</td></tr>
+<tr><td><code>npsp</code><span class="ux-info" tabindex="0" role="img" aria-label="Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped." data-tip="Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped.">ⓘ</span><small>SFDX → MDAPI zip</small></td><td><strong>9.26×</strong></td><td class="ux-group-start">426 ms</td><td>+8%</td><td class="ux-group-start">3,939 ms</td><td>+2%</td></tr>
+</tbody>
+</table>
 
----
+#### Cold CLI, end to end
 
-## Part B: Cold CLI Comparison (`busbar-sf-source-format` vs `sf`)
+<table class="ux-grouped">
+<thead>
+<tr><th rowspan="2">Workload</th><th rowspan="2">Speedup<span class="ux-info" tabindex="0" role="img" aria-label="Median time of the baseline ÷ median time of sf-source-format. Higher is faster." data-tip="Median time of the baseline ÷ median time of sf-source-format. Higher is faster.">ⓘ</span></th><th rowspan="2">Less memory<span class="ux-info" tabindex="0" role="img" aria-label="Peak resident memory of the baseline ÷ peak resident memory of sf-source-format." data-tip="Peak resident memory of the baseline ÷ peak resident memory of sf-source-format.">ⓘ</span></th><th colspan="3">sf-source-format</th><th colspan="3"><code>sf</code> CLI</th></tr>
+<tr><th>Median</th><th>Skew<span class="ux-info" tabindex="0" role="img" aria-label="Skew = (p95 − median) ÷ median. How far the slowest typical runs stray from the median run. Lower is steadier." data-tip="Skew = (p95 − median) ÷ median. How far the slowest typical runs stray from the median run. Lower is steadier.">ⓘ</span></th><th>Peak RSS</th><th>Median</th><th>Skew<span class="ux-info" tabindex="0" role="img" aria-label="Skew = (p95 − median) ÷ median. How far the slowest typical runs stray from the median run. Lower is steadier." data-tip="Skew = (p95 − median) ÷ median. How far the slowest typical runs stray from the median run. Lower is steadier.">ⓘ</span></th><th>Peak RSS</th></tr>
+</thead>
+<tbody>
+<tr><td><code>customObjects-and-children</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views)." data-tip="SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views).">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>218×</strong></td><td>23.0×</td><td class="ux-group-start">5.95 ms</td><td>+6%</td><td>8.4 MiB</td><td class="ux-group-start">1,295 ms</td><td>+1%</td><td>192.4 MiB</td></tr>
+<tr><td><code>customObjects-and-children</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views)." data-tip="SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views).">ⓘ</span><small>SFDX → MDAPI</small></td><td><strong>190×</strong></td><td>19.7×</td><td class="ux-group-start">6.83 ms</td><td>+3%</td><td>9.8 MiB</td><td class="ux-group-start">1,295 ms</td><td>+0%</td><td>192.3 MiB</td></tr>
+<tr><td><code>digitalExperienceBundle</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files." data-tip="SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files.">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>102×</strong></td><td>16.0×</td><td class="ux-group-start">12.7 ms</td><td>+7%</td><td>12.3 MiB</td><td class="ux-group-start">1,294 ms</td><td>+0%</td><td>196.4 MiB</td></tr>
+<tr><td><code>digitalExperienceBundle</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files." data-tip="SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files.">ⓘ</span><small>SFDX → MDAPI</small></td><td><strong>96.8×</strong></td><td>15.1×</td><td class="ux-group-start">13.4 ms</td><td>+5%</td><td>12.6 MiB</td><td class="ux-group-start">1,299 ms</td><td>+0%</td><td>190.0 MiB</td></tr>
+<tr><td><code>medium-org</code><span class="ux-info" tabindex="0" role="img" aria-label="Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files." data-tip="Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files.">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>40.9×</strong></td><td>5.50×</td><td class="ux-group-start">56.8 ms</td><td>+1%</td><td>39.5 MiB</td><td class="ux-group-start">2,323 ms</td><td>+0%</td><td>217.0 MiB</td></tr>
+<tr><td><code>medium-org</code><span class="ux-info" tabindex="0" role="img" aria-label="Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files." data-tip="Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files.">ⓘ</span><small>SFDX → MDAPI</small></td><td><strong>38.9×</strong></td><td>3.89×</td><td class="ux-group-start">59.6 ms</td><td>+2%</td><td>54.0 MiB</td><td class="ux-group-start">2,319 ms</td><td>+0%</td><td>210.0 MiB</td></tr>
+<tr><td><code>npsp</code><span class="ux-info" tabindex="0" role="img" aria-label="Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped." data-tip="Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped.">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>15.5×</strong></td><td>2.34×</td><td class="ux-group-start">474 ms</td><td>+4%</td><td>163.2 MiB</td><td class="ux-group-start">7,353 ms</td><td>+0%</td><td>382.3 MiB</td></tr>
+<tr><td><code>npsp</code><span class="ux-info" tabindex="0" role="img" aria-label="Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped." data-tip="Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped.">ⓘ</span><small>SFDX → MDAPI</small></td><td><strong>13.9×</strong></td><td>1.55×</td><td class="ux-group-start">455 ms</td><td>+0%</td><td>232.4 MiB</td><td class="ux-group-start">6,331 ms</td><td>+0%</td><td>359.8 MiB</td></tr>
+</tbody>
+</table>
 
-| Workload | Rust CLI Median (ms) | Rust CLI Mean (ms) | `sf` CLI Median (ms) | `sf` CLI Mean (ms) | Median Speedup | Rust Peak RSS | `sf` Peak RSS | Output Files (R / `sf`) |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | :---: |
-| `customObjects-and-children` (MDAPI -> SFDX) | 8.0 | 8.0 | 1188.0 | 1187.2 | **148.91x** | 6.9 MiB | 263.9 MiB | 38 / 38 |
-| `customObjects-and-children` (SFDX -> MDAPI) | 7.9 | 8.6 | 1189.6 | 990.9 | **150.52x** | 8.7 MiB | 241.8 MiB | 3 / 3 |
-| `digitalExperienceBundle` (MDAPI -> SFDX) | 22.7 | 22.7 | 1187.7 | 1186.4 | **52.28x** | 12.5 MiB | 283.4 MiB | 115 / 115 |
-| `digitalExperienceBundle` (SFDX -> MDAPI) | 19.4 | 20.6 | 1189.1 | 1196.2 | **61.23x** | 13.5 MiB | 233.3 MiB | 116 / 116 |
-| `medium-org` (MDAPI -> SFDX) | 92.5 | 92.3 | 5327.5 | 5115.0 | **57.58x** | 39.0 MiB | 676.0 MiB | 1591 / 1591 |
-| `medium-org` (SFDX -> MDAPI) | 58.6 | 59.8 | 2278.3 | 2308.5 | **38.85x** | 55.3 MiB | 261.7 MiB | 292 / 292 |
-| `npsp` (MDAPI -> SFDX) | 887.9 | 918.7 | 6270.8 | 7618.0 | **7.06x** | 178.8 MiB | 496.2 MiB | 12063 / 12063 |
-| `npsp` (SFDX -> MDAPI) | 607.2 | 643.3 | 4226.1 | 4226.2 | **6.96x** | 240.4 MiB | 458.8 MiB | 3927 / 3927 |
+<details>
+<summary><strong>Apple M2 Max · macOS</strong></summary>
 
----
+#### Apple M2 Max · macOS
 
-## Part C: Native Rust Criterion Microbenchmarks
+Apple M2 Max · 12 cores · 64 GiB RAM · macOS · rustc 1.96.0 · Node v22.23.4 · measured 2026-11-21
 
-Captured with `cargo bench -p sf-source-format --bench convert_bench`:
+##### In-process conversion
+
+<table class="ux-grouped">
+<thead>
+<tr><th rowspan="2">Workload</th><th rowspan="2">Speedup<span class="ux-info" tabindex="0" role="img" aria-label="Median time of the baseline ÷ median time of sf-source-format. Higher is faster." data-tip="Median time of the baseline ÷ median time of sf-source-format. Higher is faster.">ⓘ</span></th><th colspan="2">sf-source-format</th><th colspan="2">Node SDR</th></tr>
+<tr><th>Median</th><th>Skew<span class="ux-info" tabindex="0" role="img" aria-label="Skew = (p95 − median) ÷ median. How far the slowest typical runs stray from the median run. Lower is steadier." data-tip="Skew = (p95 − median) ÷ median. How far the slowest typical runs stray from the median run. Lower is steadier.">ⓘ</span></th><th>Median</th><th>Skew<span class="ux-info" tabindex="0" role="img" aria-label="Skew = (p95 − median) ÷ median. How far the slowest typical runs stray from the median run. Lower is steadier." data-tip="Skew = (p95 − median) ÷ median. How far the slowest typical runs stray from the median run. Lower is steadier.">ⓘ</span></th></tr>
+</thead>
+<tbody>
+<tr><td><code>customObjects-and-children</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views)." data-tip="SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views).">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>5.65×</strong></td><td class="ux-group-start">3.15 ms</td><td>+7%</td><td class="ux-group-start">17.8 ms</td><td>+43%</td></tr>
+<tr><td><code>customObjects-and-children</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views)." data-tip="SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views).">ⓘ</span><small>SFDX → MDAPI dir</small></td><td><strong>4.45×</strong></td><td class="ux-group-start">2.20 ms</td><td>+4%</td><td class="ux-group-start">9.77 ms</td><td>+74%</td></tr>
+<tr><td><code>customObjects-and-children</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views)." data-tip="SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views).">ⓘ</span><small>SFDX → MDAPI zip</small></td><td><strong>7.05×</strong></td><td class="ux-group-start">1.58 ms</td><td>+19%</td><td class="ux-group-start">11.1 ms</td><td>+49%</td></tr>
+<tr><td><code>digitalExperienceBundle</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files." data-tip="SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files.">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>5.09×</strong></td><td class="ux-group-start">15.4 ms</td><td>+11%</td><td class="ux-group-start">78.3 ms</td><td>+34%</td></tr>
+<tr><td><code>digitalExperienceBundle</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files." data-tip="SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files.">ⓘ</span><small>SFDX → MDAPI dir</small></td><td><strong>4.81×</strong></td><td class="ux-group-start">13.9 ms</td><td>+3%</td><td class="ux-group-start">66.9 ms</td><td>+32%</td></tr>
+<tr><td><code>digitalExperienceBundle</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files." data-tip="SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files.">ⓘ</span><small>SFDX → MDAPI zip</small></td><td><strong>11.2×</strong></td><td class="ux-group-start">4.40 ms</td><td>+10%</td><td class="ux-group-start">49.3 ms</td><td>+18%</td></tr>
+<tr><td><code>staticResource</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: a static resource, including its unpacked archive contents." data-tip="SDR snapshot fixture: a static resource, including its unpacked archive contents.">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>5.97×</strong></td><td class="ux-group-start">2.01 ms</td><td>+28%</td><td class="ux-group-start">12.0 ms</td><td>+47%</td></tr>
+<tr><td><code>staticResource</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: a static resource, including its unpacked archive contents." data-tip="SDR snapshot fixture: a static resource, including its unpacked archive contents.">ⓘ</span><small>SFDX → MDAPI dir</small></td><td><strong>5.99×</strong></td><td class="ux-group-start">4.57 ms</td><td>+3%</td><td class="ux-group-start">27.4 ms</td><td>+40%</td></tr>
+<tr><td><code>preset-decomposedPS2</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture for the decomposePermissionSetBeta2 sourceBehaviorOptions preset (permission sets split into per-permission files)." data-tip="SDR snapshot fixture for the decomposePermissionSetBeta2 sourceBehaviorOptions preset (permission sets split into per-permission files).">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>10.8×</strong></td><td class="ux-group-start">2.91 ms</td><td>+17%</td><td class="ux-group-start">31.6 ms</td><td>+58%</td></tr>
+<tr><td><code>preset-decomposedPS2</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture for the decomposePermissionSetBeta2 sourceBehaviorOptions preset (permission sets split into per-permission files)." data-tip="SDR snapshot fixture for the decomposePermissionSetBeta2 sourceBehaviorOptions preset (permission sets split into per-permission files).">ⓘ</span><small>SFDX → MDAPI dir</small></td><td><strong>4.58×</strong></td><td class="ux-group-start">2.41 ms</td><td>+7%</td><td class="ux-group-start">11.0 ms</td><td>+107%</td></tr>
+<tr><td><code>preset-decomposedESR</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture for the decomposeExternalServiceRegistrationBeta sourceBehaviorOptions preset." data-tip="SDR snapshot fixture for the decomposeExternalServiceRegistrationBeta sourceBehaviorOptions preset.">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>7.86×</strong></td><td class="ux-group-start">1.05 ms</td><td>+15%</td><td class="ux-group-start">8.22 ms</td><td>+157%</td></tr>
+<tr><td><code>preset-decomposedESR</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture for the decomposeExternalServiceRegistrationBeta sourceBehaviorOptions preset." data-tip="SDR snapshot fixture for the decomposeExternalServiceRegistrationBeta sourceBehaviorOptions preset.">ⓘ</span><small>SFDX → MDAPI dir</small></td><td><strong>4.96×</strong></td><td class="ux-group-start">0.90 ms</td><td>+9%</td><td class="ux-group-start">4.45 ms</td><td>+62%</td></tr>
+<tr><td><code>customLabels-multiple</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: custom labels spread across several files that are recomposed into one CustomLabels document." data-tip="SDR snapshot fixture: custom labels spread across several files that are recomposed into one CustomLabels document.">ⓘ</span><small>SFDX → MDAPI dir</small></td><td><strong>9.70×</strong></td><td class="ux-group-start">55.6 ms</td><td>+25%</td><td class="ux-group-start">539 ms</td><td>+7%</td></tr>
+<tr><td><code>medium-org</code><span class="ux-info" tabindex="0" role="img" aria-label="Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files." data-tip="Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files.">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>4.95×</strong></td><td class="ux-group-start">80.6 ms</td><td>+12%</td><td class="ux-group-start">399 ms</td><td>+17%</td></tr>
+<tr><td><code>medium-org</code><span class="ux-info" tabindex="0" role="img" aria-label="Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files." data-tip="Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files.">ⓘ</span><small>SFDX → MDAPI dir</small></td><td><strong>3.18×</strong></td><td class="ux-group-start">63.0 ms</td><td>+33%</td><td class="ux-group-start">201 ms</td><td>+5%</td></tr>
+<tr><td><code>medium-org</code><span class="ux-info" tabindex="0" role="img" aria-label="Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files." data-tip="Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files.">ⓘ</span><small>SFDX → MDAPI zip</small></td><td><strong>6.04×</strong></td><td class="ux-group-start">28.7 ms</td><td>+19%</td><td class="ux-group-start">173 ms</td><td>+1%</td></tr>
+<tr><td><code>large-org</code><span class="ux-info" tabindex="0" role="img" aria-label="Synthetic org: 100 custom objects (50 fields, 10 validation rules and 4 list views each), 400 Apex classes, 30 profiles, 20 permission sets, 2,000 custom labels and 25 LWC bundles. 7,451 SFDX files / 1,052 MDAPI files." data-tip="Synthetic org: 100 custom objects (50 fields, 10 validation rules and 4 list views each), 400 Apex classes, 30 profiles, 20 permission sets, 2,000 custom labels and 25 LWC bundles. 7,451 SFDX files / 1,052 MDAPI files.">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>4.52×</strong></td><td class="ux-group-start">391 ms</td><td>+13%</td><td class="ux-group-start">1,770 ms</td><td>+8%</td></tr>
+<tr><td><code>large-org</code><span class="ux-info" tabindex="0" role="img" aria-label="Synthetic org: 100 custom objects (50 fields, 10 validation rules and 4 list views each), 400 Apex classes, 30 profiles, 20 permission sets, 2,000 custom labels and 25 LWC bundles. 7,451 SFDX files / 1,052 MDAPI files." data-tip="Synthetic org: 100 custom objects (50 fields, 10 validation rules and 4 list views each), 400 Apex classes, 30 profiles, 20 permission sets, 2,000 custom labels and 25 LWC bundles. 7,451 SFDX files / 1,052 MDAPI files.">ⓘ</span><small>SFDX → MDAPI dir</small></td><td><strong>5.19×</strong></td><td class="ux-group-start">186 ms</td><td>+1%</td><td class="ux-group-start">966 ms</td><td>+0%</td></tr>
+<tr><td><code>large-org</code><span class="ux-info" tabindex="0" role="img" aria-label="Synthetic org: 100 custom objects (50 fields, 10 validation rules and 4 list views each), 400 Apex classes, 30 profiles, 20 permission sets, 2,000 custom labels and 25 LWC bundles. 7,451 SFDX files / 1,052 MDAPI files." data-tip="Synthetic org: 100 custom objects (50 fields, 10 validation rules and 4 list views each), 400 Apex classes, 30 profiles, 20 permission sets, 2,000 custom labels and 25 LWC bundles. 7,451 SFDX files / 1,052 MDAPI files.">ⓘ</span><small>SFDX → MDAPI zip</small></td><td><strong>7.21×</strong></td><td class="ux-group-start">132 ms</td><td>+3%</td><td class="ux-group-start">950 ms</td><td>+1%</td></tr>
+<tr><td><code>npsp</code><span class="ux-info" tabindex="0" role="img" aria-label="Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped." data-tip="Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped.">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>4.55×</strong></td><td class="ux-group-start">802 ms</td><td>+8%</td><td class="ux-group-start">3,650 ms</td><td>+24%</td></tr>
+<tr><td><code>npsp</code><span class="ux-info" tabindex="0" role="img" aria-label="Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped." data-tip="Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped.">ⓘ</span><small>SFDX → MDAPI dir</small></td><td><strong>5.92×</strong></td><td class="ux-group-start">530 ms</td><td>+9%</td><td class="ux-group-start">3,138 ms</td><td>+25%</td></tr>
+<tr><td><code>npsp</code><span class="ux-info" tabindex="0" role="img" aria-label="Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped." data-tip="Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped.">ⓘ</span><small>SFDX → MDAPI zip</small></td><td><strong>8.07×</strong></td><td class="ux-group-start">374 ms</td><td>+4%</td><td class="ux-group-start">3,021 ms</td><td>+0%</td></tr>
+</tbody>
+</table>
+
+##### Cold CLI, end to end
+
+<table class="ux-grouped">
+<thead>
+<tr><th rowspan="2">Workload</th><th rowspan="2">Speedup<span class="ux-info" tabindex="0" role="img" aria-label="Median time of the baseline ÷ median time of sf-source-format. Higher is faster." data-tip="Median time of the baseline ÷ median time of sf-source-format. Higher is faster.">ⓘ</span></th><th rowspan="2">Less memory<span class="ux-info" tabindex="0" role="img" aria-label="Peak resident memory of the baseline ÷ peak resident memory of sf-source-format." data-tip="Peak resident memory of the baseline ÷ peak resident memory of sf-source-format.">ⓘ</span></th><th colspan="3">sf-source-format</th><th colspan="3"><code>sf</code> CLI</th></tr>
+<tr><th>Median</th><th>Skew<span class="ux-info" tabindex="0" role="img" aria-label="Skew = (p95 − median) ÷ median. How far the slowest typical runs stray from the median run. Lower is steadier." data-tip="Skew = (p95 − median) ÷ median. How far the slowest typical runs stray from the median run. Lower is steadier.">ⓘ</span></th><th>Peak RSS</th><th>Median</th><th>Skew<span class="ux-info" tabindex="0" role="img" aria-label="Skew = (p95 − median) ÷ median. How far the slowest typical runs stray from the median run. Lower is steadier." data-tip="Skew = (p95 − median) ÷ median. How far the slowest typical runs stray from the median run. Lower is steadier.">ⓘ</span></th><th>Peak RSS</th></tr>
+</thead>
+<tbody>
+<tr><td><code>customObjects-and-children</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views)." data-tip="SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views).">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>149×</strong></td><td>38.1×</td><td class="ux-group-start">7.98 ms</td><td>+5%</td><td>6.9 MiB</td><td class="ux-group-start">1,188 ms</td><td>+0%</td><td>263.9 MiB</td></tr>
+<tr><td><code>customObjects-and-children</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views)." data-tip="SDR snapshot fixture: custom objects with their child metadata (fields, validation rules, list views).">ⓘ</span><small>SFDX → MDAPI</small></td><td><strong>151×</strong></td><td>27.9×</td><td class="ux-group-start">7.90 ms</td><td>+41%</td><td>8.7 MiB</td><td class="ux-group-start">1,190 ms</td><td>+1%</td><td>241.8 MiB</td></tr>
+<tr><td><code>digitalExperienceBundle</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files." data-tip="SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files.">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>52.3×</strong></td><td>22.6×</td><td class="ux-group-start">22.7 ms</td><td>+4%</td><td>12.5 MiB</td><td class="ux-group-start">1,188 ms</td><td>+0%</td><td>283.4 MiB</td></tr>
+<tr><td><code>digitalExperienceBundle</code><span class="ux-info" tabindex="0" role="img" aria-label="SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files." data-tip="SDR snapshot fixture: a Digital Experience (Experience Cloud) site bundle with many nested content files.">ⓘ</span><small>SFDX → MDAPI</small></td><td><strong>61.2×</strong></td><td>17.3×</td><td class="ux-group-start">19.4 ms</td><td>+27%</td><td>13.5 MiB</td><td class="ux-group-start">1,189 ms</td><td>+3%</td><td>233.3 MiB</td></tr>
+<tr><td><code>medium-org</code><span class="ux-info" tabindex="0" role="img" aria-label="Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files." data-tip="Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files.">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>57.6×</strong></td><td>17.3×</td><td class="ux-group-start">92.5 ms</td><td>+6%</td><td>39.0 MiB</td><td class="ux-group-start">5,327 ms</td><td>+0%</td><td>676.0 MiB</td></tr>
+<tr><td><code>medium-org</code><span class="ux-info" tabindex="0" role="img" aria-label="Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files." data-tip="Synthetic org: 25 custom objects (40 fields, 8 validation rules and 4 list views each), 100 Apex classes, 15 profiles, 10 permission sets, 500 custom labels and 10 LWC bundles. 1,591 SFDX files / 292 MDAPI files.">ⓘ</span><small>SFDX → MDAPI</small></td><td><strong>38.9×</strong></td><td>4.73×</td><td class="ux-group-start">58.6 ms</td><td>+16%</td><td>55.3 MiB</td><td class="ux-group-start">2,278 ms</td><td>+7%</td><td>261.7 MiB</td></tr>
+<tr><td><code>npsp</code><span class="ux-info" tabindex="0" role="img" aria-label="Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped." data-tip="Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped.">ⓘ</span><small>MDAPI → SFDX</small></td><td><strong>7.06×</strong></td><td>2.77×</td><td class="ux-group-start">888 ms</td><td>+13%</td><td>178.8 MiB</td><td class="ux-group-start">6,271 ms</td><td>+65%</td><td>496.2 MiB</td></tr>
+<tr><td><code>npsp</code><span class="ux-info" tabindex="0" role="img" aria-label="Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped." data-tip="Real-world project: SalesforceFoundation/NPSP at a pinned commit. 12,063 SFDX files (after .forceignore) / 3,927 MDAPI files, about 9.2 MB zipped.">ⓘ</span><small>SFDX → MDAPI</small></td><td><strong>6.96×</strong></td><td>1.91×</td><td class="ux-group-start">607 ms</td><td>+25%</td><td>240.4 MiB</td><td class="ux-group-start">4,226 ms</td><td>+0%</td><td>458.8 MiB</td></tr>
+</tbody>
+</table>
+
+</details>
+
+<!-- bench:tables:end -->
+
+## Microbenchmarks
+
+<details>
+<summary><strong>Native Rust Criterion microbenchmarks</strong> (Apple M2 Max)</summary>
+
+Captured with `cargo bench -p busbar-sf-source-format --bench convert_bench`:
 
 | Group / Benchmark | Low | Estimate | High |
 | --- | ---: | ---: | ---: |
@@ -101,39 +161,12 @@ Captured with `cargo bench -p sf-source-format --bench convert_bench`:
 | `registry_new/from_project_dir_default` | 12.68 µs | **12.73 µs** | 12.78 µs |
 | `registry_new/from_project_dir_preset` | 205.02 µs | **206.53 µs** | 208.15 µs |
 
----
+</details>
 
-## Optimization Impact (Waves 1 & 2)
+## Incremental cache
 
-### Wave 1: Algorithmic Complexity, `Arc` Sharing & Initial Parallelism
-1. **`O(N²)` -> `O(N)` `NonDecomposed` (`CustomLabels`) recomposition** ([finalizers.rs](crates/source-format/src/convert/finalizers.rs)): Indexed each parsed parent XML document once in a single pass instead of cloning the full parent `XmlDocument` and linearly scanning for each child, reused a thread-local `feruca::Collator` with pre-extracted sort keys, and parallelized recomposition entries with `rayon`.
-2. **`Arc`-shared registries & `.forceignore` + indexed strict-folder lookup** ([access.rs](crates/source-format/src/registry/access.rs), [variants.rs](crates/source-format/src/registry/variants.rs), [force_ignore.rs](crates/source-format/src/tree/force_ignore.rs), [resolver.rs](crates/source-format/src/resolve/resolver.rs)): Eliminated deep copies of the 543-type `MetadataRegistry` and `Gitignore` matchers across components, fast-pathed `from_project_dir` when no presets/customizations exist, and indexed `strictDirectoryNames` by `directoryName` without per-file `Vec` allocations.
-3. **Single-buffer XML serialization & `FirstOnly` scope** ([serialize.rs](crates/source-format/src/xml/serialize.rs), [types.rs](crates/source-format/src/convert/types.rs), [converter.rs](crates/source-format/src/convert/converter.rs)): Serialized into a single pre-sized buffer and matched SDR's `FirstOnly` post-write re-resolution scope.
-
-### Wave 2: Syscall Reduction, Bounded I/O Pool & Parallel ZIP DEFLATE
-1. **Bounded filesystem I/O pool** ([io_pool.rs](crates/source-format/src/io_pool.rs)): Separated disk I/O onto a bounded Rayon pool (`min(cores, 4)` on macOS) to eliminate APFS VFS/vnode lock contention observed when 12 threads hammered `open`/`write`/`stat` concurrently, while leaving pure CPU work on the global pool.
-2. **Syscall & `.forceignore` elimination in `tree` and `StandardWriter`** ([fs_tree.rs](crates/source-format/src/tree/fs_tree.rs), [force_ignore.rs](crates/source-format/src/tree/force_ignore.rs), [tree.rs](crates/source-format/src/tree/tree.rs), [writer.rs](crates/source-format/src/convert/writer.rs)):
-   - Replaced per-entry `is_directory()` calls with `DirEntry::file_type()` (`DirEntryInfo`) and added read-through `FsTree::new_cached()` for `ComponentSetBuilder::build` ([component_set.rs](crates/source-format/src/resolve/component_set.rs)) and post-write re-resolution.
-   - Removed the upfront `resolved.is_dir()` `stat()` before `fs::read()` in `FsTree::read_file`.
-   - Added zero-`stat` `ForceIgnore::denies_with_kind(PathKindHint)` and cached parsed `ForceIgnore` instances by discovered `.forceignore` path in `resolve_converted_paths_parallel`.
-   - Replaced per-file `lstat()` + `fs::write()` with Unix `O_NOFOLLOW` writes and used `fs::copy` (APFS copy-on-write) for unchanged `FsTree` files targeting fresh empty output directories, plus parallelized directory creation.
-3. **Parallel ZIP DEFLATE** ([writer.rs](crates/source-format/src/convert/writer.rs), [transformers.rs](crates/source-format/src/convert/transformers.rs)): Compressed entries concurrently across all CPU cores using `zip::PreparedZipFile::from_data` in both `ArchiveWriter::finish` and `zip_expanded_static_resource`.
-
-| Metric | Initial Baseline | Wave 1 | Wave 2 (Current) | Total Improvement |
-| --- | ---: | ---: | ---: | ---: |
-| `registry_new/default_embedded` (Criterion) | 176.45 µs | 5.51 ns | **5.58 ns** | **~31,600x** |
-| `customLabels-multiple` (SFDX -> MDAPI dir) | 2,447.02 ms (`0.25x`) | 52.91 ms (`9.47x`) | **55.56 ms (`9.70x`)** | **44.0x** |
-| `large-org` (MDAPI -> SFDX, `7,451` files) | 1,376.99 ms (`1.79x`) | 595.18 ms (`2.94x`) | **391.39 ms (`4.52x`)** | **3.5x** |
-| `large-org` (SFDX -> MDAPI dir) | 2,188.44 ms (`0.60x`) | 310.53 ms (`3.33x`) | **186.34 ms (`5.19x`)** | **11.7x** |
-| `large-org` (SFDX -> MDAPI zip) | 2,093.07 ms (`0.60x`) | 204.98 ms (`5.52x`) | **131.77 ms (`7.21x`)** | **15.9x** |
-| `npsp` (MDAPI -> SFDX, `12,063` files) | — | 1,454.10 ms (`2.37x`) | **801.98 ms (`4.55x`)** | **1.81x vs W1** |
-| `npsp` (SFDX -> MDAPI dir, `3,927` files) | — | 957.36 ms (`2.65x`) | **530.12 ms (`5.92x`)** | **1.81x vs W1** |
-| `npsp` (SFDX -> MDAPI zip, ~9.2 MB) | — | 916.85 ms (`3.12x`) | **374.18 ms (`8.07x`)** | **2.45x vs W1** |
-| `sdr_snapshots` full suite (`cargo test`, debug) | 8.56 s | 0.44 s | **0.30 s** | **28.5x** |
-
----
-
-## Part D: Incremental `blake3` Cache Benchmarks (Real-World NPSP)
+<details>
+<summary><strong>Incremental <code>blake3</code> cache benchmarks</strong> (real-world NPSP, Apple Silicon)</summary>
 
 End-to-end release CLI timings (`./target/release/sf-source-format` with `--cache-dir`) on `SalesforceFoundation/NPSP` (`force-app`: 12,194 files on disk; MDAPI output: 3,927 files / 9,160,874-byte `.zip`; 2,329 incremental work units across 9,658 decomposed MDAPI->SFDX components).
 
@@ -144,7 +177,7 @@ Features three major optimization layers:
 
 Median wall-clock time across 5 runs per scenario (Apple Silicon, local NVMe):
 
-### 1. `SFDX -> MDAPI` Directory (3,927 output files, 2,329 work units)
+**1. `SFDX -> MDAPI` Directory (3,927 output files, 2,329 work units)**
 
 | Scenario | Units Cached / Rebuilt | Files Written / Skipped | Median | vs Uncached Cold |
 | :--- | :--- | :--- | ---: | ---: |
@@ -154,7 +187,7 @@ Median wall-clock time across 5 runs per scenario (Apple Silicon, local NVMe):
 | 1-file Apex edit (`fflib_Application.cls`) | 2,328 / 1 rebuilt | 1 written / 3,926 skipped | 347.6 ms | **2.14x** |
 | 1-file CustomField edit (`BindingObjectAlternate__c.field-meta.xml`) | 2,328 / 1 rebuilt | 1 written / 3,926 skipped | 315.5 ms | **2.36x** |
 
-### 2. `SFDX -> MDAPI` ZIP (9,160,874-byte `pkg.zip`, 2,329 work units)
+**2. `SFDX -> MDAPI` ZIP (9,160,874-byte `pkg.zip`, 2,329 work units)**
 
 Untouched archive entries are transferred with zero decompression/recompression via `zip::ZipWriter::raw_copy_file`; warm no-op runs perform zero archive writes.
 
@@ -166,7 +199,7 @@ Untouched archive entries are transferred with zero decompression/recompression 
 | 1-file Apex edit (`fflib_Application.cls`) | 2,328 / 1 rebuilt | 2 written / 3,925 skipped | 360.7 ms | **1.63x** |
 | 1-file CustomField edit (`BindingObjectAlternate__c.field-meta.xml`) | 2,328 / 1 rebuilt | 1 written / 3,926 skipped | 342.7 ms | **1.71x** |
 
-### 3. `MDAPI -> SFDX` Directory (12,063 output files, 2,329 work units)
+**3. `MDAPI -> SFDX` Directory (12,063 output files, 2,329 work units)**
 
 | Scenario | Units Cached / Rebuilt | Files Written / Skipped | Median | vs Uncached Cold |
 | :--- | :--- | :--- | ---: | ---: |
@@ -180,18 +213,27 @@ Untouched archive entries are transferred with zero decompression/recompression 
 - **Sub-200ms incremental single-file workflow**: Rebuilding and converting a single `.object` edit in `MDAPI -> SFDX` on NPSP's 12k files drops from `996.5 ms` down to `159.5 ms` (a **6.25x** speedup), writing only the single modified `.object-meta.xml` file while skipping all other 12,062 untouched XML files.
 - Note on cold CLI floor: In warm/1-file invocations, `~160–330 ms` is dominated by subprocess startup and full sourcepath/component-set discovery of 12k source files; persistent in-process library consumers bypass subprocess startup.
 
----
+</details>
 
 ## Reproducing
 
-Run the full cross-engine & cold-CLI comparison (fetches/caches `SalesforceFoundation/NPSP` under gitignored `benchmarks/.cache/npsp` and writes [benchmarks/results.json](benchmarks/results.json)):
+Run the cross-engine and cold CLI comparison (fetches and caches `SalesforceFoundation/NPSP` under the gitignored `benchmarks/.cache/npsp`) and save the run into the tracked results:
 
 ```bash
-python3 benchmarks/run-comparison.py
+python3 benchmarks/run-comparison.py            # writes the scratch file benchmarks/results.json
+node benchmarks/save-local-results.mjs          # saves it as benchmarks/results/local/<machine>.json
+node benchmarks/summarize.mjs --write-docs      # regenerates the tables above and the Overview cards
 ```
 
-Run native Rust Criterion microbenchmarks:
+Fetch the latest GitHub Actions results (run the **Benchmarks** workflow with suite `comparison` first):
 
 ```bash
-cargo bench -p sf-source-format --bench convert_bench
+node benchmarks/fetch-ci-results.mjs
+node benchmarks/summarize.mjs --write-docs
+```
+
+Run the native Criterion microbenchmarks:
+
+```bash
+cargo bench -p busbar-sf-source-format --bench convert_bench
 ```
