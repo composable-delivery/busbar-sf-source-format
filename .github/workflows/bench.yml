@@ -115,6 +115,9 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
+          # Deliberately NOT the latest LTS: SDR is a Node program, so its speed depends on the Node
+          # version. Keep this equal to the Node used for the local results in benchmarks/results.json
+          # (v22.23.x) so the Rust-vs-SDR ranges stay like-for-like. Change both together and re-measure.
           node-version: "22"
           cache: npm
           cache-dependency-path: benchmarks/node-sdr/package-lock.json

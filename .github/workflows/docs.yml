@@ -70,7 +70,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: "22"
+          node-version: "26" # current LTS; matches the Vercel build (Node 26.x) and the UX kits' CI
           registry-url: "https://npm.pkg.github.com"
           scope: "@composable-delivery"
 
