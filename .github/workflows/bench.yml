@@ -51,7 +51,7 @@ jobs:
         shell: bash
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.runners }}" = "cross-os" ]; then
-            echo 'runners=["ubuntu-latest", "macos-latest", "windows-latest"]' >> "$GITHUB_OUTPUT"
+            echo 'runners=["ubuntu-latest", "macos-latest"]' >> "$GITHUB_OUTPUT"
           else
             echo 'runners=["ubuntu-latest"]' >> "$GITHUB_OUTPUT"
           fi

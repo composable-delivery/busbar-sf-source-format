@@ -27,8 +27,9 @@ const hasComparison = (id) =>
   JSON.parse(gh('api', `repos/${repo}/actions/runs/${id}/artifacts`, '--jq', '{a:[.artifacts[].name]}'))
     .a.some((n) => n.startsWith('benchmark-comparison-results-'));
 
+// An explicit --run may be a partially failed run (e.g. one OS failed); take what succeeded.
 const run = runId
-  ? runs.find((r) => String(r.databaseId) === String(runId)) ?? { databaseId: runId }
+  ? JSON.parse(gh('run', 'view', String(runId), '--json', 'databaseId,headSha,createdAt,url'))
   : runs.find((r) => hasComparison(r.databaseId));
 if (!run) {
   console.error('No successful Benchmarks run with comparison artifacts found. Dispatch one with:\n' +
