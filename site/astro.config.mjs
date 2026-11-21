@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import { uxKitStarlightPlugin } from '@composable-delivery/generic-ux-kit/starlight';
 import { DOCS_BASE, DOCS_ORIGIN, DOCS_URL, REPO_URL } from './docs.config.mjs';
 import {
   loadStarlightPlugins,
@@ -134,12 +135,8 @@ export default defineConfig({
       description:
         'High-performance Rust engine for Salesforce MDAPI and SFDX source format conversion.',
       social: [{ icon: 'github', label: 'GitHub', href: REPO_URL }],
-      plugins: extra.plugins,
-      customCss: [
-        '@composable-delivery/generic-ux-kit/styles/tokens.css',
-        '@composable-delivery/generic-ux-kit/styles/starlight.css',
-        './src/styles.css',
-      ],
+      plugins: [uxKitStarlightPlugin(), ...extra.plugins],
+      customCss: ['./src/styles.css'],
       sidebar: [
         {
           label: 'Getting Started',

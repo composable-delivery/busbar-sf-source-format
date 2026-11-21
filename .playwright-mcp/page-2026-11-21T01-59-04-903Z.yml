@@ -1,0 +1,1610 @@
+- generic [active] [ref=f14e1]:
+  - link "Skip to content" [ref=f14e2] [cursor=pointer]:
+    - /url: "#_top"
+  - generic [ref=f14e3]:
+    - banner [ref=f14e4]:
+      - generic [ref=f14e5]:
+        - generic [ref=f14e6]:
+          - link "Visit MuseLab" [ref=f14e7] [cursor=pointer]:
+            - /url: https://muselab.com
+          - generic [aria-hidden] [ref=f14e16]: /
+          - link "sf-source-format" [ref=f14e17] [cursor=pointer]:
+            - /url: /busbar-sf-source-format
+        - button "Search ⌘ K" [ref=f14e21] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f14e24]: Search
+          - generic [ref=f14e25]:
+            - generic [ref=f14e26]: ⌘
+            - generic [ref=f14e27]: K
+        - generic [ref=f14e28]:
+          - link "GitHub" [ref=f14e30] [cursor=pointer]:
+            - /url: https://github.com/composable-delivery/busbar-sf-source-format
+          - generic [ref=f14e35]:
+            - generic [ref=f14e36]: Select theme
+            - combobox "Select theme" [ref=f14e37] [cursor=pointer]:
+              - option "Dark" [selected]
+              - option "Light"
+              - option "Auto"
+    - navigation "Main":
+      - list [ref=f14e41]:
+        - listitem [ref=f14e42]:
+          - group [ref=f14e43]:
+            - generic "Getting Started" [ref=f14e44] [cursor=pointer]
+            - list [ref=f14e48]:
+              - listitem [ref=f14e49]:
+                - link "Overview" [ref=f14e50] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/
+              - listitem [ref=f14e51]:
+                - link "Getting Started" [ref=f14e52] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/getting-started/
+        - listitem [ref=f14e53]:
+          - group [ref=f14e54]:
+            - generic "Usage & API" [ref=f14e55] [cursor=pointer]
+            - list [ref=f14e59]:
+              - listitem [ref=f14e60]:
+                - link "CLI Reference" [ref=f14e61] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/cli-reference/
+              - listitem [ref=f14e62]:
+                - link "Library API Guide" [ref=f14e63] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/library-api/
+        - listitem [ref=f14e64]:
+          - group [ref=f14e65]:
+            - generic "Design & Parity" [ref=f14e66] [cursor=pointer]
+            - list [ref=f14e70]:
+              - listitem [ref=f14e71]:
+                - link "Architecture" [ref=f14e72] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/architecture/
+              - listitem [ref=f14e73]:
+                - link "Porting Notes" [ref=f14e74] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/porting/
+              - listitem [ref=f14e75]:
+                - link "Benchmarks" [ref=f14e76] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/benchmarks/
+        - listitem [ref=f14e77]:
+          - group [ref=f14e78]:
+            - generic "Rustdoc API" [ref=f14e79] [cursor=pointer]
+            - list [ref=f14e83]:
+              - listitem [ref=f14e84]:
+                - link "busbar-sf-source-format" [ref=f14e85] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/api/busbar_sf_source_format/
+              - listitem [ref=f14e86]:
+                - link "registry" [ref=f14e87] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/api/busbar_sf_source_format/registry/
+              - listitem [ref=f14e88]:
+                - link "tree" [ref=f14e89] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/api/busbar_sf_source_format/tree/
+              - listitem [ref=f14e90]:
+                - link "xml" [ref=f14e91] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/api/busbar_sf_source_format/xml/
+              - listitem [ref=f14e92]:
+                - link "resolve" [ref=f14e93] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/api/busbar_sf_source_format/resolve/
+              - listitem [ref=f14e94]:
+                - link "convert" [ref=f14e95] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/api/busbar_sf_source_format/convert/
+    - generic [ref=f14e97]:
+      - complementary [ref=f14e98]:
+        - navigation "On this page" [ref=f14e103]:
+          - heading "On this page" [level=2] [ref=f14e104]
+          - list [ref=f14e105]:
+            - listitem [ref=f14e106]:
+              - link "Overview" [ref=f14e107] [cursor=pointer]:
+                - /url: "#_top"
+            - listitem [ref=f14e108]:
+              - link "Environment" [ref=f14e109] [cursor=pointer]:
+                - /url: "#environment"
+            - listitem [ref=f14e110]:
+              - link "Methodology" [ref=f14e111] [cursor=pointer]:
+                - /url: "#methodology"
+            - listitem [ref=f14e112]:
+              - 'link "Part A: Warm In-Process Engine Comparison" [ref=f14e113] [cursor=pointer]':
+                - /url: "#part-a-warm-in-process-engine-comparison"
+            - listitem [ref=f14e114]:
+              - 'link "Part B: Cold CLI Comparison (busbar-sf-source-format vs sf)" [ref=f14e115] [cursor=pointer]':
+                - /url: "#part-b-cold-cli-comparison-busbar-sf-source-format-vs-sf"
+            - listitem [ref=f14e116]:
+              - 'link "Part C: Native Rust Criterion Microbenchmarks" [ref=f14e117] [cursor=pointer]':
+                - /url: "#part-c-native-rust-criterion-microbenchmarks"
+            - listitem [ref=f14e118]:
+              - link "Optimization Impact (Waves 1 & 2)" [ref=f14e119] [cursor=pointer]:
+                - /url: "#optimization-impact-waves-1--2"
+              - list [ref=f14e120]:
+                - listitem [ref=f14e121]:
+                  - 'link "Wave 1: Algorithmic Complexity, Arc Sharing & Initial Parallelism" [ref=f14e122] [cursor=pointer]':
+                    - /url: "#wave-1-algorithmic-complexity-arc-sharing--initial-parallelism"
+                - listitem [ref=f14e123]:
+                  - 'link "Wave 2: Syscall Reduction, Bounded I/O Pool & Parallel ZIP DEFLATE" [ref=f14e124] [cursor=pointer]':
+                    - /url: "#wave-2-syscall-reduction-bounded-io-pool--parallel-zip-deflate"
+            - listitem [ref=f14e125]:
+              - 'link "Part D: Incremental blake3 Cache Benchmarks (Real-World NPSP)" [ref=f14e126] [cursor=pointer]':
+                - /url: "#part-d-incremental-blake3-cache-benchmarks-real-world-npsp"
+              - list [ref=f14e127]:
+                - listitem [ref=f14e128]:
+                  - link "1. SFDX -> MDAPI Directory (3,927 output files, 2,329 work units)" [ref=f14e129] [cursor=pointer]:
+                    - /url: "#1-sfdx---mdapi-directory-3927-output-files-2329-work-units"
+                - listitem [ref=f14e130]:
+                  - link "2. SFDX -> MDAPI ZIP (9,160,874-byte pkg.zip, 2,329 work units)" [ref=f14e131] [cursor=pointer]:
+                    - /url: "#2-sfdx---mdapi-zip-9160874-byte-pkgzip-2329-work-units"
+                - listitem [ref=f14e132]:
+                  - link "3. MDAPI -> SFDX Directory (12,063 output files, 2,329 work units)" [ref=f14e133] [cursor=pointer]:
+                    - /url: "#3-mdapi---sfdx-directory-12063-output-files-2329-work-units"
+            - listitem [ref=f14e134]:
+              - link "Reproducing" [ref=f14e135] [cursor=pointer]:
+                - /url: "#reproducing"
+      - main [ref=f14e137]:
+        - heading "Benchmarks" [level=1] [ref=f14e140]
+        - generic [ref=f14e142]:
+          - generic [ref=f14e143]:
+            - paragraph [ref=f14e144]:
+              - text: Benchmarks comparing this Rust workspace (
+              - code [ref=f14e145]: busbar-sf-source-format
+              - text: /
+              - code [ref=f14e146]: busbar-sf-source-format-cli
+              - text: ") against:"
+            - list [ref=f14e147]:
+              - listitem [ref=f14e148]:
+                - strong [ref=f14e149]: In-Process Conversion Engine
+                - text: ":"
+                - code [ref=f14e150]: "@salesforce/source-deploy-retrieve@13.13.0"
+                - text: (
+                - code [ref=f14e151]: benchmarks/node-sdr/bench.mjs
+                - text: ) vs Rust release harness (
+                - code [ref=f14e152]: crates/source-format/examples/bench_harness.rs
+                - text: ).
+              - listitem [ref=f14e153]:
+                - strong [ref=f14e154]: Cold CLI End-to-End
+                - text: ":"
+                - code [ref=f14e155]: "@salesforce/cli"
+                - text: (
+                - code [ref=f14e156]: sf project convert mdapi
+                - text: /
+                - code [ref=f14e157]: sf project convert source
+                - text: ) vs
+                - code [ref=f14e158]: busbar-sf-source-format-cli
+                - text: .
+              - listitem [ref=f14e159]:
+                - strong [ref=f14e160]: Microbenchmarks
+                - text: ": Rust Criterion suite ("
+                - code [ref=f14e161]: crates/source-format/benches/convert_bench.rs
+                - text: ).
+            - heading "Environment" [level=2] [ref=f14e162]
+            - paragraph [ref=f14e163]:
+              - text: Measured locally (saved with
+              - code [ref=f14e164]: benchmarks/save-local-results.mjs
+              - text: ) from
+              - link "benchmarks/results/local/apple-m2-max-macos.json" [ref=f14e165] [cursor=pointer]:
+                - /url: https://github.com/composable-delivery/busbar-sf-source-format/blob/main/benchmarks/results/local/apple-m2-max-macos.json
+              - text: ":"
+            - list [ref=f14e166]:
+              - listitem [ref=f14e167]:
+                - strong [ref=f14e168]: Machine
+                - text: ": Apple M2 Max, 12 cores, 64 GiB RAM ("
+                - code [ref=f14e169]: 68,719,476,736
+                - text: bytes)
+              - listitem [ref=f14e170]:
+                - strong [ref=f14e171]: OS
+                - text: ": macOS 14.4.1 ("
+                - code [ref=f14e172]: Build 23E224
+                - text: )
+              - listitem [ref=f14e173]:
+                - strong [ref=f14e174]: Rust
+                - text: ":"
+                - code [ref=f14e175]: rustc 1.96.0 (ac68faa20 2026-05-25)
+                - text: (
+                - code [ref=f14e176]: "--release"
+                - text: /
+                - code [ref=f14e177]: bench
+                - text: profile)
+              - listitem [ref=f14e178]:
+                - strong [ref=f14e179]: Node.js
+                - text: ":"
+                - code [ref=f14e180]: v22.23.4
+              - listitem [ref=f14e181]:
+                - strong [ref=f14e182]: Node Library
+                - text: ":"
+                - code [ref=f14e183]: "@salesforce/source-deploy-retrieve@13.13.0"
+              - listitem [ref=f14e184]:
+                - strong [ref=f14e185]: Salesforce CLI
+                - text: ":"
+                - code [ref=f14e186]: "@salesforce/cli/2.156.8 darwin-arm64 node-v22.23.4"
+            - heading "Methodology" [level=2] [ref=f14e187]
+            - list [ref=f14e188]:
+              - listitem [ref=f14e189]:
+                - strong [ref=f14e190]: Fair Timing Boundaries
+                - text: ": Output directory preparation/cleanup and output file/ZIP counting run"
+                - strong [ref=f14e191]: outside
+                - text: the timed interval in both
+                - code [ref=f14e192]: bench_harness.rs
+                - text: (
+                - code [ref=f14e193]: std::time::Instant
+                - text: ) and
+                - code [ref=f14e194]: bench.mjs
+                - text: (
+                - code [ref=f14e195]: process.hrtime.bigint()
+                - text: "). Both engines time the exact pipeline:"
+                - code [ref=f14e196]: RegistryAccess
+                - text: initialization (
+                - code [ref=f14e197]: from_project_dir
+                - text: when present),
+                - code [ref=f14e198]: "ComponentSetBuilder.build({ sourcepath })"
+                - text: ", and"
+                - code [ref=f14e199]: MetadataConverter.convert(...)
+                - text: .
+              - listitem [ref=f14e200]:
+                - strong [ref=f14e201]: Parity Verification
+                - text: ": Every in-process ("
+                - code [ref=f14e202]: 22/22
+                - text: ) and cold-CLI (
+                - code [ref=f14e203]: 8/8
+                - text: ) workload asserts output file counts (non-directory ZIP entry count for ZIP targets; recursive file count for directory targets) match between Rust and Node. On the real-world
+                - code [ref=f14e204]: SalesforceFoundation/NPSP
+                - text: dataset, a separate head-to-head byte comparison against
+                - code [ref=f14e205]: "@salesforce/source-deploy-retrieve@13.13.0"
+                - text: confirmed
+                - code [ref=f14e206]: 12,063 / 12,063
+                - text: SFDX files raw byte-identical (
+                - code [ref=f14e207]: MDAPI -> SFDX
+                - text: ),
+                - code [ref=f14e208]: 3,926 / 3,926
+                - text: non-ZIP MDAPI files raw byte-identical plus
+                - code [ref=f14e209]: staticresources/CumulusStaticResources.resource
+                - text: ’s
+                - code [ref=f14e210]: "809"
+                - text: inner files byte-identical (
+                - code [ref=f14e211]: SFDX -> MDAPI dir
+                - text: ), and all
+                - code [ref=f14e212]: 3,927 / 3,927
+                - text: entries matched inside
+                - code [ref=f14e213]: SFDX -> MDAPI zip
+                - text: .
+              - listitem [ref=f14e214]:
+                - strong [ref=f14e215]: Warmup & Iterations
+                - text: ":"
+                - list [ref=f14e216]:
+                  - listitem [ref=f14e217]:
+                    - text: "Real SDR snapshot fixtures (6 projects):"
+                    - code [ref=f14e218]: "3"
+                    - text: warmup runs +
+                    - code [ref=f14e219]: "10"
+                    - text: timed iterations (
+                    - code [ref=f14e220]: Part A
+                    - text: ).
+                  - listitem [ref=f14e221]:
+                    - text: Synthetic
+                    - code [ref=f14e222]: medium-org
+                    - text: (25
+                    - code [ref=f14e223]: CustomObject
+                    - text: s with 40 fields / 8 validation rules / 4 list views each, 100
+                    - code [ref=f14e224]: ApexClass
+                    - text: es, 15
+                    - code [ref=f14e225]: Profile
+                    - text: s, 10
+                    - code [ref=f14e226]: PermissionSet
+                    - text: s, 500
+                    - code [ref=f14e227]: CustomLabels
+                    - text: ", 10"
+                    - code [ref=f14e228]: LightningComponentBundle
+                    - text: s —
+                    - code [ref=f14e229]: 1,591
+                    - text: SFDX /
+                    - code [ref=f14e230]: "292"
+                    - text: "MDAPI files):"
+                    - code [ref=f14e231]: "2"
+                    - text: warmup +
+                    - code [ref=f14e232]: "5"
+                    - text: timed iterations (
+                    - code [ref=f14e233]: Part A
+                    - text: ),
+                    - code [ref=f14e234]: "1"
+                    - text: warmup +
+                    - code [ref=f14e235]: "5"
+                    - text: timed CLI invocations (
+                    - code [ref=f14e236]: Part B
+                    - text: ).
+                  - listitem [ref=f14e237]:
+                    - text: Synthetic
+                    - code [ref=f14e238]: large-org
+                    - text: (100
+                    - code [ref=f14e239]: CustomObject
+                    - text: s with 50 fields / 10 validation rules / 4 list views each, 400
+                    - code [ref=f14e240]: ApexClass
+                    - text: es, 30
+                    - code [ref=f14e241]: Profile
+                    - text: s, 20
+                    - code [ref=f14e242]: PermissionSet
+                    - text: s, 2,000
+                    - code [ref=f14e243]: CustomLabels
+                    - text: ", 25"
+                    - code [ref=f14e244]: LightningComponentBundle
+                    - text: s —
+                    - code [ref=f14e245]: 7,451
+                    - text: SFDX /
+                    - code [ref=f14e246]: 1,052
+                    - text: "MDAPI files):"
+                    - code [ref=f14e247]: "1"
+                    - text: warmup +
+                    - code [ref=f14e248]: "3"
+                    - text: timed iterations.
+                  - listitem [ref=f14e249]:
+                    - text: Real-world
+                    - strong [ref=f14e250]:
+                      - code [ref=f14e251]: npsp
+                    - text: (
+                    - link [ref=f14e252] [cursor=pointer]:
+                      - /url: https://github.com/SalesforceFoundation/NPSP
+                      - code [ref=f14e253]: SalesforceFoundation/NPSP
+                    - text: pinned commit
+                    - code [ref=f14e254]: f5072b44781e7f31cb396c6919cfa7d0ead0ec6a
+                    - text: ", BSD-3-Clause;"
+                    - code [ref=f14e255]: 12,194
+                    - text: raw SFDX files /
+                    - code [ref=f14e256]: 12,063
+                    - text: after
+                    - code [ref=f14e257]: .forceignore
+                    - text: /
+                    - code [ref=f14e258]: 3,927
+                    - text: MDAPI files / ~9.2 MB compressed
+                    - code [ref=f14e259]: .zip
+                    - text: across 28 metadata directories, cached in gitignored
+                    - code [ref=f14e260]: benchmarks/.cache/npsp
+                    - text: "):"
+                    - code [ref=f14e261]: "1"
+                    - text: warmup +
+                    - code [ref=f14e262]: "3"
+                    - text: timed iterations in both
+                    - code [ref=f14e263]: Part A
+                    - text: and
+                    - code [ref=f14e264]: Part B
+                    - text: .
+                  - listitem [ref=f14e265]:
+                    - text: Cold CLI (
+                    - code [ref=f14e266]: Part B
+                    - text: "): subprocess invocations with"
+                    - code [ref=f14e267]: SF_DISABLE_AUTOUPDATE=true
+                    - text: ","
+                    - code [ref=f14e268]: SF_SKIP_NEW_VERSION_CHECK=true
+                    - text: ","
+                    - code [ref=f14e269]: SF_DISABLE_TELEMETRY=true
+                    - text: ","
+                    - code [ref=f14e270]: SF_USE_PROGRESS_BAR=false
+                    - text: ","
+                    - code [ref=f14e271]: SF_NO_COLOR=true
+                    - text: .
+              - listitem [ref=f14e272]:
+                - strong [ref=f14e273]: Memory
+                - text: ": Peak RSS ("
+                - code [ref=f14e274]: maximum resident set size
+                - text: ) and
+                - code [ref=f14e275]: peak memory footprint
+                - text: measured via
+                - code [ref=f14e276]: /usr/bin/time -l
+                - text: .
+            - separator [ref=f14e277]
+            - 'heading "Part A: Warm In-Process Engine Comparison" [level=2] [ref=f14e278]'
+            - table [ref=f14e279]:
+              - rowgroup [ref=f14e280]:
+                - row [ref=f14e281]:
+                  - columnheader "Workload" [ref=f14e282]
+                  - columnheader "Rust Median (ms)" [ref=f14e283]
+                  - columnheader "Rust Mean (ms)" [ref=f14e284]
+                  - columnheader "Rust P95 (ms)" [ref=f14e285]
+                  - columnheader "Node Median (ms)" [ref=f14e286]
+                  - columnheader "Node Mean (ms)" [ref=f14e287]
+                  - columnheader "Node P95 (ms)" [ref=f14e288]
+                  - columnheader "Median Speedup" [ref=f14e289]
+                  - columnheader "Output Files (R / N)" [ref=f14e290]
+              - rowgroup [ref=f14e291]:
+                - row [ref=f14e292]:
+                  - cell [ref=f14e293]:
+                    - code [ref=f14e294]: customObjects-and-children
+                    - text: (MDAPI -> SFDX)
+                  - cell "3.15" [ref=f14e295]
+                  - cell "3.18" [ref=f14e296]
+                  - cell "3.37" [ref=f14e297]
+                  - cell "17.77" [ref=f14e298]
+                  - cell "18.81" [ref=f14e299]
+                  - cell "25.47" [ref=f14e300]
+                  - cell [ref=f14e301]:
+                    - strong [ref=f14e302]: 5.65x
+                  - cell "38 / 38" [ref=f14e303]
+                - row [ref=f14e304]:
+                  - cell [ref=f14e305]:
+                    - code [ref=f14e306]: customObjects-and-children
+                    - text: (SFDX -> MDAPI dir)
+                  - cell "2.20" [ref=f14e307]
+                  - cell "2.17" [ref=f14e308]
+                  - cell "2.29" [ref=f14e309]
+                  - cell "9.77" [ref=f14e310]
+                  - cell "10.02" [ref=f14e311]
+                  - cell "17.03" [ref=f14e312]
+                  - cell [ref=f14e313]:
+                    - strong [ref=f14e314]: 4.45x
+                  - cell "3 / 3" [ref=f14e315]
+                - row [ref=f14e316]:
+                  - cell [ref=f14e317]:
+                    - code [ref=f14e318]: customObjects-and-children
+                    - text: (SFDX -> MDAPI zip)
+                  - cell "1.58" [ref=f14e319]
+                  - cell "1.59" [ref=f14e320]
+                  - cell "1.88" [ref=f14e321]
+                  - cell "11.15" [ref=f14e322]
+                  - cell "11.37" [ref=f14e323]
+                  - cell "16.61" [ref=f14e324]
+                  - cell [ref=f14e325]:
+                    - strong [ref=f14e326]: 7.05x
+                  - cell "3 / 3" [ref=f14e327]
+                - row [ref=f14e328]:
+                  - cell [ref=f14e329]:
+                    - code [ref=f14e330]: digitalExperienceBundle
+                    - text: (MDAPI -> SFDX)
+                  - cell "15.39" [ref=f14e331]
+                  - cell "15.46" [ref=f14e332]
+                  - cell "17.06" [ref=f14e333]
+                  - cell "78.30" [ref=f14e334]
+                  - cell "78.58" [ref=f14e335]
+                  - cell "104.80" [ref=f14e336]
+                  - cell [ref=f14e337]:
+                    - strong [ref=f14e338]: 5.09x
+                  - cell "115 / 115" [ref=f14e339]
+                - row [ref=f14e340]:
+                  - cell [ref=f14e341]:
+                    - code [ref=f14e342]: digitalExperienceBundle
+                    - text: (SFDX -> MDAPI dir)
+                  - cell "13.92" [ref=f14e343]
+                  - cell "13.82" [ref=f14e344]
+                  - cell "14.27" [ref=f14e345]
+                  - cell "66.93" [ref=f14e346]
+                  - cell "68.62" [ref=f14e347]
+                  - cell "88.58" [ref=f14e348]
+                  - cell [ref=f14e349]:
+                    - strong [ref=f14e350]: 4.81x
+                  - cell "116 / 116" [ref=f14e351]
+                - row [ref=f14e352]:
+                  - cell [ref=f14e353]:
+                    - code [ref=f14e354]: digitalExperienceBundle
+                    - text: (SFDX -> MDAPI zip)
+                  - cell "4.40" [ref=f14e355]
+                  - cell "4.46" [ref=f14e356]
+                  - cell "4.82" [ref=f14e357]
+                  - cell "49.29" [ref=f14e358]
+                  - cell "48.55" [ref=f14e359]
+                  - cell "58.13" [ref=f14e360]
+                  - cell [ref=f14e361]:
+                    - strong [ref=f14e362]: 11.20x
+                  - cell "116 / 116" [ref=f14e363]
+                - row [ref=f14e364]:
+                  - cell [ref=f14e365]:
+                    - code [ref=f14e366]: staticResource
+                    - text: (MDAPI -> SFDX)
+                  - cell "2.01" [ref=f14e367]
+                  - cell "2.13" [ref=f14e368]
+                  - cell "2.57" [ref=f14e369]
+                  - cell "11.97" [ref=f14e370]
+                  - cell "12.27" [ref=f14e371]
+                  - cell "17.62" [ref=f14e372]
+                  - cell [ref=f14e373]:
+                    - strong [ref=f14e374]: 5.97x
+                  - cell "14 / 14" [ref=f14e375]
+                - row [ref=f14e376]:
+                  - cell [ref=f14e377]:
+                    - code [ref=f14e378]: staticResource
+                    - text: (SFDX -> MDAPI dir)
+                  - cell "4.57" [ref=f14e379]
+                  - cell "4.56" [ref=f14e380]
+                  - cell "4.73" [ref=f14e381]
+                  - cell "27.41" [ref=f14e382]
+                  - cell "27.90" [ref=f14e383]
+                  - cell "38.50" [ref=f14e384]
+                  - cell [ref=f14e385]:
+                    - strong [ref=f14e386]: 5.99x
+                  - cell "9 / 9" [ref=f14e387]
+                - row [ref=f14e388]:
+                  - cell [ref=f14e389]:
+                    - code [ref=f14e390]: preset-decomposedPS2
+                    - text: (MDAPI -> SFDX)
+                  - cell "2.91" [ref=f14e391]
+                  - cell "3.02" [ref=f14e392]
+                  - cell "3.40" [ref=f14e393]
+                  - cell "31.57" [ref=f14e394]
+                  - cell "32.23" [ref=f14e395]
+                  - cell "49.84" [ref=f14e396]
+                  - cell [ref=f14e397]:
+                    - strong [ref=f14e398]: 10.84x
+                  - cell "26 / 26" [ref=f14e399]
+                - row [ref=f14e400]:
+                  - cell [ref=f14e401]:
+                    - code [ref=f14e402]: preset-decomposedPS2
+                    - text: (SFDX -> MDAPI dir)
+                  - cell "2.41" [ref=f14e403]
+                  - cell "2.41" [ref=f14e404]
+                  - cell "2.59" [ref=f14e405]
+                  - cell "11.03" [ref=f14e406]
+                  - cell "12.61" [ref=f14e407]
+                  - cell "22.83" [ref=f14e408]
+                  - cell [ref=f14e409]:
+                    - strong [ref=f14e410]: 4.58x
+                  - cell "7 / 7" [ref=f14e411]
+                - row [ref=f14e412]:
+                  - cell [ref=f14e413]:
+                    - code [ref=f14e414]: preset-decomposedESR
+                    - text: (MDAPI -> SFDX)
+                  - cell "1.05" [ref=f14e415]
+                  - cell "1.04" [ref=f14e416]
+                  - cell "1.20" [ref=f14e417]
+                  - cell "8.22" [ref=f14e418]
+                  - cell "9.99" [ref=f14e419]
+                  - cell "21.13" [ref=f14e420]
+                  - cell [ref=f14e421]:
+                    - strong [ref=f14e422]: 7.86x
+                  - cell "4 / 4" [ref=f14e423]
+                - row [ref=f14e424]:
+                  - cell [ref=f14e425]:
+                    - code [ref=f14e426]: preset-decomposedESR
+                    - text: (SFDX -> MDAPI dir)
+                  - cell "0.90" [ref=f14e427]
+                  - cell "0.91" [ref=f14e428]
+                  - cell "0.98" [ref=f14e429]
+                  - cell "4.45" [ref=f14e430]
+                  - cell "4.74" [ref=f14e431]
+                  - cell "7.21" [ref=f14e432]
+                  - cell [ref=f14e433]:
+                    - strong [ref=f14e434]: 4.96x
+                  - cell "3 / 3" [ref=f14e435]
+                - row [ref=f14e436]:
+                  - cell [ref=f14e437]:
+                    - code [ref=f14e438]: customLabels-multiple
+                    - text: (SFDX -> MDAPI dir)
+                  - cell "55.56" [ref=f14e439]
+                  - cell "57.80" [ref=f14e440]
+                  - cell "69.41" [ref=f14e441]
+                  - cell "538.64" [ref=f14e442]
+                  - cell "536.93" [ref=f14e443]
+                  - cell "578.74" [ref=f14e444]
+                  - cell [ref=f14e445]:
+                    - strong [ref=f14e446]: 9.70x
+                  - cell "2 / 2" [ref=f14e447]
+                - row [ref=f14e448]:
+                  - cell [ref=f14e449]:
+                    - code [ref=f14e450]: medium-org
+                    - text: (MDAPI -> SFDX)
+                  - cell "80.58" [ref=f14e451]
+                  - cell "81.84" [ref=f14e452]
+                  - cell "89.94" [ref=f14e453]
+                  - cell "399.18" [ref=f14e454]
+                  - cell "411.38" [ref=f14e455]
+                  - cell "467.32" [ref=f14e456]
+                  - cell [ref=f14e457]:
+                    - strong [ref=f14e458]: 4.95x
+                  - cell "1591 / 1591" [ref=f14e459]
+                - row [ref=f14e460]:
+                  - cell [ref=f14e461]:
+                    - code [ref=f14e462]: medium-org
+                    - text: (SFDX -> MDAPI dir)
+                  - cell "63.00" [ref=f14e463]
+                  - cell "66.16" [ref=f14e464]
+                  - cell "83.76" [ref=f14e465]
+                  - cell "200.58" [ref=f14e466]
+                  - cell "200.89" [ref=f14e467]
+                  - cell "210.70" [ref=f14e468]
+                  - cell [ref=f14e469]:
+                    - strong [ref=f14e470]: 3.18x
+                  - cell "292 / 292" [ref=f14e471]
+                - row [ref=f14e472]:
+                  - cell [ref=f14e473]:
+                    - code [ref=f14e474]: medium-org
+                    - text: (SFDX -> MDAPI zip)
+                  - cell "28.70" [ref=f14e475]
+                  - cell "29.75" [ref=f14e476]
+                  - cell "34.26" [ref=f14e477]
+                  - cell "173.32" [ref=f14e478]
+                  - cell "171.65" [ref=f14e479]
+                  - cell "175.61" [ref=f14e480]
+                  - cell [ref=f14e481]:
+                    - strong [ref=f14e482]: 6.04x
+                  - cell "292 / 292" [ref=f14e483]
+                - row [ref=f14e484]:
+                  - cell [ref=f14e485]:
+                    - code [ref=f14e486]: large-org
+                    - text: (MDAPI -> SFDX)
+                  - cell "391.39" [ref=f14e487]
+                  - cell "403.02" [ref=f14e488]
+                  - cell "440.52" [ref=f14e489]
+                  - cell "1770.24" [ref=f14e490]
+                  - cell "1798.93" [ref=f14e491]
+                  - cell "1910.45" [ref=f14e492]
+                  - cell [ref=f14e493]:
+                    - strong [ref=f14e494]: 4.52x
+                  - cell "7451 / 7451" [ref=f14e495]
+                - row [ref=f14e496]:
+                  - cell [ref=f14e497]:
+                    - code [ref=f14e498]: large-org
+                    - text: (SFDX -> MDAPI dir)
+                  - cell "186.34" [ref=f14e499]
+                  - cell "185.89" [ref=f14e500]
+                  - cell "188.10" [ref=f14e501]
+                  - cell "966.42" [ref=f14e502]
+                  - cell "967.47" [ref=f14e503]
+                  - cell "970.02" [ref=f14e504]
+                  - cell [ref=f14e505]:
+                    - strong [ref=f14e506]: 5.19x
+                  - cell "1052 / 1052" [ref=f14e507]
+                - row [ref=f14e508]:
+                  - cell [ref=f14e509]:
+                    - code [ref=f14e510]: large-org
+                    - text: (SFDX -> MDAPI zip)
+                  - cell "131.77" [ref=f14e511]
+                  - cell "130.68" [ref=f14e512]
+                  - cell "135.48" [ref=f14e513]
+                  - cell "949.96" [ref=f14e514]
+                  - cell "951.03" [ref=f14e515]
+                  - cell "961.55" [ref=f14e516]
+                  - cell [ref=f14e517]:
+                    - strong [ref=f14e518]: 7.21x
+                  - cell "1052 / 1052" [ref=f14e519]
+                - row [ref=f14e520]:
+                  - cell [ref=f14e521]:
+                    - code [ref=f14e522]: npsp
+                    - text: (MDAPI -> SFDX)
+                  - cell "801.98" [ref=f14e523]
+                  - cell "818.12" [ref=f14e524]
+                  - cell "866.10" [ref=f14e525]
+                  - cell "3650.17" [ref=f14e526]
+                  - cell "3929.99" [ref=f14e527]
+                  - cell "4510.14" [ref=f14e528]
+                  - cell [ref=f14e529]:
+                    - strong [ref=f14e530]: 4.55x
+                  - cell "12063 / 12063" [ref=f14e531]
+                - row [ref=f14e532]:
+                  - cell [ref=f14e533]:
+                    - code [ref=f14e534]: npsp
+                    - text: (SFDX -> MDAPI dir)
+                  - cell "530.12" [ref=f14e535]
+                  - cell "530.52" [ref=f14e536]
+                  - cell "580.14" [ref=f14e537]
+                  - cell "3138.12" [ref=f14e538]
+                  - cell "3227.35" [ref=f14e539]
+                  - cell "3915.36" [ref=f14e540]
+                  - cell [ref=f14e541]:
+                    - strong [ref=f14e542]: 5.92x
+                  - cell "3927 / 3927" [ref=f14e543]
+                - row [ref=f14e544]:
+                  - cell [ref=f14e545]:
+                    - code [ref=f14e546]: npsp
+                    - text: (SFDX -> MDAPI zip)
+                  - cell "374.18" [ref=f14e547]
+                  - cell "375.74" [ref=f14e548]
+                  - cell "388.85" [ref=f14e549]
+                  - cell "3020.53" [ref=f14e550]
+                  - cell "3014.05" [ref=f14e551]
+                  - cell "3024.24" [ref=f14e552]
+                  - cell [ref=f14e553]:
+                    - strong [ref=f14e554]: 8.07x
+                  - cell "3927 / 3927" [ref=f14e555]
+            - paragraph [ref=f14e556]:
+              - strong [ref=f14e557]:
+                - text: Full-suite process memory (
+                - code [ref=f14e558]: /usr/bin/time -l
+                - text: )
+              - text: ":"
+            - list [ref=f14e559]:
+              - listitem [ref=f14e560]:
+                - strong [ref=f14e561]:
+                  - text: Rust (
+                  - code [ref=f14e562]: bench_harness
+                  - text: )
+                - text: ":"
+                - code [ref=f14e563]: 388.4 MiB
+                - text: max RSS (
+                - code [ref=f14e564]: 128.6 MiB
+                - text: peak memory footprint)
+              - listitem [ref=f14e565]:
+                - strong [ref=f14e566]:
+                  - text: Node (
+                  - code [ref=f14e567]: bench.mjs
+                  - text: )
+                - text: ":"
+                - code [ref=f14e568]: 913.1 MiB
+                - text: max RSS (
+                - code [ref=f14e569]: 460.4 MiB
+                - text: peak memory footprint) —
+                - strong [ref=f14e570]: 2.35x higher max RSS / 3.58x higher peak memory footprint
+                - text: than Rust.
+            - separator [ref=f14e571]
+            - heading [level=2] [ref=f14e572]:
+              - text: "Part B: Cold CLI Comparison ("
+              - code [ref=f14e573]: busbar-sf-source-format
+              - text: vs
+              - code [ref=f14e574]: sf
+              - text: )
+            - table [ref=f14e575]:
+              - rowgroup [ref=f14e576]:
+                - row [ref=f14e577]:
+                  - columnheader "Workload" [ref=f14e578]
+                  - columnheader "Rust CLI Median (ms)" [ref=f14e579]
+                  - columnheader "Rust CLI Mean (ms)" [ref=f14e580]
+                  - columnheader "sf CLI Median (ms)" [ref=f14e581]:
+                    - code [ref=f14e582]: sf
+                    - text: CLI Median (ms)
+                  - columnheader "sf CLI Mean (ms)" [ref=f14e583]:
+                    - code [ref=f14e584]: sf
+                    - text: CLI Mean (ms)
+                  - columnheader "Median Speedup" [ref=f14e585]
+                  - columnheader "Rust Peak RSS" [ref=f14e586]
+                  - columnheader "sf Peak RSS" [ref=f14e587]:
+                    - code [ref=f14e588]: sf
+                    - text: Peak RSS
+                  - columnheader "Output Files (R / sf)" [ref=f14e589]:
+                    - text: Output Files (R /
+                    - code [ref=f14e590]: sf
+                    - text: )
+              - rowgroup [ref=f14e591]:
+                - row [ref=f14e592]:
+                  - cell [ref=f14e593]:
+                    - code [ref=f14e594]: customObjects-and-children
+                    - text: (MDAPI -> SFDX)
+                  - cell "8.0" [ref=f14e595]
+                  - cell "8.0" [ref=f14e596]
+                  - cell "1188.0" [ref=f14e597]
+                  - cell "1187.2" [ref=f14e598]
+                  - cell [ref=f14e599]:
+                    - strong [ref=f14e600]: 148.91x
+                  - cell "6.9 MiB" [ref=f14e601]
+                  - cell "263.9 MiB" [ref=f14e602]
+                  - cell "38 / 38" [ref=f14e603]
+                - row [ref=f14e604]:
+                  - cell [ref=f14e605]:
+                    - code [ref=f14e606]: customObjects-and-children
+                    - text: (SFDX -> MDAPI)
+                  - cell "7.9" [ref=f14e607]
+                  - cell "8.6" [ref=f14e608]
+                  - cell "1189.6" [ref=f14e609]
+                  - cell "990.9" [ref=f14e610]
+                  - cell [ref=f14e611]:
+                    - strong [ref=f14e612]: 150.52x
+                  - cell "8.7 MiB" [ref=f14e613]
+                  - cell "241.8 MiB" [ref=f14e614]
+                  - cell "3 / 3" [ref=f14e615]
+                - row [ref=f14e616]:
+                  - cell [ref=f14e617]:
+                    - code [ref=f14e618]: digitalExperienceBundle
+                    - text: (MDAPI -> SFDX)
+                  - cell "22.7" [ref=f14e619]
+                  - cell "22.7" [ref=f14e620]
+                  - cell "1187.7" [ref=f14e621]
+                  - cell "1186.4" [ref=f14e622]
+                  - cell [ref=f14e623]:
+                    - strong [ref=f14e624]: 52.28x
+                  - cell "12.5 MiB" [ref=f14e625]
+                  - cell "283.4 MiB" [ref=f14e626]
+                  - cell "115 / 115" [ref=f14e627]
+                - row [ref=f14e628]:
+                  - cell [ref=f14e629]:
+                    - code [ref=f14e630]: digitalExperienceBundle
+                    - text: (SFDX -> MDAPI)
+                  - cell "19.4" [ref=f14e631]
+                  - cell "20.6" [ref=f14e632]
+                  - cell "1189.1" [ref=f14e633]
+                  - cell "1196.2" [ref=f14e634]
+                  - cell [ref=f14e635]:
+                    - strong [ref=f14e636]: 61.23x
+                  - cell "13.5 MiB" [ref=f14e637]
+                  - cell "233.3 MiB" [ref=f14e638]
+                  - cell "116 / 116" [ref=f14e639]
+                - row [ref=f14e640]:
+                  - cell [ref=f14e641]:
+                    - code [ref=f14e642]: medium-org
+                    - text: (MDAPI -> SFDX)
+                  - cell "92.5" [ref=f14e643]
+                  - cell "92.3" [ref=f14e644]
+                  - cell "5327.5" [ref=f14e645]
+                  - cell "5115.0" [ref=f14e646]
+                  - cell [ref=f14e647]:
+                    - strong [ref=f14e648]: 57.58x
+                  - cell "39.0 MiB" [ref=f14e649]
+                  - cell "676.0 MiB" [ref=f14e650]
+                  - cell "1591 / 1591" [ref=f14e651]
+                - row [ref=f14e652]:
+                  - cell [ref=f14e653]:
+                    - code [ref=f14e654]: medium-org
+                    - text: (SFDX -> MDAPI)
+                  - cell "58.6" [ref=f14e655]
+                  - cell "59.8" [ref=f14e656]
+                  - cell "2278.3" [ref=f14e657]
+                  - cell "2308.5" [ref=f14e658]
+                  - cell [ref=f14e659]:
+                    - strong [ref=f14e660]: 38.85x
+                  - cell "55.3 MiB" [ref=f14e661]
+                  - cell "261.7 MiB" [ref=f14e662]
+                  - cell "292 / 292" [ref=f14e663]
+                - row [ref=f14e664]:
+                  - cell [ref=f14e665]:
+                    - code [ref=f14e666]: npsp
+                    - text: (MDAPI -> SFDX)
+                  - cell "887.9" [ref=f14e667]
+                  - cell "918.7" [ref=f14e668]
+                  - cell "6270.8" [ref=f14e669]
+                  - cell "7618.0" [ref=f14e670]
+                  - cell [ref=f14e671]:
+                    - strong [ref=f14e672]: 7.06x
+                  - cell "178.8 MiB" [ref=f14e673]
+                  - cell "496.2 MiB" [ref=f14e674]
+                  - cell "12063 / 12063" [ref=f14e675]
+                - row [ref=f14e676]:
+                  - cell [ref=f14e677]:
+                    - code [ref=f14e678]: npsp
+                    - text: (SFDX -> MDAPI)
+                  - cell "607.2" [ref=f14e679]
+                  - cell "643.3" [ref=f14e680]
+                  - cell "4226.1" [ref=f14e681]
+                  - cell "4226.2" [ref=f14e682]
+                  - cell [ref=f14e683]:
+                    - strong [ref=f14e684]: 6.96x
+                  - cell "240.4 MiB" [ref=f14e685]
+                  - cell "458.8 MiB" [ref=f14e686]
+                  - cell "3927 / 3927" [ref=f14e687]
+            - separator [ref=f14e688]
+            - 'heading "Part C: Native Rust Criterion Microbenchmarks" [level=2] [ref=f14e689]'
+            - paragraph [ref=f14e690]:
+              - text: Captured with
+              - code [ref=f14e691]: cargo bench -p sf-source-format --bench convert_bench
+              - text: ":"
+            - table [ref=f14e692]:
+              - rowgroup [ref=f14e693]:
+                - row [ref=f14e694]:
+                  - columnheader "Group / Benchmark" [ref=f14e695]
+                  - columnheader "Low" [ref=f14e696]
+                  - columnheader "Estimate" [ref=f14e697]
+                  - columnheader "High" [ref=f14e698]
+              - rowgroup [ref=f14e699]:
+                - row [ref=f14e700]:
+                  - cell [ref=f14e701]:
+                    - code [ref=f14e702]: mdapi_to_source/customObjects-and-children
+                  - cell "3.68 ms" [ref=f14e703]
+                  - cell [ref=f14e704]:
+                    - strong [ref=f14e705]: 3.94 ms
+                  - cell "4.24 ms" [ref=f14e706]
+                - row [ref=f14e707]:
+                  - cell [ref=f14e708]:
+                    - code [ref=f14e709]: mdapi_to_source/digitalExperienceBundle
+                  - cell "13.38 ms" [ref=f14e710]
+                  - cell [ref=f14e711]:
+                    - strong [ref=f14e712]: 14.12 ms
+                  - cell "14.53 ms" [ref=f14e713]
+                - row [ref=f14e714]:
+                  - cell [ref=f14e715]:
+                    - code [ref=f14e716]: mdapi_to_source/staticResource
+                  - cell "2.24 ms" [ref=f14e717]
+                  - cell [ref=f14e718]:
+                    - strong [ref=f14e719]: 2.46 ms
+                  - cell "2.62 ms" [ref=f14e720]
+                - row [ref=f14e721]:
+                  - cell [ref=f14e722]:
+                    - code [ref=f14e723]: mdapi_to_source/preset-decomposedPS2
+                  - cell "3.08 ms" [ref=f14e724]
+                  - cell [ref=f14e725]:
+                    - strong [ref=f14e726]: 3.20 ms
+                  - cell "3.31 ms" [ref=f14e727]
+                - row [ref=f14e728]:
+                  - cell [ref=f14e729]:
+                    - code [ref=f14e730]: mdapi_to_source/preset-decomposedESR
+                  - cell "953.99 µs" [ref=f14e731]
+                  - cell [ref=f14e732]:
+                    - strong [ref=f14e733]: 971.58 µs
+                  - cell "1.00 ms" [ref=f14e734]
+                - row [ref=f14e735]:
+                  - cell [ref=f14e736]:
+                    - code [ref=f14e737]: source_to_mdapi_dir/customObjects-and-children
+                  - cell "2.09 ms" [ref=f14e738]
+                  - cell [ref=f14e739]:
+                    - strong [ref=f14e740]: 2.16 ms
+                  - cell "2.25 ms" [ref=f14e741]
+                - row [ref=f14e742]:
+                  - cell [ref=f14e743]:
+                    - code [ref=f14e744]: source_to_mdapi_dir/digitalExperienceBundle
+                  - cell "12.24 ms" [ref=f14e745]
+                  - cell [ref=f14e746]:
+                    - strong [ref=f14e747]: 12.55 ms
+                  - cell "13.00 ms" [ref=f14e748]
+                - row [ref=f14e749]:
+                  - cell [ref=f14e750]:
+                    - code [ref=f14e751]: source_to_mdapi_dir/staticResource
+                  - cell "4.31 ms" [ref=f14e752]
+                  - cell [ref=f14e753]:
+                    - strong [ref=f14e754]: 4.38 ms
+                  - cell "4.46 ms" [ref=f14e755]
+                - row [ref=f14e756]:
+                  - cell [ref=f14e757]:
+                    - code [ref=f14e758]: source_to_mdapi_dir/preset-decomposedPS2
+                  - cell "2.71 ms" [ref=f14e759]
+                  - cell [ref=f14e760]:
+                    - strong [ref=f14e761]: 2.76 ms
+                  - cell "2.81 ms" [ref=f14e762]
+                - row [ref=f14e763]:
+                  - cell [ref=f14e764]:
+                    - code [ref=f14e765]: source_to_mdapi_dir/preset-decomposedESR
+                  - cell "978.00 µs" [ref=f14e766]
+                  - cell [ref=f14e767]:
+                    - strong [ref=f14e768]: 1.01 ms
+                  - cell "1.05 ms" [ref=f14e769]
+                - row [ref=f14e770]:
+                  - cell [ref=f14e771]:
+                    - code [ref=f14e772]: source_to_mdapi_zip/customObjects-and-children
+                  - cell "1.50 ms" [ref=f14e773]
+                  - cell [ref=f14e774]:
+                    - strong [ref=f14e775]: 1.56 ms
+                  - cell "1.66 ms" [ref=f14e776]
+                - row [ref=f14e777]:
+                  - cell [ref=f14e778]:
+                    - code [ref=f14e779]: source_to_mdapi_zip/digitalExperienceBundle
+                  - cell "4.97 ms" [ref=f14e780]
+                  - cell [ref=f14e781]:
+                    - strong [ref=f14e782]: 5.21 ms
+                  - cell "5.47 ms" [ref=f14e783]
+                - row [ref=f14e784]:
+                  - cell [ref=f14e785]:
+                    - code [ref=f14e786]: source_to_mdapi_zip/staticResource
+                  - cell "4.35 ms" [ref=f14e787]
+                  - cell [ref=f14e788]:
+                    - strong [ref=f14e789]: 4.38 ms
+                  - cell "4.40 ms" [ref=f14e790]
+                - row [ref=f14e791]:
+                  - cell [ref=f14e792]:
+                    - code [ref=f14e793]: registry_new/default_embedded
+                  - cell "5.55 ns" [ref=f14e794]
+                  - cell [ref=f14e795]:
+                    - strong [ref=f14e796]: 5.58 ns
+                  - cell "5.62 ns" [ref=f14e797]
+                - row [ref=f14e798]:
+                  - cell [ref=f14e799]:
+                    - code [ref=f14e800]: registry_new/from_project_dir_default
+                  - cell "12.68 µs" [ref=f14e801]
+                  - cell [ref=f14e802]:
+                    - strong [ref=f14e803]: 12.73 µs
+                  - cell "12.78 µs" [ref=f14e804]
+                - row [ref=f14e805]:
+                  - cell [ref=f14e806]:
+                    - code [ref=f14e807]: registry_new/from_project_dir_preset
+                  - cell "205.02 µs" [ref=f14e808]
+                  - cell [ref=f14e809]:
+                    - strong [ref=f14e810]: 206.53 µs
+                  - cell "208.15 µs" [ref=f14e811]
+            - separator [ref=f14e812]
+            - heading "Optimization Impact (Waves 1 & 2)" [level=2] [ref=f14e813]
+            - heading [level=3] [ref=f14e814]:
+              - text: "Wave 1: Algorithmic Complexity,"
+              - code [ref=f14e815]: Arc
+              - text: Sharing & Initial Parallelism
+            - list [ref=f14e816]:
+              - listitem [ref=f14e817]:
+                - strong [ref=f14e818]:
+                  - code [ref=f14e819]: O(N²)
+                  - text: "->"
+                  - code [ref=f14e820]: O(N)
+                  - code [ref=f14e821]: NonDecomposed
+                  - text: (
+                  - code [ref=f14e822]: CustomLabels
+                  - text: ) recomposition
+                - text: (
+                - link "finalizers.rs" [ref=f14e823] [cursor=pointer]:
+                  - /url: https://github.com/composable-delivery/busbar-sf-source-format/blob/main/crates/source-format/src/convert/finalizers.rs
+                - text: "): Indexed each parsed parent XML document once in a single pass instead of cloning the full parent"
+                - code [ref=f14e824]: XmlDocument
+                - text: and linearly scanning for each child, reused a thread-local
+                - code [ref=f14e825]: feruca::Collator
+                - text: with pre-extracted sort keys, and parallelized recomposition entries with
+                - code [ref=f14e826]: rayon
+                - text: .
+              - listitem [ref=f14e827]:
+                - strong [ref=f14e828]:
+                  - code [ref=f14e829]: Arc
+                  - text: "-shared registries &"
+                  - code [ref=f14e830]: .forceignore
+                  - text: + indexed strict-folder lookup
+                - text: (
+                - link "access.rs" [ref=f14e831] [cursor=pointer]:
+                  - /url: https://github.com/composable-delivery/busbar-sf-source-format/blob/main/crates/source-format/src/registry/access.rs
+                - text: ","
+                - link "variants.rs" [ref=f14e832] [cursor=pointer]:
+                  - /url: https://github.com/composable-delivery/busbar-sf-source-format/blob/main/crates/source-format/src/registry/variants.rs
+                - text: ","
+                - link "force_ignore.rs" [ref=f14e833] [cursor=pointer]:
+                  - /url: https://github.com/composable-delivery/busbar-sf-source-format/blob/main/crates/source-format/src/tree/force_ignore.rs
+                - text: ","
+                - link "resolver.rs" [ref=f14e834] [cursor=pointer]:
+                  - /url: https://github.com/composable-delivery/busbar-sf-source-format/blob/main/crates/source-format/src/resolve/resolver.rs
+                - text: "): Eliminated deep copies of the 543-type"
+                - code [ref=f14e835]: MetadataRegistry
+                - text: and
+                - code [ref=f14e836]: Gitignore
+                - text: matchers across components, fast-pathed
+                - code [ref=f14e837]: from_project_dir
+                - text: when no presets/customizations exist, and indexed
+                - code [ref=f14e838]: strictDirectoryNames
+                - text: by
+                - code [ref=f14e839]: directoryName
+                - text: without per-file
+                - code [ref=f14e840]: Vec
+                - text: allocations.
+              - listitem [ref=f14e841]:
+                - strong [ref=f14e842]:
+                  - text: Single-buffer XML serialization &
+                  - code [ref=f14e843]: FirstOnly
+                  - text: scope
+                - text: (
+                - link "serialize.rs" [ref=f14e844] [cursor=pointer]:
+                  - /url: https://github.com/composable-delivery/busbar-sf-source-format/blob/main/crates/source-format/src/xml/serialize.rs
+                - text: ","
+                - link "types.rs" [ref=f14e845] [cursor=pointer]:
+                  - /url: https://github.com/composable-delivery/busbar-sf-source-format/blob/main/crates/source-format/src/convert/types.rs
+                - text: ","
+                - link "converter.rs" [ref=f14e846] [cursor=pointer]:
+                  - /url: https://github.com/composable-delivery/busbar-sf-source-format/blob/main/crates/source-format/src/convert/converter.rs
+                - text: "): Serialized into a single pre-sized buffer and matched SDR’s"
+                - code [ref=f14e847]: FirstOnly
+                - text: post-write re-resolution scope.
+            - 'heading "Wave 2: Syscall Reduction, Bounded I/O Pool & Parallel ZIP DEFLATE" [level=3] [ref=f14e848]'
+            - list [ref=f14e849]:
+              - listitem [ref=f14e850]:
+                - strong [ref=f14e851]: Bounded filesystem I/O pool
+                - text: (
+                - link "io_pool.rs" [ref=f14e852] [cursor=pointer]:
+                  - /url: https://github.com/composable-delivery/busbar-sf-source-format/blob/main/crates/source-format/src/io_pool.rs
+                - text: "): Separated disk I/O onto a bounded Rayon pool ("
+                - code [ref=f14e853]: min(cores, 4)
+                - text: on macOS) to eliminate APFS VFS/vnode lock contention observed when 12 threads hammered
+                - code [ref=f14e854]: open
+                - text: /
+                - code [ref=f14e855]: write
+                - text: /
+                - code [ref=f14e856]: stat
+                - text: concurrently, while leaving pure CPU work on the global pool.
+              - listitem [ref=f14e857]:
+                - strong [ref=f14e858]:
+                  - text: Syscall &
+                  - code [ref=f14e859]: .forceignore
+                  - text: elimination in
+                  - code [ref=f14e860]: tree
+                  - text: and
+                  - code [ref=f14e861]: StandardWriter
+                - text: (
+                - link "fs_tree.rs" [ref=f14e862] [cursor=pointer]:
+                  - /url: https://github.com/composable-delivery/busbar-sf-source-format/blob/main/crates/source-format/src/tree/fs_tree.rs
+                - text: ","
+                - link "force_ignore.rs" [ref=f14e863] [cursor=pointer]:
+                  - /url: https://github.com/composable-delivery/busbar-sf-source-format/blob/main/crates/source-format/src/tree/force_ignore.rs
+                - text: ","
+                - link "tree.rs" [ref=f14e864] [cursor=pointer]:
+                  - /url: https://github.com/composable-delivery/busbar-sf-source-format/blob/main/crates/source-format/src/tree/tree.rs
+                - text: ","
+                - link "writer.rs" [ref=f14e865] [cursor=pointer]:
+                  - /url: https://github.com/composable-delivery/busbar-sf-source-format/blob/main/crates/source-format/src/convert/writer.rs
+                - text: "):"
+                - list [ref=f14e866]:
+                  - listitem [ref=f14e867]:
+                    - text: Replaced per-entry
+                    - code [ref=f14e868]: is_directory()
+                    - text: calls with
+                    - code [ref=f14e869]: DirEntry::file_type()
+                    - text: (
+                    - code [ref=f14e870]: DirEntryInfo
+                    - text: ) and added read-through
+                    - code [ref=f14e871]: FsTree::new_cached()
+                    - text: for
+                    - code [ref=f14e872]: ComponentSetBuilder::build
+                    - text: (
+                    - link "component_set.rs" [ref=f14e873] [cursor=pointer]:
+                      - /url: https://github.com/composable-delivery/busbar-sf-source-format/blob/main/crates/source-format/src/resolve/component_set.rs
+                    - text: ) and post-write re-resolution.
+                  - listitem [ref=f14e874]:
+                    - text: Removed the upfront
+                    - code [ref=f14e875]: resolved.is_dir()
+                    - code [ref=f14e876]: stat()
+                    - text: before
+                    - code [ref=f14e877]: fs::read()
+                    - text: in
+                    - code [ref=f14e878]: FsTree::read_file
+                    - text: .
+                  - listitem [ref=f14e879]:
+                    - text: Added zero-
+                    - code [ref=f14e880]: stat
+                    - code [ref=f14e881]: ForceIgnore::denies_with_kind(PathKindHint)
+                    - text: and cached parsed
+                    - code [ref=f14e882]: ForceIgnore
+                    - text: instances by discovered
+                    - code [ref=f14e883]: .forceignore
+                    - text: path in
+                    - code [ref=f14e884]: resolve_converted_paths_parallel
+                    - text: .
+                  - listitem [ref=f14e885]:
+                    - text: Replaced per-file
+                    - code [ref=f14e886]: lstat()
+                    - text: +
+                    - code [ref=f14e887]: fs::write()
+                    - text: with Unix
+                    - code [ref=f14e888]: O_NOFOLLOW
+                    - text: writes and used
+                    - code [ref=f14e889]: fs::copy
+                    - text: (APFS copy-on-write) for unchanged
+                    - code [ref=f14e890]: FsTree
+                    - text: files targeting fresh empty output directories, plus parallelized directory creation.
+              - listitem [ref=f14e891]:
+                - strong [ref=f14e892]: Parallel ZIP DEFLATE
+                - text: (
+                - link "writer.rs" [ref=f14e893] [cursor=pointer]:
+                  - /url: https://github.com/composable-delivery/busbar-sf-source-format/blob/main/crates/source-format/src/convert/writer.rs
+                - text: ","
+                - link "transformers.rs" [ref=f14e894] [cursor=pointer]:
+                  - /url: https://github.com/composable-delivery/busbar-sf-source-format/blob/main/crates/source-format/src/convert/transformers.rs
+                - text: "): Compressed entries concurrently across all CPU cores using"
+                - code [ref=f14e895]: zip::PreparedZipFile::from_data
+                - text: in both
+                - code [ref=f14e896]: ArchiveWriter::finish
+                - text: and
+                - code [ref=f14e897]: zip_expanded_static_resource
+                - text: .
+            - table [ref=f14e898]:
+              - rowgroup [ref=f14e899]:
+                - row [ref=f14e900]:
+                  - columnheader "Metric" [ref=f14e901]
+                  - columnheader "Initial Baseline" [ref=f14e902]
+                  - columnheader "Wave 1" [ref=f14e903]
+                  - columnheader "Wave 2 (Current)" [ref=f14e904]
+                  - columnheader "Total Improvement" [ref=f14e905]
+              - rowgroup [ref=f14e906]:
+                - row [ref=f14e907]:
+                  - cell [ref=f14e908]:
+                    - code [ref=f14e909]: registry_new/default_embedded
+                    - text: (Criterion)
+                  - cell "176.45 µs" [ref=f14e910]
+                  - cell "5.51 ns" [ref=f14e911]
+                  - cell [ref=f14e912]:
+                    - strong [ref=f14e913]: 5.58 ns
+                  - cell [ref=f14e914]:
+                    - strong [ref=f14e915]: ~31,600x
+                - row [ref=f14e916]:
+                  - cell [ref=f14e917]:
+                    - code [ref=f14e918]: customLabels-multiple
+                    - text: (SFDX -> MDAPI dir)
+                  - cell [ref=f14e919]:
+                    - text: 2,447.02 ms (
+                    - code [ref=f14e920]: 0.25x
+                    - text: )
+                  - cell [ref=f14e921]:
+                    - text: 52.91 ms (
+                    - code [ref=f14e922]: 9.47x
+                    - text: )
+                  - cell [ref=f14e923]:
+                    - strong [ref=f14e924]:
+                      - text: 55.56 ms (
+                      - code [ref=f14e925]: 9.70x
+                      - text: )
+                  - cell [ref=f14e926]:
+                    - strong [ref=f14e927]: 44.0x
+                - row [ref=f14e928]:
+                  - cell [ref=f14e929]:
+                    - code [ref=f14e930]: large-org
+                    - text: (MDAPI -> SFDX,
+                    - code [ref=f14e931]: 7,451
+                    - text: files)
+                  - cell [ref=f14e932]:
+                    - text: 1,376.99 ms (
+                    - code [ref=f14e933]: 1.79x
+                    - text: )
+                  - cell [ref=f14e934]:
+                    - text: 595.18 ms (
+                    - code [ref=f14e935]: 2.94x
+                    - text: )
+                  - cell [ref=f14e936]:
+                    - strong [ref=f14e937]:
+                      - text: 391.39 ms (
+                      - code [ref=f14e938]: 4.52x
+                      - text: )
+                  - cell [ref=f14e939]:
+                    - strong [ref=f14e940]: 3.5x
+                - row [ref=f14e941]:
+                  - cell [ref=f14e942]:
+                    - code [ref=f14e943]: large-org
+                    - text: (SFDX -> MDAPI dir)
+                  - cell [ref=f14e944]:
+                    - text: 2,188.44 ms (
+                    - code [ref=f14e945]: 0.60x
+                    - text: )
+                  - cell [ref=f14e946]:
+                    - text: 310.53 ms (
+                    - code [ref=f14e947]: 3.33x
+                    - text: )
+                  - cell [ref=f14e948]:
+                    - strong [ref=f14e949]:
+                      - text: 186.34 ms (
+                      - code [ref=f14e950]: 5.19x
+                      - text: )
+                  - cell [ref=f14e951]:
+                    - strong [ref=f14e952]: 11.7x
+                - row [ref=f14e953]:
+                  - cell [ref=f14e954]:
+                    - code [ref=f14e955]: large-org
+                    - text: (SFDX -> MDAPI zip)
+                  - cell [ref=f14e956]:
+                    - text: 2,093.07 ms (
+                    - code [ref=f14e957]: 0.60x
+                    - text: )
+                  - cell [ref=f14e958]:
+                    - text: 204.98 ms (
+                    - code [ref=f14e959]: 5.52x
+                    - text: )
+                  - cell [ref=f14e960]:
+                    - strong [ref=f14e961]:
+                      - text: 131.77 ms (
+                      - code [ref=f14e962]: 7.21x
+                      - text: )
+                  - cell [ref=f14e963]:
+                    - strong [ref=f14e964]: 15.9x
+                - row [ref=f14e965]:
+                  - cell [ref=f14e966]:
+                    - code [ref=f14e967]: npsp
+                    - text: (MDAPI -> SFDX,
+                    - code [ref=f14e968]: 12,063
+                    - text: files)
+                  - cell "—" [ref=f14e969]
+                  - cell [ref=f14e970]:
+                    - text: 1,454.10 ms (
+                    - code [ref=f14e971]: 2.37x
+                    - text: )
+                  - cell [ref=f14e972]:
+                    - strong [ref=f14e973]:
+                      - text: 801.98 ms (
+                      - code [ref=f14e974]: 4.55x
+                      - text: )
+                  - cell [ref=f14e975]:
+                    - strong [ref=f14e976]: 1.81x vs W1
+                - row [ref=f14e977]:
+                  - cell [ref=f14e978]:
+                    - code [ref=f14e979]: npsp
+                    - text: (SFDX -> MDAPI dir,
+                    - code [ref=f14e980]: 3,927
+                    - text: files)
+                  - cell "—" [ref=f14e981]
+                  - cell [ref=f14e982]:
+                    - text: 957.36 ms (
+                    - code [ref=f14e983]: 2.65x
+                    - text: )
+                  - cell [ref=f14e984]:
+                    - strong [ref=f14e985]:
+                      - text: 530.12 ms (
+                      - code [ref=f14e986]: 5.92x
+                      - text: )
+                  - cell [ref=f14e987]:
+                    - strong [ref=f14e988]: 1.81x vs W1
+                - row [ref=f14e989]:
+                  - cell [ref=f14e990]:
+                    - code [ref=f14e991]: npsp
+                    - text: (SFDX -> MDAPI zip, ~9.2 MB)
+                  - cell "—" [ref=f14e992]
+                  - cell [ref=f14e993]:
+                    - text: 916.85 ms (
+                    - code [ref=f14e994]: 3.12x
+                    - text: )
+                  - cell [ref=f14e995]:
+                    - strong [ref=f14e996]:
+                      - text: 374.18 ms (
+                      - code [ref=f14e997]: 8.07x
+                      - text: )
+                  - cell [ref=f14e998]:
+                    - strong [ref=f14e999]: 2.45x vs W1
+                - row [ref=f14e1000]:
+                  - cell [ref=f14e1001]:
+                    - code [ref=f14e1002]: sdr_snapshots
+                    - text: full suite (
+                    - code [ref=f14e1003]: cargo test
+                    - text: ", debug)"
+                  - cell "8.56 s" [ref=f14e1004]
+                  - cell "0.44 s" [ref=f14e1005]
+                  - cell [ref=f14e1006]:
+                    - strong [ref=f14e1007]: 0.30 s
+                  - cell [ref=f14e1008]:
+                    - strong [ref=f14e1009]: 28.5x
+            - separator [ref=f14e1010]
+            - heading [level=2] [ref=f14e1011]:
+              - text: "Part D: Incremental"
+              - code [ref=f14e1012]: blake3
+              - text: Cache Benchmarks (Real-World NPSP)
+            - paragraph [ref=f14e1013]:
+              - text: End-to-end release CLI timings (
+              - code [ref=f14e1014]: ./target/release/sf-source-format
+              - text: with
+              - code [ref=f14e1015]: "--cache-dir"
+              - text: ) on
+              - code [ref=f14e1016]: SalesforceFoundation/NPSP
+              - text: (
+              - code [ref=f14e1017]: force-app
+              - text: ": 12,194 files on disk; MDAPI output: 3,927 files / 9,160,874-byte"
+              - code [ref=f14e1018]: .zip
+              - text: ; 2,329 incremental work units across 9,658 decomposed MDAPI->SFDX components).
+            - paragraph [ref=f14e1019]: "Features three major optimization layers:"
+            - list [ref=f14e1020]:
+              - listitem [ref=f14e1021]:
+                - strong [ref=f14e1022]: Content-diffed decomposed writes
+                - text: ": Modifying an input recomposed/decomposed component (such as an"
+                - code [ref=f14e1023]: .object
+                - text: in
+                - code [ref=f14e1024]: MDAPI -> SFDX
+                - text: ) hashes candidates in parallel against valid on-disk outputs; unchanged child files are preserved without rewriting, dropping child write volume to only modified files (e.g.
+                - strong [ref=f14e1025]: 1 written / 12,062 skipped
+                - text: instead of rewriting all 29 object files).
+              - listitem [ref=f14e1026]:
+                - strong [ref=f14e1027]:
+                  - text: Git
+                  - code [ref=f14e1028]: .git/index
+                  - text: blob OID reuse
+                - text: ": Cold cache builds parse"
+                - code [ref=f14e1029]: .git/index
+                - text: (v2, v3, and v4 prefix-compressed) in pure Rust to reuse Git’s blob OIDs for stat-clean tracked files, bypassing disk reads and hashing on cold repository builds when safe (no
+                - code [ref=f14e1030]: .gitattributes
+                - text: ", CRLF filters, or racy timestamps)."
+              - listitem [ref=f14e1031]:
+                - strong [ref=f14e1032]: Cold/warm parallelism & syscall reduction
+                - text: ": Redundant parent directory walks on recomposition components are eliminated, input collection and digests are parallelized on Rayon, and parent symlink validations are deduplicated per directory."
+            - paragraph [ref=f14e1033]: "Median wall-clock time across 5 runs per scenario (Apple Silicon, local NVMe):"
+            - heading [level=3] [ref=f14e1034]:
+              - text: "1."
+              - code [ref=f14e1035]: SFDX -> MDAPI
+              - text: Directory (3,927 output files, 2,329 work units)
+            - table [ref=f14e1036]:
+              - rowgroup [ref=f14e1037]:
+                - row [ref=f14e1038]:
+                  - columnheader "Scenario" [ref=f14e1039]
+                  - columnheader "Units Cached / Rebuilt" [ref=f14e1040]
+                  - columnheader "Files Written / Skipped" [ref=f14e1041]
+                  - columnheader "Median" [ref=f14e1042]
+                  - columnheader "vs Uncached Cold" [ref=f14e1043]
+              - rowgroup [ref=f14e1044]:
+                - row [ref=f14e1045]:
+                  - cell [ref=f14e1046]:
+                    - text: Cold, uncached (
+                    - code [ref=f14e1047]: "--exact-dir"
+                    - text: )
+                  - cell "—" [ref=f14e1048]
+                  - cell "3,927 written" [ref=f14e1049]
+                  - cell "744.5 ms" [ref=f14e1050]
+                  - cell "1.00x" [ref=f14e1051]
+                - row [ref=f14e1052]:
+                  - cell [ref=f14e1053]:
+                    - text: Cold, populate cache (
+                    - code [ref=f14e1054]: "--cache-dir"
+                    - text: ", Git OID reuse)"
+                  - cell "0 / 2,329 rebuilt" [ref=f14e1055]
+                  - cell "3,927 written / 0 skipped" [ref=f14e1056]
+                  - cell "929.8 ms" [ref=f14e1057]
+                  - cell "0.80x" [ref=f14e1058]
+                - row [ref=f14e1059]:
+                  - cell "Warm no-op (0 edits)" [ref=f14e1060]
+                  - cell "2,329 / 0 rebuilt" [ref=f14e1061]
+                  - cell "0 written / 3,927 skipped" [ref=f14e1062]
+                  - cell "330.4 ms" [ref=f14e1063]
+                  - cell [ref=f14e1064]:
+                    - strong [ref=f14e1065]: 2.25x
+                - row [ref=f14e1066]:
+                  - cell [ref=f14e1067]:
+                    - text: 1-file Apex edit (
+                    - code [ref=f14e1068]: fflib_Application.cls
+                    - text: )
+                  - cell "2,328 / 1 rebuilt" [ref=f14e1069]
+                  - cell "1 written / 3,926 skipped" [ref=f14e1070]
+                  - cell "347.6 ms" [ref=f14e1071]
+                  - cell [ref=f14e1072]:
+                    - strong [ref=f14e1073]: 2.14x
+                - row [ref=f14e1074]:
+                  - cell [ref=f14e1075]:
+                    - text: 1-file CustomField edit (
+                    - code [ref=f14e1076]: BindingObjectAlternate__c.field-meta.xml
+                    - text: )
+                  - cell "2,328 / 1 rebuilt" [ref=f14e1077]
+                  - cell "1 written / 3,926 skipped" [ref=f14e1078]
+                  - cell "315.5 ms" [ref=f14e1079]
+                  - cell [ref=f14e1080]:
+                    - strong [ref=f14e1081]: 2.36x
+            - heading [level=3] [ref=f14e1082]:
+              - text: "2."
+              - code [ref=f14e1083]: SFDX -> MDAPI
+              - text: ZIP (9,160,874-byte
+              - code [ref=f14e1084]: pkg.zip
+              - text: ", 2,329 work units)"
+            - paragraph [ref=f14e1085]:
+              - text: Untouched archive entries are transferred with zero decompression/recompression via
+              - code [ref=f14e1086]: zip::ZipWriter::raw_copy_file
+              - text: ; warm no-op runs perform zero archive writes.
+            - table [ref=f14e1087]:
+              - rowgroup [ref=f14e1088]:
+                - row [ref=f14e1089]:
+                  - columnheader "Scenario" [ref=f14e1090]
+                  - columnheader "Units Cached / Rebuilt" [ref=f14e1091]
+                  - columnheader "Entries Written / Skipped" [ref=f14e1092]
+                  - columnheader "Median" [ref=f14e1093]
+                  - columnheader "vs Uncached Cold" [ref=f14e1094]
+              - rowgroup [ref=f14e1095]:
+                - row [ref=f14e1096]:
+                  - cell [ref=f14e1097]:
+                    - text: Cold, uncached (
+                    - code [ref=f14e1098]: "--zip"
+                    - text: )
+                  - cell "—" [ref=f14e1099]
+                  - cell "3,927 written" [ref=f14e1100]
+                  - cell "587.1 ms" [ref=f14e1101]
+                  - cell "1.00x" [ref=f14e1102]
+                - row [ref=f14e1103]:
+                  - cell [ref=f14e1104]:
+                    - text: Cold, populate cache (
+                    - code [ref=f14e1105]: "--zip --cache-dir"
+                    - text: ", Git OID reuse)"
+                  - cell "0 / 2,329 rebuilt" [ref=f14e1106]
+                  - cell "3,927 written / 0 skipped" [ref=f14e1107]
+                  - cell "730.8 ms" [ref=f14e1108]
+                  - cell "0.80x" [ref=f14e1109]
+                - row [ref=f14e1110]:
+                  - cell "Warm no-op (0 edits)" [ref=f14e1111]
+                  - cell "2,329 / 0 rebuilt" [ref=f14e1112]
+                  - cell "0 written / 3,927 skipped" [ref=f14e1113]
+                  - cell "310.2 ms" [ref=f14e1114]
+                  - cell [ref=f14e1115]:
+                    - strong [ref=f14e1116]: 1.89x
+                - row [ref=f14e1117]:
+                  - cell [ref=f14e1118]:
+                    - text: 1-file Apex edit (
+                    - code [ref=f14e1119]: fflib_Application.cls
+                    - text: )
+                  - cell "2,328 / 1 rebuilt" [ref=f14e1120]
+                  - cell "2 written / 3,925 skipped" [ref=f14e1121]
+                  - cell "360.7 ms" [ref=f14e1122]
+                  - cell [ref=f14e1123]:
+                    - strong [ref=f14e1124]: 1.63x
+                - row [ref=f14e1125]:
+                  - cell [ref=f14e1126]:
+                    - text: 1-file CustomField edit (
+                    - code [ref=f14e1127]: BindingObjectAlternate__c.field-meta.xml
+                    - text: )
+                  - cell "2,328 / 1 rebuilt" [ref=f14e1128]
+                  - cell "1 written / 3,926 skipped" [ref=f14e1129]
+                  - cell "342.7 ms" [ref=f14e1130]
+                  - cell [ref=f14e1131]:
+                    - strong [ref=f14e1132]: 1.71x
+            - heading [level=3] [ref=f14e1133]:
+              - text: "3."
+              - code [ref=f14e1134]: MDAPI -> SFDX
+              - text: Directory (12,063 output files, 2,329 work units)
+            - table [ref=f14e1135]:
+              - rowgroup [ref=f14e1136]:
+                - row [ref=f14e1137]:
+                  - columnheader "Scenario" [ref=f14e1138]
+                  - columnheader "Units Cached / Rebuilt" [ref=f14e1139]
+                  - columnheader "Files Written / Skipped" [ref=f14e1140]
+                  - columnheader "Median" [ref=f14e1141]
+                  - columnheader "vs Uncached Cold" [ref=f14e1142]
+              - rowgroup [ref=f14e1143]:
+                - row [ref=f14e1144]:
+                  - cell [ref=f14e1145]:
+                    - text: Cold, uncached (
+                    - code [ref=f14e1146]: "--exact-dir"
+                    - text: )
+                  - cell "—" [ref=f14e1147]
+                  - cell "12,063 written" [ref=f14e1148]
+                  - cell "996.5 ms" [ref=f14e1149]
+                  - cell "1.00x" [ref=f14e1150]
+                - row [ref=f14e1151]:
+                  - cell [ref=f14e1152]:
+                    - text: Cold, populate cache (
+                    - code [ref=f14e1153]: "--cache-dir"
+                    - text: )
+                  - cell "0 / 2,329 rebuilt" [ref=f14e1154]
+                  - cell "12,063 written / 0 skipped" [ref=f14e1155]
+                  - cell "1,153.5 ms" [ref=f14e1156]
+                  - cell "0.86x" [ref=f14e1157]
+                - row [ref=f14e1158]:
+                  - cell "Warm no-op (0 edits)" [ref=f14e1159]
+                  - cell "2,329 / 0 rebuilt" [ref=f14e1160]
+                  - cell "0 written / 12,063 skipped" [ref=f14e1161]
+                  - cell "207.4 ms" [ref=f14e1162]
+                  - cell [ref=f14e1163]:
+                    - strong [ref=f14e1164]: 4.80x
+                - row [ref=f14e1165]:
+                  - cell [ref=f14e1166]:
+                    - text: 1-file
+                    - code [ref=f14e1167]: .object
+                    - text: edit (
+                    - code [ref=f14e1168]: objects/Account.object
+                    - text: )
+                  - cell "2,328 / 1 rebuilt" [ref=f14e1169]
+                  - cell [ref=f14e1170]:
+                    - strong [ref=f14e1171]: 1 written / 12,062 skipped
+                  - cell [ref=f14e1172]:
+                    - strong [ref=f14e1173]: 159.5 ms
+                  - cell [ref=f14e1174]:
+                    - strong [ref=f14e1175]: 6.25x
+            - list [ref=f14e1176]:
+              - listitem [ref=f14e1177]:
+                - strong [ref=f14e1178]: Cache footprint
+                - text: ":"
+                - code [ref=f14e1179]: 3.46 MB
+                - text: –
+                - code [ref=f14e1180]: 3.77 MB
+                - text: per
+                - code [ref=f14e1181]: .sfsfc
+                - text: binary index (
+                - code [ref=f14e1182]: 3,586,425 B
+                - text: for
+                - code [ref=f14e1183]: SFDX -> MDAPI dir
+                - text: ","
+                - code [ref=f14e1184]: 3,770,729 B
+                - text: for
+                - code [ref=f14e1185]: SFDX -> MDAPI zip
+                - text: ", and"
+                - code [ref=f14e1186]: 3,461,086 B
+                - text: for
+                - code [ref=f14e1187]: MDAPI -> SFDX dir
+                - text: ).
+              - listitem [ref=f14e1188]:
+                - strong [ref=f14e1189]: Byte-for-byte parity
+                - text: ":"
+                - strong [ref=f14e1190]: 0 byte diffs
+                - text: vs cold uncached conversion across every tested scenario (cold cached, warm no-op, 1-file Apex edit, 1-file CustomField recomposition edit, and
+                - code [ref=f14e1191]: MDAPI -> SFDX
+                - text: 1-file
+                - code [ref=f14e1192]: Account.object
+                - text: edit).
+              - listitem [ref=f14e1193]:
+                - strong [ref=f14e1194]: Sub-200ms incremental single-file workflow
+                - text: ": Rebuilding and converting a single"
+                - code [ref=f14e1195]: .object
+                - text: edit in
+                - code [ref=f14e1196]: MDAPI -> SFDX
+                - text: on NPSP’s 12k files drops from
+                - code [ref=f14e1197]: 996.5 ms
+                - text: down to
+                - code [ref=f14e1198]: 159.5 ms
+                - text: (a
+                - strong [ref=f14e1199]: 6.25x
+                - text: speedup), writing only the single modified
+                - code [ref=f14e1200]: .object-meta.xml
+                - text: file while skipping all other 12,062 untouched XML files.
+              - listitem [ref=f14e1201]:
+                - text: "Note on cold CLI floor: In warm/1-file invocations,"
+                - code [ref=f14e1202]: ~160–330 ms
+                - text: is dominated by subprocess startup and full sourcepath/component-set discovery of 12k source files; persistent in-process library consumers bypass subprocess startup.
+            - separator [ref=f14e1203]
+            - heading "Reproducing" [level=2] [ref=f14e1204]
+            - paragraph [ref=f14e1205]:
+              - text: Run the full cross-engine & cold-CLI comparison (fetches/caches
+              - code [ref=f14e1206]: SalesforceFoundation/NPSP
+              - text: under gitignored
+              - code [ref=f14e1207]: benchmarks/.cache/npsp
+              - text: and writes
+              - link "benchmarks/results.json" [ref=f14e1208] [cursor=pointer]:
+                - /url: https://github.com/composable-delivery/busbar-sf-source-format/blob/main/benchmarks/results.json
+              - text: "):"
+            - figure "Terminal window" [ref=f14e1210]:
+              - code [ref=f14e1215]:
+                - generic [ref=f14e1216]: python3 benchmarks/run-comparison.py
+              - button "Copy to clipboard" [ref=f14e1219] [cursor=pointer]
+            - paragraph [ref=f14e1221]: "Run native Rust Criterion microbenchmarks:"
+            - figure "Terminal window" [ref=f14e1223]:
+              - code [ref=f14e1228]:
+                - generic [ref=f14e1229]: cargo bench -p sf-source-format --bench convert_bench
+              - button "Copy to clipboard" [ref=f14e1232] [cursor=pointer]
+          - generic [ref=f14e1234]:
+            - generic [ref=f14e1235]:
+              - link [ref=f14e1236] [cursor=pointer]:
+                - /url: /busbar-sf-source-format/porting/
+                - generic [ref=f14e1239]: PreviousPorting Notes
+              - link [ref=f14e1240] [cursor=pointer]:
+                - /url: /busbar-sf-source-format/api/busbar_sf_source_format/
+                - generic [ref=f14e1243]: Nextbusbar-sf-source-format
+            - generic [ref=f14e1244]:
+              - generic [ref=f14e1245]:
+                - generic [ref=f14e1246]: Crafted by
+                - link [ref=f14e1247] [cursor=pointer]:
+                  - /url: https://muselab.com
+                  - strong [ref=f14e1248]: MuseLab
+                - generic [ref=f14e1249]: © 2026. All rights reserved.
+              - generic [ref=f14e1250]:
+                - link "About MuseLab" [ref=f14e1251] [cursor=pointer]:
+                  - /url: https://muselab.com
+                - link "Composable Delivery" [ref=f14e1252] [cursor=pointer]:
+                  - /url: https://github.com/composable-delivery

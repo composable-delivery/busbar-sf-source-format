@@ -1,7 +1,6 @@
 ---
 title: sf-source-format
 description: Convert Salesforce metadata between Metadata API and SFDX source format with a single fast binary. No Node.js required.
-template: splash
 hero:
   tagline: Convert Salesforce metadata between Metadata API and SFDX source format in one fast, self-contained binary. No Node.js, no sf CLI.
   actions:

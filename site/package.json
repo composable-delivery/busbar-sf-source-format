@@ -12,8 +12,8 @@
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.10",
     "@astrojs/starlight": "^0.43.1",
-    "@composable-delivery/generic-ux-kit": "0.1.0-alpha.0",
-    "@composable-delivery/muselab-ux-kit": "0.2.0-alpha.0",
+    "@composable-delivery/generic-ux-kit": "0.1.0-alpha.2",
+    "@composable-delivery/muselab-ux-kit": "0.2.0-alpha.1",
     "astro": "^7.4.13"
   },
   "devDependencies": {

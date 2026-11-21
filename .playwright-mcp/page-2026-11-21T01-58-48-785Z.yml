@@ -1,0 +1,325 @@
+- generic [active] [ref=f11e1]:
+  - link "Skip to content" [ref=f11e2] [cursor=pointer]:
+    - /url: "#_top"
+  - generic [ref=f11e3]:
+    - banner [ref=f11e4]:
+      - generic [ref=f11e5]:
+        - generic [ref=f11e6]:
+          - link "Visit MuseLab" [ref=f11e7] [cursor=pointer]:
+            - /url: https://muselab.com
+          - generic [aria-hidden] [ref=f11e16]: /
+          - link "sf-source-format" [ref=f11e17] [cursor=pointer]:
+            - /url: /busbar-sf-source-format
+        - button "Search ⌘ K" [ref=f11e21] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f11e24]: Search
+          - generic [ref=f11e25]:
+            - generic [ref=f11e26]: ⌘
+            - generic [ref=f11e27]: K
+        - generic [ref=f11e28]:
+          - link "GitHub" [ref=f11e30] [cursor=pointer]:
+            - /url: https://github.com/composable-delivery/busbar-sf-source-format
+          - generic [ref=f11e35]:
+            - generic [ref=f11e36]: Select theme
+            - combobox "Select theme" [ref=f11e37] [cursor=pointer]:
+              - option "Dark"
+              - option "Light" [selected]
+              - option "Auto"
+    - navigation "Main":
+      - list [ref=f11e41]:
+        - listitem [ref=f11e42]:
+          - group [ref=f11e43]:
+            - generic "Getting Started" [ref=f11e44] [cursor=pointer]
+            - list [ref=f11e48]:
+              - listitem [ref=f11e49]:
+                - link "Overview" [ref=f11e50] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/
+              - listitem [ref=f11e51]:
+                - link "Getting Started" [ref=f11e52] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/getting-started/
+        - listitem [ref=f11e53]:
+          - group [ref=f11e54]:
+            - generic "Usage & API" [ref=f11e55] [cursor=pointer]
+            - list [ref=f11e59]:
+              - listitem [ref=f11e60]:
+                - link "CLI Reference" [ref=f11e61] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/cli-reference/
+              - listitem [ref=f11e62]:
+                - link "Library API Guide" [ref=f11e63] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/library-api/
+        - listitem [ref=f11e64]:
+          - group [ref=f11e65]:
+            - generic "Design & Parity" [ref=f11e66] [cursor=pointer]
+            - list [ref=f11e70]:
+              - listitem [ref=f11e71]:
+                - link "Architecture" [ref=f11e72] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/architecture/
+              - listitem [ref=f11e73]:
+                - link "Porting Notes" [ref=f11e74] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/porting/
+              - listitem [ref=f11e75]:
+                - link "Benchmarks" [ref=f11e76] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/benchmarks/
+        - listitem [ref=f11e77]:
+          - group [ref=f11e78]:
+            - generic "Rustdoc API" [ref=f11e79] [cursor=pointer]
+            - list [ref=f11e83]:
+              - listitem [ref=f11e84]:
+                - link "busbar-sf-source-format" [ref=f11e85] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/api/busbar_sf_source_format/
+              - listitem [ref=f11e86]:
+                - link "registry" [ref=f11e87] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/api/busbar_sf_source_format/registry/
+              - listitem [ref=f11e88]:
+                - link "tree" [ref=f11e89] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/api/busbar_sf_source_format/tree/
+              - listitem [ref=f11e90]:
+                - link "xml" [ref=f11e91] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/api/busbar_sf_source_format/xml/
+              - listitem [ref=f11e92]:
+                - link "resolve" [ref=f11e93] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/api/busbar_sf_source_format/resolve/
+              - listitem [ref=f11e94]:
+                - link "convert" [ref=f11e95] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/api/busbar_sf_source_format/convert/
+    - generic [ref=f11e97]:
+      - complementary [ref=f11e98]:
+        - navigation "On this page" [ref=f11e103]:
+          - heading "On this page" [level=2] [ref=f11e104]
+          - list [ref=f11e105]:
+            - listitem [ref=f11e106]:
+              - link "Overview" [ref=f11e107] [cursor=pointer]:
+                - /url: "#_top"
+            - listitem [ref=f11e108]:
+              - link "Faster and lighter than SDR" [ref=f11e109] [cursor=pointer]:
+                - /url: "#faster-and-lighter-than-sdr"
+            - listitem [ref=f11e110]:
+              - link "What it does" [ref=f11e111] [cursor=pointer]:
+                - /url: "#what-it-does"
+            - listitem [ref=f11e112]:
+              - link "Try it in 30 seconds" [ref=f11e113] [cursor=pointer]:
+                - /url: "#try-it-in-30-seconds"
+            - listitem [ref=f11e114]:
+              - link "Is it right for you?" [ref=f11e115] [cursor=pointer]:
+                - /url: "#is-it-right-for-you"
+            - listitem [ref=f11e116]:
+              - link "Output you can trust" [ref=f11e117] [cursor=pointer]:
+                - /url: "#output-you-can-trust"
+            - listitem [ref=f11e118]:
+              - link "Where to go next" [ref=f11e119] [cursor=pointer]:
+                - /url: "#where-to-go-next"
+              - list [ref=f11e120]:
+                - listitem [ref=f11e121]:
+                  - link "Learn by doing" [ref=f11e122] [cursor=pointer]:
+                    - /url: "#learn-by-doing"
+                - listitem [ref=f11e123]:
+                  - link "Get a task done" [ref=f11e124] [cursor=pointer]:
+                    - /url: "#get-a-task-done"
+                - listitem [ref=f11e125]:
+                  - link "Look something up" [ref=f11e126] [cursor=pointer]:
+                    - /url: "#look-something-up"
+                - listitem [ref=f11e127]:
+                  - link "Understand how it works" [ref=f11e128] [cursor=pointer]:
+                    - /url: "#understand-how-it-works"
+      - main [ref=f11e130]:
+        - generic [ref=f11e132]:
+          - generic [ref=f11e134]:
+            - generic [ref=f11e135]:
+              - heading "sf-source-format" [level=1] [ref=f11e136]
+              - generic [ref=f11e137]: Convert Salesforce metadata between Metadata API and SFDX source format in one fast, self-contained binary. No Node.js, no sf CLI.
+            - generic [ref=f11e138]:
+              - link "Get started" [ref=f11e139] [cursor=pointer]:
+                - /url: ./getting-started/
+              - link "CLI reference" [ref=f11e142] [cursor=pointer]:
+                - /url: ./cli-reference/
+          - generic [ref=f11e143]:
+            - heading "Faster and lighter than SDR" [level=2] [ref=f11e144]
+            - generic [ref=f11e145]:
+              - generic [ref=f11e146]:
+                - paragraph [ref=f11e147]: Conversion speed
+                - paragraph [ref=f11e148]:
+                  - generic [ref=f11e149]: 2.0–16×
+                  - generic [ref=f11e150]: faster
+                - paragraph [ref=f11e151]: In-process, across 22 scenarios on 3 platforms.
+              - generic [ref=f11e152]:
+                - paragraph [ref=f11e153]: Cold start in CI
+                - paragraph [ref=f11e154]:
+                  - generic [ref=f11e155]: 7.0–223×
+                  - generic [ref=f11e156]: faster
+                - paragraph [ref=f11e157]:
+                  - text: Whole command vs the
+                  - code [ref=f11e158]: sf
+                  - text: CLI, across 8 scenarios on 3 platforms.
+              - generic [ref=f11e159]:
+                - paragraph [ref=f11e160]: Memory use
+                - paragraph [ref=f11e161]:
+                  - generic [ref=f11e162]: 1.6–38×
+                  - generic [ref=f11e163]: less memory
+                - paragraph [ref=f11e164]:
+                  - text: Peak memory per run vs the
+                  - code [ref=f11e165]: sf
+                  - text: CLI, across 8 scenarios.
+              - generic [ref=f11e166]:
+                - paragraph [ref=f11e167]: No runtime to boot
+                - paragraph [ref=f11e168]:
+                  - generic [ref=f11e169]: 6 ms
+                  - generic [ref=f11e170]: to start
+                - paragraph [ref=f11e171]: A single native binary. No Node.js, no npm install, no warm-up.
+            - paragraph [ref=f11e172]:
+              - text: Compared with
+              - code [ref=f11e173]: "@salesforce/source-deploy-retrieve"
+              - text: 13.13.0 and the
+              - code [ref=f11e174]: sf
+              - text: CLI. Measured on Apple M2 Max · macOS; GitHub Actions · macos-latest; GitHub Actions · ubuntu-latest. See the
+              - link "full results and methodology" [ref=f11e175] [cursor=pointer]:
+                - /url: /busbar-sf-source-format/benchmarks/
+              - text: .
+            - heading "What it does" [level=2] [ref=f11e176]
+            - paragraph [ref=f11e177]:
+              - text: Salesforce projects come in two shapes.
+              - strong [ref=f11e178]: Metadata API (MDAPI)
+              - text: format keeps each object in one large XML file.
+              - strong [ref=f11e179]: SFDX source
+              - text: format splits it into many small files that review and merge cleanly in Git.
+              - code [ref=f11e180]: sf-source-format
+              - text: converts between the two, in either direction.
+            - figure [ref=f11e182]:
+              - code [ref=f11e184]:
+                - generic [ref=f11e185]: MDAPI SFDX source
+                - generic [ref=f11e187]: objects/Account.object → force-app/main/default/objects/Account/Account.object-meta.xml
+                - generic [ref=f11e189]: force-app/main/default/objects/Account/fields/Industry.field-meta.xml
+                - generic [ref=f11e192]: force-app/main/default/objects/Account/validationRules/…
+              - button "Copy to clipboard" [ref=f11e196] [cursor=pointer]
+            - paragraph [ref=f11e198]:
+              - text: It replaces the conversion step of
+              - code [ref=f11e199]: sf project convert
+              - text: ", and its output is byte-for-byte identical to"
+              - link [ref=f11e200] [cursor=pointer]:
+                - /url: https://github.com/forcedotcom/source-deploy-retrieve
+                - code [ref=f11e201]: "@salesforce/source-deploy-retrieve"
+              - text: (SDR) 13.13.0, so you can swap it in without changing what you deploy.
+            - heading "Try it in 30 seconds" [level=2] [ref=f11e202]
+            - figure "Terminal window" [ref=f11e204]:
+              - code [ref=f11e209]:
+                - generic [ref=f11e210]: "# Install the standalone binary (macOS / Linux)"
+                - generic [ref=f11e212]: curl -fsSL https://docs.muselab.com/busbar-sf-source-format/install.sh | bash
+                - generic [ref=f11e216]: "# Turn SFDX source into a deployable MDAPI package"
+                - generic [ref=f11e218]: sf-source-format convert mdapi --sourcepath force-app --output-dir build/mdapi --exact-dir
+              - button "Copy to clipboard" [ref=f11e221] [cursor=pointer]
+            - paragraph [ref=f11e223]:
+              - text: The converted package is in
+              - code [ref=f11e224]: build/mdapi
+              - text: . Run
+              - code [ref=f11e225]: convert source
+              - text: for the other direction. Windows, Cargo and CI installs are covered in
+              - link "Getting started" [ref=f11e226] [cursor=pointer]:
+                - /url: /busbar-sf-source-format/getting-started/
+              - text: .
+            - heading "Is it right for you?" [level=2] [ref=f11e227]
+            - paragraph [ref=f11e228]:
+              - strong [ref=f11e229]: "A good fit if you:"
+            - list [ref=f11e230]:
+              - listitem [ref=f11e231]:
+                - text: run conversions in CI and want to drop the Node.js and
+                - code [ref=f11e232]: sf
+                - text: CLI install from your pipeline,
+              - listitem [ref=f11e233]: convert large projects repeatedly and want unchanged components served from an incremental cache,
+              - listitem [ref=f11e234]:
+                - text: build Rust tooling that needs a Salesforce metadata registry, XML handling or
+                - code [ref=f11e235]: .forceignore
+                - text: support as a library.
+            - paragraph [ref=f11e236]:
+              - strong [ref=f11e237]: "Not for:"
+              - text: authenticating to an org, retrieving, or deploying.
+              - code [ref=f11e238]: sf-source-format
+              - text: only converts files on disk; keep using the
+              - code [ref=f11e239]: sf
+              - text: CLI for those.
+            - heading "Output you can trust" [level=2] [ref=f11e240]
+            - paragraph [ref=f11e241]:
+              - text: "Parity with SDR is checked, not assumed: all 34 snapshot tests across the 33 upstream SDR test suites, all 7"
+              - code [ref=f11e242]: sourceBehaviorOptions
+              - text: presets, and byte-identical output for every one of the 12,063 source files in
+              - link [ref=f11e243] [cursor=pointer]:
+                - /url: https://github.com/SalesforceFoundation/NPSP
+                - code [ref=f11e244]: SalesforceFoundation/NPSP
+              - text: . The
+              - link "Porting notes" [ref=f11e245] [cursor=pointer]:
+                - /url: /busbar-sf-source-format/porting/
+              - text: explain how upstream quirks are handled.
+            - heading "Where to go next" [level=2] [ref=f11e246]
+            - generic [ref=f11e247]:
+              - generic [ref=f11e248]:
+                - paragraph [ref=f11e249]: Tutorial
+                - heading "Learn by doing" [level=3] [ref=f11e250]
+                - paragraph [ref=f11e251]: Install the binary and convert your first project end to end.
+                - list [ref=f11e252]:
+                  - listitem [ref=f11e253]:
+                    - link "Getting started" [ref=f11e254] [cursor=pointer]:
+                      - /url: /busbar-sf-source-format/getting-started/
+              - generic [ref=f11e255]:
+                - paragraph [ref=f11e256]: How-to
+                - heading "Get a task done" [level=3] [ref=f11e257]
+                - paragraph [ref=f11e258]: Recipes for converting in CI, filtering by manifest, and building zip packages.
+                - list [ref=f11e259]:
+                  - listitem [ref=f11e260]:
+                    - link "Worked CLI examples" [ref=f11e261] [cursor=pointer]:
+                      - /url: /busbar-sf-source-format/cli-reference/
+                  - listitem [ref=f11e262]:
+                    - link "Use it in GitHub Actions" [ref=f11e263] [cursor=pointer]:
+                      - /url: /busbar-sf-source-format/getting-started/
+              - generic [ref=f11e264]:
+                - paragraph [ref=f11e265]: Reference
+                - heading "Look something up" [level=3] [ref=f11e266]
+                - paragraph [ref=f11e267]: Every subcommand, flag and Rust API.
+                - list [ref=f11e268]:
+                  - listitem [ref=f11e269]:
+                    - link "CLI reference" [ref=f11e270] [cursor=pointer]:
+                      - /url: /busbar-sf-source-format/cli-reference/
+                  - listitem [ref=f11e271]:
+                    - link "Library API guide" [ref=f11e272] [cursor=pointer]:
+                      - /url: /busbar-sf-source-format/library-api/
+                  - listitem [ref=f11e273]:
+                    - link "Rustdoc API" [ref=f11e274] [cursor=pointer]:
+                      - /url: /busbar-sf-source-format/api/busbar_sf_source_format/
+              - generic [ref=f11e275]:
+                - paragraph [ref=f11e276]: Explanation
+                - heading "Understand how it works" [level=3] [ref=f11e277]
+                - paragraph [ref=f11e278]: How incremental caching works, how SDR parity is verified, and how speed is measured.
+                - list [ref=f11e279]:
+                  - listitem [ref=f11e280]:
+                    - link "Architecture" [ref=f11e281] [cursor=pointer]:
+                      - /url: /busbar-sf-source-format/architecture/
+                  - listitem [ref=f11e282]:
+                    - link "Porting notes" [ref=f11e283] [cursor=pointer]:
+                      - /url: /busbar-sf-source-format/porting/
+                  - listitem [ref=f11e284]:
+                    - link "Benchmarks" [ref=f11e285] [cursor=pointer]:
+                      - /url: /busbar-sf-source-format/benchmarks/
+            - blockquote [ref=f11e286]:
+              - paragraph [ref=f11e287]:
+                - strong [ref=f11e288]: Pre-release.
+                - text: Version 0.0.1 is published on
+                - link "crates.io" [ref=f11e289] [cursor=pointer]:
+                  - /url: https://crates.io/crates/busbar-sf-source-format
+                - text: by
+                - link "MuseLab LLC" [ref=f11e290] [cursor=pointer]:
+                  - /url: https://muselab.com
+                - text: . Release binaries carry SLSA build provenance and can be verified with
+                - code [ref=f11e291]: gh attestation verify
+                - text: .
+          - generic [ref=f11e292]:
+            - link [ref=f11e294] [cursor=pointer]:
+              - /url: /busbar-sf-source-format/getting-started/
+              - generic [ref=f11e297]: NextGetting Started
+            - generic [ref=f11e298]:
+              - generic [ref=f11e299]:
+                - generic [ref=f11e300]: Crafted by
+                - link [ref=f11e301] [cursor=pointer]:
+                  - /url: https://muselab.com
+                  - strong [ref=f11e302]: MuseLab
+                - generic [ref=f11e303]: © 2026. All rights reserved.
+              - generic [ref=f11e304]:
+                - link "About MuseLab" [ref=f11e305] [cursor=pointer]:
+                  - /url: https://muselab.com
+                - link "Composable Delivery" [ref=f11e306] [cursor=pointer]:
+                  - /url: https://github.com/composable-delivery

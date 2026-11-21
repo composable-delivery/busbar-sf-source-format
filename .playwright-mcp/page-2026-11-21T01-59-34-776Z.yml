@@ -1,0 +1,1022 @@
+- generic [active] [ref=f16e1]:
+  - link "Skip to content" [ref=f16e2] [cursor=pointer]:
+    - /url: "#_top"
+  - generic [ref=f16e3]:
+    - banner [ref=f16e4]:
+      - generic [ref=f16e5]:
+        - generic [ref=f16e6]:
+          - link "Visit MuseLab" [ref=f16e7] [cursor=pointer]:
+            - /url: https://muselab.com
+          - generic [aria-hidden] [ref=f16e16]: /
+          - link "sf-source-format" [ref=f16e17] [cursor=pointer]:
+            - /url: /busbar-sf-source-format
+        - button "Search ⌘ K" [ref=f16e21] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f16e24]: Search
+          - generic [ref=f16e25]:
+            - generic [ref=f16e26]: ⌘
+            - generic [ref=f16e27]: K
+        - generic [ref=f16e28]:
+          - link "GitHub" [ref=f16e30] [cursor=pointer]:
+            - /url: https://github.com/composable-delivery/busbar-sf-source-format
+          - generic [ref=f16e35]:
+            - generic [ref=f16e36]: Select theme
+            - combobox "Select theme" [ref=f16e37] [cursor=pointer]:
+              - option "Dark" [selected]
+              - option "Light"
+              - option "Auto"
+    - navigation "Main":
+      - list [ref=f16e41]:
+        - listitem [ref=f16e42]:
+          - group [ref=f16e43]:
+            - generic "Getting Started" [ref=f16e44] [cursor=pointer]
+            - list [ref=f16e48]:
+              - listitem [ref=f16e49]:
+                - link "Overview" [ref=f16e50] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/
+              - listitem [ref=f16e51]:
+                - link "Getting Started" [ref=f16e52] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/getting-started/
+        - listitem [ref=f16e53]:
+          - group [ref=f16e54]:
+            - generic "Usage & API" [ref=f16e55] [cursor=pointer]
+            - list [ref=f16e59]:
+              - listitem [ref=f16e60]:
+                - link "CLI Reference" [ref=f16e61] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/cli-reference/
+              - listitem [ref=f16e62]:
+                - link "Library API Guide" [ref=f16e63] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/library-api/
+        - listitem [ref=f16e64]:
+          - group [ref=f16e65]:
+            - generic "Design & Parity" [ref=f16e66] [cursor=pointer]
+            - list [ref=f16e70]:
+              - listitem [ref=f16e71]:
+                - link "Architecture" [ref=f16e72] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/architecture/
+              - listitem [ref=f16e73]:
+                - link "Porting Notes" [ref=f16e74] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/porting/
+              - listitem [ref=f16e75]:
+                - link "Benchmarks" [ref=f16e76] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/benchmarks/
+        - listitem [ref=f16e77]:
+          - group [ref=f16e78]:
+            - generic "Rustdoc API" [ref=f16e79] [cursor=pointer]
+            - list [ref=f16e83]:
+              - listitem [ref=f16e84]:
+                - link "busbar-sf-source-format" [ref=f16e85] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/api/busbar_sf_source_format/
+              - listitem [ref=f16e86]:
+                - link "registry" [ref=f16e87] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/api/busbar_sf_source_format/registry/
+              - listitem [ref=f16e88]:
+                - link "tree" [ref=f16e89] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/api/busbar_sf_source_format/tree/
+              - listitem [ref=f16e90]:
+                - link "xml" [ref=f16e91] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/api/busbar_sf_source_format/xml/
+              - listitem [ref=f16e92]:
+                - link "resolve" [ref=f16e93] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/api/busbar_sf_source_format/resolve/
+              - listitem [ref=f16e94]:
+                - link "convert" [ref=f16e95] [cursor=pointer]:
+                  - /url: /busbar-sf-source-format/api/busbar_sf_source_format/convert/
+    - generic [ref=f16e97]:
+      - complementary [ref=f16e98]:
+        - navigation "On this page" [ref=f16e103]:
+          - heading "On this page" [level=2] [ref=f16e104]
+          - list [ref=f16e105]:
+            - listitem [ref=f16e106]:
+              - link "Overview" [ref=f16e107] [cursor=pointer]:
+                - /url: "#_top"
+            - listitem [ref=f16e108]:
+              - link "Upstream Pin" [ref=f16e109] [cursor=pointer]:
+                - /url: "#upstream-pin"
+            - listitem [ref=f16e110]:
+              - link "Workspace Architecture" [ref=f16e111] [cursor=pointer]:
+                - /url: "#workspace-architecture"
+            - listitem [ref=f16e112]:
+              - link "TypeScript → Rust Mapping" [ref=f16e113] [cursor=pointer]:
+                - /url: "#typescript--rust-mapping"
+              - list [ref=f16e114]:
+                - listitem [ref=f16e115]:
+                  - link "Resolution & Adapters (crates/source-format/src/resolve/)" [ref=f16e116] [cursor=pointer]:
+                    - /url: "#resolution--adapters-cratessource-formatsrcresolve"
+                - listitem [ref=f16e117]:
+                  - link "Transformers & Finalizers (crates/source-format/src/convert/)" [ref=f16e118] [cursor=pointer]:
+                    - /url: "#transformers--finalizers-cratessource-formatsrcconvert"
+            - listitem [ref=f16e119]:
+              - link "Idiomatic Rust Design Decisions & Workspace Standards" [ref=f16e120] [cursor=pointer]:
+                - /url: "#idiomatic-rust-design-decisions--workspace-standards"
+            - listitem [ref=f16e121]:
+              - link "Parity & Test Coverage" [ref=f16e122] [cursor=pointer]:
+                - /url: "#parity--test-coverage"
+            - listitem [ref=f16e123]:
+              - link "Preserved Quirks & Documented Upstream Snapshot Artifacts" [ref=f16e124] [cursor=pointer]:
+                - /url: "#preserved-quirks--documented-upstream-snapshot-artifacts"
+            - listitem [ref=f16e125]:
+              - link "Maintaining for New Salesforce API Versions" [ref=f16e126] [cursor=pointer]:
+                - /url: "#maintaining-for-new-salesforce-api-versions"
+      - main [ref=f16e128]:
+        - heading "Porting Notes" [level=1] [ref=f16e131]
+        - generic [ref=f16e133]:
+          - generic [ref=f16e134]:
+            - paragraph [ref=f16e135]:
+              - text: This workspace is an idiomatic Rust port of the MDAPI ↔ SFDX source format resolution, decomposition, recomposition, and manifest engine from Salesforce CLI’s
+              - link [ref=f16e136] [cursor=pointer]:
+                - /url: https://github.com/forcedotcom/source-deploy-retrieve
+                - code [ref=f16e137]: "@salesforce/source-deploy-retrieve"
+              - text: (SDR).
+            - heading "Upstream Pin" [level=2] [ref=f16e138]
+            - paragraph [ref=f16e139]:
+              - text: Recorded in
+              - link "fixtures/sdr-snapshots/UPSTREAM_VERSION" [ref=f16e140] [cursor=pointer]:
+                - /url: https://github.com/composable-delivery/busbar-sf-source-format/blob/main/fixtures/sdr-snapshots/UPSTREAM_VERSION
+              - text: ":"
+            - list [ref=f16e141]:
+              - listitem [ref=f16e142]:
+                - strong [ref=f16e143]: Package
+                - text: ":"
+                - code [ref=f16e144]: "@salesforce/source-deploy-retrieve"
+                - code [ref=f16e145]: 13.13.0
+              - listitem [ref=f16e146]:
+                - strong [ref=f16e147]: Repository
+                - text: ":"
+                - code [ref=f16e148]: https://github.com/forcedotcom/source-deploy-retrieve.git
+              - listitem [ref=f16e149]:
+                - strong [ref=f16e150]: Commit
+                - text: ":"
+                - code [ref=f16e151]: a2d677f6daccde1af5d35e6bb2fc0867c67db57b
+            - heading "Workspace Architecture" [level=2] [ref=f16e152]
+            - table [ref=f16e153]:
+              - rowgroup [ref=f16e154]:
+                - row [ref=f16e155]:
+                  - columnheader "Crate / Module" [ref=f16e156]
+                  - columnheader "Purpose" [ref=f16e157]
+                  - columnheader "Upstream Equivalent" [ref=f16e158]
+              - rowgroup [ref=f16e159]:
+                - row [ref=f16e160]:
+                  - cell [ref=f16e161]:
+                    - code [ref=f16e162]: busbar-sf-source-format::registry
+                  - cell [ref=f16e163]:
+                    - text: Typed metadata registry (
+                    - code [ref=f16e164]: 543+
+                    - text: types,
+                    - code [ref=f16e165]: metadataRegistry.json
+                    - text: ","
+                    - code [ref=f16e166]: stdValueSetRegistry.json
+                    - text: ), all 7 source-behavior presets, and
+                    - code [ref=f16e167]: sfdx-project.json
+                    - code [ref=f16e168]: sourceBehaviorOptions
+                    - text: /
+                    - code [ref=f16e169]: registryCustomizations
+                    - text: /
+                    - code [ref=f16e170]: replacements
+                    - text: layering
+                  - cell [ref=f16e171]:
+                    - code [ref=f16e172]: src/registry/
+                - row [ref=f16e173]:
+                  - cell [ref=f16e174]:
+                    - code [ref=f16e175]: busbar-sf-source-format::xml
+                  - cell [ref=f16e176]:
+                    - text: Order-preserving XML DOM (
+                    - code [ref=f16e177]: XmlDocument
+                    - text: ","
+                    - code [ref=f16e178]: XmlElement
+                    - text: ","
+                    - code [ref=f16e179]: XmlNode
+                    - text: ),
+                    - code [ref=f16e180]: quick-xml
+                    - text: parser, SDR-compatible serializer (4-space indent, explicit close tags
+                    - code [ref=f16e181]: <tag></tag>
+                    - text: ", inline comment preservation, numeric entity unescaping,"
+                    - code [ref=f16e182]: semantic_eq
+                    - text: )
+                  - cell [ref=f16e183]:
+                    - code [ref=f16e184]: src/convert/streams.ts
+                    - text: (
+                    - code [ref=f16e185]: JsToXml
+                    - text: ) &
+                    - code [ref=f16e186]: fast-xml-parser
+                    - text: helpers
+                - row [ref=f16e187]:
+                  - cell [ref=f16e188]:
+                    - code [ref=f16e189]: busbar-sf-source-format::tree
+                  - cell [ref=f16e190]:
+                    - code [ref=f16e191]: TreeContainer
+                    - text: abstraction (
+                    - code [ref=f16e192]: FsTree
+                    - text: ","
+                    - code [ref=f16e193]: ZipTree
+                    - text: ","
+                    - code [ref=f16e194]: MemoryTree
+                    - text: ),
+                    - code [ref=f16e195]: .forceignore
+                    - text: (
+                    - code [ref=f16e196]: ignore
+                    - text: crate with
+                    - code [ref=f16e197]: DEFAULT_IGNORE_RULES
+                    - text: ), lexical normalization, root containment checks, and symlink-traversal rejection (
+                    - code [ref=f16e198]: ensure_no_symlink_on_path
+                    - text: )
+                  - cell [ref=f16e199]:
+                    - code [ref=f16e200]: src/resolve/treeContainers.ts
+                    - text: "&"
+                    - code [ref=f16e201]: src/resolve/forceIgnore.ts
+                - row [ref=f16e202]:
+                  - cell [ref=f16e203]:
+                    - code [ref=f16e204]: busbar-sf-source-format
+                    - text: (
+                    - code [ref=f16e205]: resolve
+                    - text: ","
+                    - code [ref=f16e206]: manifest
+                    - text: ","
+                    - code [ref=f16e207]: convert
+                    - text: )
+                  - cell [ref=f16e208]:
+                    - text: Component resolution (
+                    - code [ref=f16e209]: MetadataResolver
+                    - text: ),
+                    - code [ref=f16e210]: ComponentSet
+                    - text: /
+                    - code [ref=f16e211]: ComponentSetBuilder
+                    - text: ","
+                    - code [ref=f16e212]: package.xml
+                    - text: "&"
+                    - code [ref=f16e213]: destructiveChanges*.xml
+                    - text: parsing/generation, replacement rules,
+                    - code [ref=f16e214]: UIBundle
+                    - text: deploy validation, all adapters/transformers/finalizers,
+                    - code [ref=f16e215]: StandardWriter
+                    - text: ", and"
+                    - code [ref=f16e216]: ArchiveWriter
+                  - cell [ref=f16e217]:
+                    - code [ref=f16e218]: src/collections/
+                    - text: ","
+                    - code [ref=f16e219]: src/resolve/
+                    - text: ","
+                    - code [ref=f16e220]: src/convert/
+                - row [ref=f16e221]:
+                  - cell [ref=f16e222]:
+                    - code [ref=f16e223]: busbar-sf-source-format-cli
+                  - cell [ref=f16e224]:
+                    - text: Binary (
+                    - code [ref=f16e225]: sf-source-format
+                    - text: ) exposing
+                    - code [ref=f16e226]: convert mdapi
+                    - text: and
+                    - code [ref=f16e227]: convert source
+                    - text: (directory,
+                    - code [ref=f16e228]: "--zip"
+                    - text: ","
+                    - code [ref=f16e229]: "--merge-with"
+                    - text: ","
+                    - code [ref=f16e230]: "--manifest"
+                    - text: ","
+                    - code [ref=f16e231]: "--metadata"
+                    - text: )
+                  - cell [ref=f16e232]:
+                    - code [ref=f16e233]: sf project convert mdapi
+                    - text: /
+                    - code [ref=f16e234]: sf project convert source
+            - heading "TypeScript → Rust Mapping" [level=2] [ref=f16e235]
+            - heading [level=3] [ref=f16e236]:
+              - text: Resolution & Adapters (
+              - code [ref=f16e237]: crates/source-format/src/resolve/
+              - text: )
+            - table [ref=f16e238]:
+              - rowgroup [ref=f16e239]:
+                - row [ref=f16e240]:
+                  - columnheader "Upstream TypeScript" [ref=f16e241]
+                  - columnheader "Rust Implementation" [ref=f16e242]
+              - rowgroup [ref=f16e243]:
+                - row [ref=f16e244]:
+                  - cell [ref=f16e245]:
+                    - code [ref=f16e246]: MetadataResolver
+                  - cell [ref=f16e247]:
+                    - code [ref=f16e248]: MetadataResolver
+                    - text: (
+                    - code [ref=f16e249]: resolver.rs
+                    - text: )
+                - row [ref=f16e250]:
+                  - cell [ref=f16e251]:
+                    - code [ref=f16e252]: ComponentSet
+                    - text: /
+                    - code [ref=f16e253]: ComponentSetBuilder
+                  - cell [ref=f16e254]:
+                    - code [ref=f16e255]: ComponentSet
+                    - text: /
+                    - code [ref=f16e256]: ComponentSetBuilder
+                    - text: (
+                    - code [ref=f16e257]: component_set.rs
+                    - text: )
+                - row [ref=f16e258]:
+                  - cell [ref=f16e259]:
+                    - code [ref=f16e260]: SourceComponent
+                  - cell [ref=f16e261]:
+                    - code [ref=f16e262]: SourceComponent
+                    - text: (
+                    - code [ref=f16e263]: component.rs
+                    - text: )
+                - row [ref=f16e264]:
+                  - cell [ref=f16e265]:
+                    - code [ref=f16e266]: DefaultSourceAdapter
+                  - cell [ref=f16e267]:
+                    - code [ref=f16e268]: AdapterStrategy::Default
+                    - text: in
+                    - code [ref=f16e269]: resolve_with_adapter
+                    - text: (
+                    - code [ref=f16e270]: adapters.rs
+                    - text: )
+                - row [ref=f16e271]:
+                  - cell [ref=f16e272]:
+                    - code [ref=f16e273]: MatchingContentSourceAdapter
+                  - cell [ref=f16e274]:
+                    - code [ref=f16e275]: AdapterStrategy::MatchingContentFile
+                    - text: (
+                    - code [ref=f16e276]: adapters.rs
+                    - text: )
+                - row [ref=f16e277]:
+                  - cell [ref=f16e278]:
+                    - code [ref=f16e279]: MixedContentSourceAdapter
+                  - cell [ref=f16e280]:
+                    - code [ref=f16e281]: AdapterStrategy::MixedContent
+                    - text: (
+                    - code [ref=f16e282]: adapters.rs
+                    - text: )
+                - row [ref=f16e283]:
+                  - cell [ref=f16e284]:
+                    - code [ref=f16e285]: BundleSourceAdapter
+                  - cell [ref=f16e286]:
+                    - code [ref=f16e287]: AdapterStrategy::Bundle
+                    - text: (
+                    - code [ref=f16e288]: adapters.rs
+                    - text: )
+                - row [ref=f16e289]:
+                  - cell [ref=f16e290]:
+                    - code [ref=f16e291]: DecomposedSourceAdapter
+                  - cell [ref=f16e292]:
+                    - code [ref=f16e293]: AdapterStrategy::Decomposed
+                    - text: (
+                    - code [ref=f16e294]: adapters.rs
+                    - text: )
+                - row [ref=f16e295]:
+                  - cell [ref=f16e296]:
+                    - code [ref=f16e297]: DigitalExperienceSourceAdapter
+                  - cell [ref=f16e298]:
+                    - code [ref=f16e299]: AdapterStrategy::DigitalExperience
+                    - text: (
+                    - code [ref=f16e300]: adapters.rs
+                    - text: )
+                - row [ref=f16e301]:
+                  - cell [ref=f16e302]:
+                    - code [ref=f16e303]: UiBundlesSourceAdapter
+                  - cell [ref=f16e304]:
+                    - code [ref=f16e305]: AdapterStrategy::UiBundles
+                    - text: (
+                    - code [ref=f16e306]: adapters.rs
+                    - text: )
+                - row [ref=f16e307]:
+                  - cell [ref=f16e308]:
+                    - text: Partial / custom ESR adapter (
+                    - code [ref=f16e309]: partiallyDecomposed
+                    - text: )
+                  - cell [ref=f16e310]:
+                    - code [ref=f16e311]: AdapterStrategy::PartiallyDecomposed
+                    - text: (
+                    - code [ref=f16e312]: adapters.rs
+                    - text: )
+            - heading [level=3] [ref=f16e313]:
+              - text: Transformers & Finalizers (
+              - code [ref=f16e314]: crates/source-format/src/convert/
+              - text: )
+            - table [ref=f16e315]:
+              - rowgroup [ref=f16e316]:
+                - row [ref=f16e317]:
+                  - columnheader "Upstream TypeScript" [ref=f16e318]
+                  - columnheader "Rust Implementation" [ref=f16e319]
+              - rowgroup [ref=f16e320]:
+                - row [ref=f16e321]:
+                  - cell [ref=f16e322]:
+                    - code [ref=f16e323]: MetadataConverter
+                  - cell [ref=f16e324]:
+                    - code [ref=f16e325]: MetadataConverter
+                    - text: (
+                    - code [ref=f16e326]: converter.rs
+                    - text: )
+                - row [ref=f16e327]:
+                  - cell [ref=f16e328]:
+                    - code [ref=f16e329]: DefaultMetadataTransformer
+                  - cell [ref=f16e330]:
+                    - code [ref=f16e331]: TransformerStrategy::Standard
+                    - text: (
+                    - code [ref=f16e332]: transformers.rs
+                    - text: )
+                - row [ref=f16e333]:
+                  - cell [ref=f16e334]:
+                    - code [ref=f16e335]: DecomposedMetadataTransformer
+                    - text: +
+                    - code [ref=f16e336]: DecompositionFinalizer
+                    - text: /
+                    - code [ref=f16e337]: RecompositionFinalizer
+                  - cell [ref=f16e338]:
+                    - code [ref=f16e339]: TransformerStrategy::Decomposed
+                    - text: (
+                    - code [ref=f16e340]: transformers.rs
+                    - text: ) +
+                    - code [ref=f16e341]: DecompositionFinalizer
+                    - text: /
+                    - code [ref=f16e342]: RecompositionFinalizer
+                    - text: (
+                    - code [ref=f16e343]: finalizers.rs
+                    - text: )
+                - row [ref=f16e344]:
+                  - cell [ref=f16e345]:
+                    - code [ref=f16e346]: NonDecomposedMetadataTransformer
+                    - text: +
+                    - code [ref=f16e347]: NonDecompositionFinalizer
+                  - cell [ref=f16e348]:
+                    - code [ref=f16e349]: TransformerStrategy::NonDecomposed
+                    - text: (
+                    - code [ref=f16e350]: transformers.rs
+                    - text: ) +
+                    - code [ref=f16e351]: NonDecompositionFinalizer
+                    - text: (
+                    - code [ref=f16e352]: finalizers.rs
+                    - text: )
+                - row [ref=f16e353]:
+                  - cell [ref=f16e354]:
+                    - code [ref=f16e355]: StaticResourceMetadataTransformer
+                  - cell [ref=f16e356]:
+                    - code [ref=f16e357]: TransformerStrategy::StaticResource
+                    - text: (
+                    - code [ref=f16e358]: transformers.rs
+                    - text: )
+                - row [ref=f16e359]:
+                  - cell [ref=f16e360]:
+                    - code [ref=f16e361]: ProfileMetadataTransformer
+                    - text: +
+                    - code [ref=f16e362]: ProfileMetadataFinalizer
+                  - cell [ref=f16e363]:
+                    - code [ref=f16e364]: TransformerStrategy::Profile
+                    - text: (
+                    - code [ref=f16e365]: transformers.rs
+                    - text: ) +
+                    - code [ref=f16e366]: ProfileMetadataFinalizer
+                    - text: (
+                    - code [ref=f16e367]: finalizers.rs
+                    - text: )
+                - row [ref=f16e368]:
+                  - cell [ref=f16e369]:
+                    - code [ref=f16e370]: UiBundleMetadataTransformer
+                    - text: +
+                    - code [ref=f16e371]: uiBundleValidation.ts
+                  - cell [ref=f16e372]:
+                    - code [ref=f16e373]: TransformerStrategy::UiBundle
+                    - text: (
+                    - code [ref=f16e374]: transformers.rs
+                    - text: ) +
+                    - code [ref=f16e375]: validate_ui_bundle_for_deploy
+                    - text: (
+                    - code [ref=f16e376]: ui_bundle.rs
+                    - text: )
+                - row [ref=f16e377]:
+                  - cell [ref=f16e378]:
+                    - code [ref=f16e379]: LabelsMetadataTransformer
+                    - text: /
+                    - code [ref=f16e380]: LabelMetadataTransformer
+                    - text: +
+                    - code [ref=f16e381]: DecomposedLabelsFinalizer
+                  - cell [ref=f16e382]:
+                    - code [ref=f16e383]: TransformerStrategy::DecomposedLabels
+                    - text: (
+                    - code [ref=f16e384]: transformers.rs
+                    - text: ) +
+                    - code [ref=f16e385]: DecomposedLabelsFinalizer
+                    - text: (
+                    - code [ref=f16e386]: finalizers.rs
+                    - text: )
+                - row [ref=f16e387]:
+                  - cell [ref=f16e388]:
+                    - code [ref=f16e389]: DecomposedPermissionSetTransformer
+                    - text: +
+                    - code [ref=f16e390]: DecomposedPermissionSetFinalizer
+                  - cell [ref=f16e391]:
+                    - code [ref=f16e392]: TransformerStrategy::DecomposedPermissionSet
+                    - text: (
+                    - code [ref=f16e393]: transformers.rs
+                    - text: ) +
+                    - code [ref=f16e394]: DecomposedPermissionSetFinalizer
+                    - text: (
+                    - code [ref=f16e395]: finalizers.rs
+                    - text: )
+                - row [ref=f16e396]:
+                  - cell [ref=f16e397]:
+                    - code [ref=f16e398]: DecomposeExternalServiceRegistrationTransformer
+                    - text: +
+                    - code [ref=f16e399]: DecomposedExternalServiceRegistrationFinalizer
+                  - cell [ref=f16e400]:
+                    - code [ref=f16e401]: TransformerStrategy::DecomposeExternalServiceRegistration
+                    - text: (
+                    - code [ref=f16e402]: transformers.rs
+                    - text: ) +
+                    - code [ref=f16e403]: DecomposedExternalServiceRegistrationFinalizer
+                    - text: (
+                    - code [ref=f16e404]: finalizers.rs
+                    - text: )
+                - row [ref=f16e405]:
+                  - cell [ref=f16e406]:
+                    - code [ref=f16e407]: StandardWriter
+                    - text: /
+                    - code [ref=f16e408]: ZipWriter
+                  - cell [ref=f16e409]:
+                    - code [ref=f16e410]: StandardWriter
+                    - text: /
+                    - code [ref=f16e411]: ArchiveWriter
+                    - text: (
+                    - code [ref=f16e412]: writer.rs
+                    - text: )
+                - row [ref=f16e413]:
+                  - cell [ref=f16e414]:
+                    - code [ref=f16e415]: stringReplacements
+                    - text: (
+                    - code [ref=f16e416]: src/convert/replacements.ts
+                    - text: )
+                  - cell [ref=f16e417]:
+                    - code [ref=f16e418]: mark_replacements
+                    - text: /
+                    - code [ref=f16e419]: apply_replacements
+                    - text: (
+                    - code [ref=f16e420]: replacements.rs
+                    - text: )
+            - heading "Idiomatic Rust Design Decisions & Workspace Standards" [level=2] [ref=f16e421]
+            - list [ref=f16e422]:
+              - listitem [ref=f16e423]:
+                - strong [ref=f16e424]: Zero boolean parameters & explicit enums
+                - text: ": Enforced via"
+                - code [ref=f16e425]: clippy.toml
+                - text: (
+                - code [ref=f16e426]: max-fn-params-bools = 0
+                - text: ) and workspace lints (
+                - code [ref=f16e427]: fn_params_excessive_bools = "warn"
+                - text: ). Options use typed enums (
+                - code [ref=f16e428]: TargetFormat
+                - text: ","
+                - code [ref=f16e429]: UniqueDirPolicy
+                - text: ","
+                - code [ref=f16e430]: ManifestPurpose
+                - text: ","
+                - code [ref=f16e431]: DestructiveChangesKind
+                - text: ","
+                - code [ref=f16e432]: ForceIgnorePolicy
+                - text: ","
+                - code [ref=f16e433]: ResolveMode
+                - text: ","
+                - code [ref=f16e434]: ValidateSingletons
+                - text: ).
+              - listitem [ref=f16e435]:
+                - strong [ref=f16e436]: Typed error boundaries
+                - text: ": Every crate uses"
+                - code [ref=f16e437]: thiserror
+                - text: (
+                - code [ref=f16e438]: RegistryError
+                - text: ","
+                - code [ref=f16e439]: XmlError
+                - text: ","
+                - code [ref=f16e440]: TreeError
+                - text: ","
+                - code [ref=f16e441]: ResolveError
+                - text: ","
+                - code [ref=f16e442]: ManifestError
+                - text: ","
+                - code [ref=f16e443]: ConvertError
+                - text: ) with
+                - code [ref=f16e444]: unwrap_used = "warn"
+                - text: and
+                - code [ref=f16e445]: as_conversions = "warn"
+                - text: enabled workspace-wide.
+              - listitem [ref=f16e446]:
+                - strong [ref=f16e447]: Order-preserving XML & JSON
+                - text: ": Uses"
+                - code [ref=f16e448]: XmlElement
+                - text: node lists instead of JS object key iteration bugs and
+                - code [ref=f16e449]: serde_json
+                - text: (
+                - code [ref=f16e450]: preserve_order
+                - text: via
+                - code [ref=f16e451]: IndexMap
+                - text: ) so OpenAPI schemas converted between JSON and YAML in
+                - code [ref=f16e452]: preset-decomposedESR
+                - text: preserve original key ordering.
+              - listitem [ref=f16e453]:
+                - strong [ref=f16e454]: Locale-independent UCA collation
+                - text: ": Recomposition ("
+                - code [ref=f16e455]: CustomObject
+                - text: ","
+                - code [ref=f16e456]: CustomLabels
+                - text: ", etc.) uses"
+                - code [ref=f16e457]: feruca::Collator::new(Tailoring::default(), false, true)
+                - text: (non-ignorable punctuation weights) to match Node/ICU
+                - code [ref=f16e458]: String.prototype.localeCompare
+                - text: ordering on underscore/mixed-case identifiers (e.g.,
+                - code [ref=f16e459]: Zip_Not_Found
+                - text: before
+                - code [ref=f16e460]: Zipcode_Verification_Limit
+                - text: ","
+                - code [ref=f16e461]: Addr_Id_Error
+                - text: before
+                - code [ref=f16e462]: addrCiceroMissingAPIKey
+                - text: ).
+              - listitem [ref=f16e463]:
+                - strong [ref=f16e464]: Path traversal & symlink safety
+                - text: ":"
+                - code [ref=f16e465]: busbar_sf_source_format::tree
+                - text: safety guards validate registry
+                - code [ref=f16e466]: directoryName
+                - text: segments, ZIP archive entry paths,
+                - code [ref=f16e467]: UIBundle
+                - text: JSON descriptors, and output destinations via
+                - code [ref=f16e468]: normalize_lexical
+                - text: ","
+                - code [ref=f16e469]: ensure_within_root
+                - text: ", and"
+                - code [ref=f16e470]: ensure_no_symlink_on_path
+                - text: .
+            - heading "Parity & Test Coverage" [level=2] [ref=f16e471]
+            - list [ref=f16e472]:
+              - listitem [ref=f16e473]:
+                - strong [ref=f16e474]:
+                  - code [ref=f16e475]: registry
+                  - text: (
+                  - code [ref=f16e476]: crates/source-format/tests/registry_validation.rs
+                  - text: ", 4 tests)"
+                - text: ":"
+                - list [ref=f16e477]:
+                  - listitem [ref=f16e478]:
+                    - text: Ports
+                    - code [ref=f16e479]: test/registry/registryValidation.test.ts
+                    - text: across the base registry, presets, and merged overlays.
+                  - listitem [ref=f16e480]:
+                    - text: Verifies all 7 preset files (
+                    - code [ref=f16e481]: decomposeCustomLabelsBeta.json
+                    - text: ","
+                    - code [ref=f16e482]: decomposeCustomLabelsBeta2.json
+                    - text: ","
+                    - code [ref=f16e483]: decomposeExternalServiceRegistrationBeta.json
+                    - text: ","
+                    - code [ref=f16e484]: decomposePermissionSetBeta.json
+                    - text: ","
+                    - code [ref=f16e485]: decomposePermissionSetBeta2.json
+                    - text: ","
+                    - code [ref=f16e486]: decomposeSharingRulesBeta.json
+                    - text: ","
+                    - code [ref=f16e487]: decomposeWorkflowBeta.json
+                    - text: ) and loads every
+                    - code [ref=f16e488]: sfdx-project.json
+                    - text: across
+                    - code [ref=f16e489]: fixtures/sdr-snapshots/
+                    - text: .
+              - listitem [ref=f16e490]:
+                - strong [ref=f16e491]:
+                  - code [ref=f16e492]: xml
+                  - text: (
+                  - code [ref=f16e493]: crates/source-format/tests/xml_roundtrip.rs
+                  - text: ", 7 tests)"
+                - text: "&"
+                - strong [ref=f16e494]:
+                  - code [ref=f16e495]: tree
+                  - text: (
+                  - code [ref=f16e496]: crates/source-format/tests/tree_and_ignore.rs
+                  - text: ", 4 tests)"
+                - text: ":"
+                - list [ref=f16e497]:
+                  - listitem [ref=f16e498]:
+                    - text: Round-trip fidelity for comments, CDATA, numeric entities, leading-zero numbers, formula quotes,
+                    - code [ref=f16e499]: .forceignore
+                    - text: ","
+                    - code [ref=f16e500]: ZipTree
+                    - text: ", and path/symlink safety checks."
+              - listitem [ref=f16e501]:
+                - strong [ref=f16e502]:
+                  - code [ref=f16e503]: busbar-sf-source-format
+                  - text: SDR Snapshot Suite (
+                  - code [ref=f16e504]: crates/source-format/tests/sdr_snapshots.rs
+                  - text: ", 34 tests)"
+                - text: ":"
+                - list [ref=f16e505]:
+                  - listitem [ref=f16e506]:
+                    - text: Covers all
+                    - strong [ref=f16e507]: "33"
+                    - text: sample project directories under
+                    - code [ref=f16e508]: fixtures/sdr-snapshots/
+                    - text: (
+                    - code [ref=f16e509]: aiAgentDefinitionVersion
+                    - text: ","
+                    - code [ref=f16e510]: appTemplates
+                    - text: ","
+                    - code [ref=f16e511]: bots
+                    - text: ","
+                    - code [ref=f16e512]: customLabels-merged
+                    - text: ","
+                    - code [ref=f16e513]: customLabels-multiple
+                    - text: ","
+                    - code [ref=f16e514]: customLabels-simple
+                    - text: ","
+                    - code [ref=f16e515]: customObjects-and-children
+                    - text: "[2 tests: round-trip + Retrieve vs Deploy empty parent manifests],"
+                    - code [ref=f16e516]: customTranslationProject
+                    - text: ","
+                    - code [ref=f16e517]: destructiveCompSets
+                    - text: ","
+                    - code [ref=f16e518]: digitalExperienceBundle
+                    - text: ","
+                    - code [ref=f16e519]: digitalExperienceMobilePages
+                    - text: ","
+                    - code [ref=f16e520]: forceignore
+                    - text: ","
+                    - code [ref=f16e521]: genAiFunctions
+                    - text: ","
+                    - code [ref=f16e522]: legacySuffixSupport
+                    - text: ","
+                    - code [ref=f16e523]: mpdWithLabels
+                    - text: ","
+                    - code [ref=f16e524]: nestedFolders
+                    - text: ","
+                    - code [ref=f16e525]: preset-PermSet
+                    - text: ","
+                    - code [ref=f16e526]: preset-decomposeLabels
+                    - text: ","
+                    - code [ref=f16e527]: preset-decomposedESR
+                    - text: ","
+                    - code [ref=f16e528]: preset-decomposedPS2
+                    - text: ","
+                    - code [ref=f16e529]: preset-sharingRules
+                    - text: ","
+                    - code [ref=f16e530]: preset-workflow
+                    - text: ","
+                    - code [ref=f16e531]: preset-workflow-mpd
+                    - text: ","
+                    - code [ref=f16e532]: sharingRules
+                    - text: ","
+                    - code [ref=f16e533]: singleCustomFieldRetrieve
+                    - text: ","
+                    - code [ref=f16e534]: staticResource
+                    - text: ","
+                    - code [ref=f16e535]: territory
+                    - text: ","
+                    - code [ref=f16e536]: UIBundleSnapshot
+                    - text: ","
+                    - code [ref=f16e537]: variant-raw-PermSet
+                    - text: ","
+                    - code [ref=f16e538]: variant-workflow
+                    - text: ","
+                    - code [ref=f16e539]: waveTemplateBundle
+                    - text: ","
+                    - code [ref=f16e540]: workflow
+                    - text: ","
+                    - code [ref=f16e541]: xmlComments
+                    - text: ).
+              - listitem [ref=f16e542]:
+                - strong [ref=f16e543]:
+                  - code [ref=f16e544]: UIBundle
+                  - text: deploy validation (
+                  - code [ref=f16e545]: crates/source-format/tests/ui_bundle_validation.rs
+                  - text: ", 5 tests)"
+                - text: ":"
+                - list [ref=f16e546]:
+                  - listitem [ref=f16e547]:
+                    - text: Verifies deploy-time rejection of empty
+                    - code [ref=f16e548]: ui-bundle.json
+                    - text: ", unknown properties, path traversal, and invalid"
+                    - code [ref=f16e549]: mcp-resources.json
+                    - text: ", plus bypassing validation during retrieve ("
+                    - code [ref=f16e550]: TargetFormat::Source
+                    - text: ).
+              - listitem [ref=f16e551]:
+                - strong [ref=f16e552]:
+                  - text: Incremental cache (
+                  - code [ref=f16e553]: crates/source-format/tests/incremental_cache.rs
+                  - text: ", 11 tests)"
+                - text: ":"
+                - list [ref=f16e554]:
+                  - listitem [ref=f16e555]:
+                    - text: Exercises persistent
+                    - code [ref=f16e556]: blake3
+                    - text: directory and ZIP incremental conversion, self-healing, manifest pruning, and env invalidation.
+              - listitem [ref=f16e557]:
+                - strong [ref=f16e558]:
+                  - code [ref=f16e559]: busbar-sf-source-format-cli
+                  - text: (
+                  - code [ref=f16e560]: crates/cli/tests/cli_integration.rs
+                  - text: ", 5 tests)"
+                - text: ":"
+                - list [ref=f16e561]:
+                  - listitem [ref=f16e562]:
+                    - text: Exercises CLI execution for
+                    - code [ref=f16e563]: convert source
+                    - text: ","
+                    - code [ref=f16e564]: convert mdapi
+                    - text: ","
+                    - code [ref=f16e565]: convert mdapi --zip
+                    - text: ","
+                    - code [ref=f16e566]: convert source --merge-with
+                    - text: ","
+                    - code [ref=f16e567]: "--cache-dir"
+                    - text: ", and invalid argument rejection."
+            - heading "Preserved Quirks & Documented Upstream Snapshot Artifacts" [level=2] [ref=f16e568]
+            - paragraph [ref=f16e569]:
+              - text: The test harness copies each snapshot project into
+              - code [ref=f16e570]: <TempDir>/<project_name>/
+              - text: (preserving parent directory naming such as
+              - code [ref=f16e571]: appTemplates
+              - text: and
+              - code [ref=f16e572]: genAiFunctions
+              - text: for bundle resolution) and documents five upstream
+              - code [ref=f16e573]: mocha-snap
+              - text: "/ JS test quirks discovered during strict Rust parity testing:"
+            - list [ref=f16e574]:
+              - listitem [ref=f16e575]:
+                - strong [ref=f16e576]:
+                  - code [ref=f16e577]: appTemplates
+                  - text: "&"
+                  - code [ref=f16e578]: genAiFunctions
+                - text: ": Upstream"
+                - code [ref=f16e579]: MetadataResolver.resolveDirectoryAsComponent
+                - text: searches
+                - code [ref=f16e580]: parts.lastIndexOf(directoryName)
+                - text: ", including ancestor directory segments such as"
+                - code [ref=f16e581]: appTemplates
+                - text: /
+                - code [ref=f16e582]: genAiFunctions
+                - text: ; copying fixtures under
+                - code [ref=f16e583]: <TempDir>/<project_name>/
+                - text: preserves the identical resolution behavior.
+              - listitem [ref=f16e584]:
+                - strong [ref=f16e585]:
+                  - code [ref=f16e586]: preset-PermSet
+                  - text: "&"
+                  - code [ref=f16e587]: preset-sharingRules
+                - text: ": Upstream"
+                - code [ref=f16e588]: snapshots.test.ts
+                - text: omitted
+                - code [ref=f16e589]: await
+                - text: "on"
+                - code [ref=f16e590]: dirsAreIdentical(...)
+                - text: ", leaving stale single-file"
+                - code [ref=f16e591]: dreamhouse.permissionset-meta.xml
+                - text: /
+                - code [ref=f16e592]: account.sharingRules-meta.xml
+                - text: artifacts inside
+                - code [ref=f16e593]: __snapshots__/verify-source-files.expected/
+                - text: .
+                - code [ref=f16e594]: sdr_snapshots.rs
+                - text: excludes those stale files while asserting strict equality on all decomposed files and semantic XML equality against
+                - code [ref=f16e595]: originalMdapi
+                - text: .
+              - listitem [ref=f16e596]:
+                - strong [ref=f16e597]:
+                  - code [ref=f16e598]: staticResource
+                - text: ": Upstream"
+                - code [ref=f16e599]: snapshots.test.ts
+                - text: omitted
+                - code [ref=f16e600]: await
+                - text: "on"
+                - code [ref=f16e601]: dirsAreIdentical(...)
+                - text: ", upstream"
+                - code [ref=f16e602]: conversions.ts
+                - code [ref=f16e603]: shouldIgnore
+                - text: skipped
+                - code [ref=f16e604]: file.includes('leafletjs.resource')
+                - text: (excluding
+                - code [ref=f16e605]: leafletjs.resource-meta.xml
+                - text: as well), and
+                - code [ref=f16e606]: fileSnap
+                - text: read
+                - code [ref=f16e607]: leafletjs/
+                - text: binary PNGs and CRLF CSS/JS files as UTF-8.
+                - code [ref=f16e608]: snapshot_static_resource
+                - text: compares all extracted
+                - code [ref=f16e609]: leafletjs/
+                - text: bytes,
+                - code [ref=f16e610]: .resource-meta.xml
+                - text: ", and generated"
+                - code [ref=f16e611]: .resource
+                - text: zip entries strictly against
+                - code [ref=f16e612]: originalMdapi
+                - text: .
+              - listitem [ref=f16e613]:
+                - strong [ref=f16e614]:
+                  - code [ref=f16e615]: waveTemplateBundle
+                - text: ": Upstream"
+                - code [ref=f16e616]: originalMdapi/waveTemplates/.../Regional_Sales_Info.csv
+                - text: uses
+                - code [ref=f16e617]: \r\n
+                - text: ", whereas"
+                - code [ref=f16e618]: mocha-snap
+                - text: normalized line endings to
+                - code [ref=f16e619]: \n
+                - text: in
+                - code [ref=f16e620]: __snapshots__
+                - text: .
+                - code [ref=f16e621]: sdr_snapshots.rs
+                - text: normalizes
+                - code [ref=f16e622]: \r\n
+                - text: →
+                - code [ref=f16e623]: \n
+                - text: solely for
+                - code [ref=f16e624]: .csv
+                - text: files.
+              - listitem [ref=f16e625]:
+                - strong [ref=f16e626]:
+                  - code [ref=f16e627]: mpdWithLabels
+                - text: ": Upstream"
+                - code [ref=f16e628]: "@salesforce/core"
+                - code [ref=f16e629]: pkg.fullPath
+                - text: ends with
+                - code [ref=f16e630]: /
+                - text: while
+                - code [ref=f16e631]: mpdWithLabels/snapshots.test.ts
+                - text: passed
+                - code [ref=f16e632]: path.resolve(...)
+                - text: without one, causing
+                - code [ref=f16e633]: pkgPaths.includes(defaultDirectory)
+                - text: to miss and duplicate
+                - code [ref=f16e634]: my_app_Label_1
+                - text: into
+                - code [ref=f16e635]: force-app
+                - text: . In Rust,
+                - code [ref=f16e636]: NonDecompositionFinalizer
+                - text: normalizes paths canonically so multi-package ownership stays idempotent.
+            - heading "Maintaining for New Salesforce API Versions" [level=2] [ref=f16e637]
+            - paragraph [ref=f16e638]:
+              - text: To update this repository for a new Salesforce API release /
+              - code [ref=f16e639]: "@salesforce/source-deploy-retrieve"
+              - text: "version:"
+            - list [ref=f16e640]:
+              - listitem [ref=f16e641]:
+                - text: "Run the sync script with the target SDR git tag:"
+                - figure "Terminal window" [ref=f16e643]:
+                  - code [ref=f16e648]:
+                    - generic [ref=f16e649]: ./scripts/sync-sdr-fixtures.sh <sdr-tag>
+                  - button "Copy to clipboard" [ref=f16e652] [cursor=pointer]
+                - text: "This updates:"
+                - list [ref=f16e654]:
+                  - listitem [ref=f16e655]:
+                    - code [ref=f16e656]: crates/source-format/data/metadataRegistry.json
+                  - listitem [ref=f16e657]:
+                    - code [ref=f16e658]: crates/source-format/data/stdValueSetRegistry.json
+                  - listitem [ref=f16e659]:
+                    - code [ref=f16e660]: crates/source-format/data/presets/*.json
+                  - listitem [ref=f16e661]:
+                    - code [ref=f16e662]: fixtures/sdr-snapshots/
+                    - text: and
+                    - code [ref=f16e663]: fixtures/sdr-snapshots/UPSTREAM_VERSION
+              - listitem [ref=f16e664]:
+                - text: If upstream SDR introduces a new
+                - code [ref=f16e665]: adapter
+                - text: ","
+                - code [ref=f16e666]: transformer
+                - text: ","
+                - code [ref=f16e667]: decomposition
+                - text: ", or"
+                - code [ref=f16e668]: recomposition
+                - text: strategy enum value in
+                - code [ref=f16e669]: metadataRegistry.json
+                - text: or presets, serde (
+                - code [ref=f16e670]: "#[serde(deny_unknown_fields)]"
+                - text: ) will fail fast in
+                - code [ref=f16e671]: registry_validation.rs
+                - text: . Add the corresponding enum variant in
+                - code [ref=f16e672]: crates/source-format/src/registry/types.rs
+                - text: and implement it in
+                - code [ref=f16e673]: crates/source-format/src/
+                - text: .
+              - listitem [ref=f16e674]:
+                - text: "Verify full parity and lint compliance:"
+                - figure "Terminal window" [ref=f16e676]:
+                  - code [ref=f16e681]:
+                    - generic [ref=f16e682]: cargo fmt --check
+                    - generic [ref=f16e684]: cargo clippy --workspace --all-targets --all-features -- -D warnings
+                    - generic [ref=f16e686]: cargo test --workspace
+                    - generic [ref=f16e688]: cargo doc --workspace --no-deps
+                  - button "Copy to clipboard" [ref=f16e691] [cursor=pointer]
+          - generic [ref=f16e693]:
+            - generic [ref=f16e694]:
+              - link [ref=f16e695] [cursor=pointer]:
+                - /url: /busbar-sf-source-format/architecture/
+                - generic [ref=f16e698]: PreviousArchitecture
+              - link [ref=f16e699] [cursor=pointer]:
+                - /url: /busbar-sf-source-format/benchmarks/
+                - generic [ref=f16e702]: NextBenchmarks
+            - generic [ref=f16e703]:
+              - generic [ref=f16e704]:
+                - generic [ref=f16e705]: Crafted by
+                - link [ref=f16e706] [cursor=pointer]:
+                  - /url: https://muselab.com
+                  - strong [ref=f16e707]: MuseLab
+                - generic [ref=f16e708]: © 2026. All rights reserved.
+              - generic [ref=f16e709]:
+                - link "About MuseLab" [ref=f16e710] [cursor=pointer]:
+                  - /url: https://muselab.com
+                - link "Composable Delivery" [ref=f16e711] [cursor=pointer]:
+                  - /url: https://github.com/composable-delivery
