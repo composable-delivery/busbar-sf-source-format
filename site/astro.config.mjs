@@ -9,6 +9,7 @@ import {
   packageExportAliases,
   remarkDocLinks,
   remarkStripLeadingH1,
+  remarkUxBlocks,
   resolveSiteEnv,
 } from '@composable-delivery/generic-ux-kit/node';
 
@@ -105,6 +106,8 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [
       remarkStripLeadingH1,
+      // Turns the marked sections of docs/index.md (plain Markdown) into cards.
+      remarkUxBlocks,
       [
         remarkDocLinks,
         {
@@ -119,6 +122,8 @@ export default defineConfig({
             'porting.md': 'PORTING.md',
           },
           rootDocs: { 'BENCHMARKS.md': 'benchmarks', 'PORTING.md': 'porting' },
+          // /api/... (generated Rustdoc) is not a Markdown page, so link it site-absolute.
+          prefixAbsolutePaths: true,
         },
       ],
     ],
