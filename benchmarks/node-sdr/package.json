@@ -4,6 +4,6 @@
   "private": true,
   "type": "module",
   "dependencies": {
-    "@salesforce/source-deploy-retrieve": "13.13.0"
+    "@salesforce/source-deploy-retrieve": "13.14.1"
   }
 }
